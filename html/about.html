@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOSHIPRO - About Us</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../css/about.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+
+<body>
+
+    <div class="background-decor animate-blob1"></div>
+    <div class="background-decor animate-blob2"></div>
+
+    <div class="dashboard-wrapper">
+
+        <header class="navbar">
+            <div class="nav-left">
+                <label for="sidebarToggle" id="menuBtn">
+                    <i class="fa-solid fa-bars"></i> Menu
+                </label>
+                <span class="logo gradient-text">JOSHIPRO</span>
+            </div>
+
+            <div class="nav-right">
+                <label for="dropdownToggle" class="profile-trigger">
+                    <div class="avatar">
+                        <img src="https://via.placeholder.com/150" alt="User Profile">
+                    </div>
+                </label>
+            </div>
+        </header>
+
+        <input type="checkbox" id="sidebarToggle" class="state-resolver-check">
+        <input type="checkbox" id="dropdownToggle" class="state-resolver-check">
+
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">NAVIGATION</div>
+            <nav class="sidebar-menu">
+                <a href="dashboard.html"><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
+                <a href="findJobs.html"><i class="fa-solid fa-briefcase"></i> Find Jobs</a>
+                <a href="applications.html"><i class="fa-solid fa-file-invoice"></i> My Applications</a>
+                <a href="helpDesk.html"><i class="fa-solid fa-headset"></i> Help Desk</a>
+                <a href="about.html" class="active-sidebar-link"><i class="fa-solid fa-info-circle"></i> About Us</a>
+            </nav>
+        </aside>
+
+        <ul class="dropdown-menu" id="dropdownMenu">
+            <li><a href="profile.html"><i class="fa-solid fa-user"></i> My Profile</a></li>
+            <li><a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
+            <li class="db-divider"></li>
+            <li><a href="login.html" class="logout-item"><i class="fa-solid fa-power-off"></i> Logout</a></li>
+        </ul>
+
+        <main class="main-content">
+            <section class="feed-section">
+
+                <div class="feed-header">
+                    <h2>About Us</h2>
+                    <p class="feed-subtitle">Get to know the ecosystem pushing the boundaries of cloud staffing
+                        solutions.</p>
+                </div>
+
+                <article class="about-card">
+                    <div class="about-card-header">
+                        <h3 class="about-title-text">Our Vision</h3>
+                    </div>
+                    <p class="about-card-desc">
+                        JOSHIPRO is engineered to bridge corporate recruitment disparities by hosting real-time global
+                        pipelines on a high-speed glassmorphic workspace interface. We bypass archaic intermediate
+                        bottlenecks to present unfiltered applicant metrics natively.
+                    </p>
+                </article>
+
+                <div class="feed-header" style="margin-top: 4rem; margin-bottom: 2rem;">
+                    <h2>Our Foundation</h2>
+                </div>
+
+                <div class="team-grid">
+                    <div class="about-card">
+                        <h3 class="about-title-text" style="color: #6366f1;">Infrastructure Core</h3>
+                        <p class="about-card-desc" style="margin-top: 0.5rem;">
+                            Hosting redundant cloud engines to process real-time structural streams securely.
+                        </p>
+                    </div>
+
+                    <div class="about-card">
+                        <h3 class="about-title-text" style="color: #a855f7;">UI Design Desk</h3>
+                        <p class="about-card-desc" style="margin-top: 0.5rem;">
+                            Crafting neon dark-mode systems tailored to increase user viewport focus metrics.
+                        </p>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+
+        <footer class="dashboard-footer">
+            <div class="footer-links">
+                <a href="contact.html" class="footer-btn"><i class="fa-solid fa-envelope"></i> Contact Support</a>
+            </div>
+            <p class="footer-copyright">&copy; 2026 JOSHIPRO Cloud Network. All Rights Reserved.</p>
+        </footer>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOSHIPRO - Contact Support</title>
+    <!-- Icons Font -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
+    <!-- Companion Styling (Reusing the shared No-JS Layout Framework) -->
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/about.css">
+</head>
+
+<body>
+
+    <!-- Animated Neon Blobs Background Layer -->
+    <div class="background-decor animate-blob1"></div>
+    <div class="background-decor animate-blob2"></div>
+
+    <div class="dashboard-wrapper">
+
+        <!-- --- Glassmorphic Navigation Header --- -->
+        <header class="navbar">
+            <div class="nav-left">
+                <!-- CSS Toggle Driver for Sidebar Menu -->
+                <label for="sidebarToggle" id="menuBtn">
+                    <i class="fa-solid fa-bars"></i> Menu
+                </label>
+                <span class="logo gradient-text">JOSHIPRO</span>
+            </div>
+
+            <div class="nav-right">
+                <!-- CSS Toggle Driver for Profile Dropdown -->
+                <label for="dropdownToggle" class="profile-trigger">
+                    <div class="avatar">
+                        <img src="https://via.placeholder.com/150" alt="User Profile">
+                    </div>
+                </label>
+            </div>
+        </header>
+
+        <!-- --- Invisible Interactive State Checkboxes (Pure CSS Controls) --- -->
+        <input type="checkbox" id="sidebarToggle" class="state-resolver-check">
+        <input type="checkbox" id="dropdownToggle" class="state-resolver-check">
+
+        <!-- --- Glassmorphic Sidebar Drawer Component --- -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">NAVIGATION</div>
+            <nav class="sidebar-menu">
+                <a href="dashboard.html"><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
+                <a href="findJobs.html"><i class="fa-solid fa-briefcase"></i> Find Jobs</a>
+                <a href="applications.html"><i class="fa-solid fa-file-invoice"></i> My Applications</a>
+                <a href="helpDesk.html" class="active-sidebar-link"><i class="fa-solid fa-headset"></i> Help Desk</a>
+                <a href="about.html"><i class="fa-solid fa-info-circle"></i> About Us</a>
+            </nav>
+        </aside>
+
+        <!-- --- Profile Dropdown Menu Frame --- -->
+        <ul class="dropdown-menu" id="dropdownMenu">
+            <li><a href="profile.html"><i class="fa-solid fa-user"></i> My Profile</a></li>
+            <li><a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
+            <li class="db-divider"></li>
+            <li><a href="login.html" class="logout-item"><i class="fa-solid fa-power-off"></i> Logout</a></li>
+        </ul>
+
+        <!-- --- Main Core Layout Panels --- -->
+        <main class="main-content">
+            <section class="feed-section">
+
+                <div class="feed-header">
+                    <h2>Help Desk & Support</h2>
+                    <p class="feed-subtitle">Have a pipeline conflict or account deployment query? Connect with our desk
+                        directly.</p>
+                </div>
+
+                <!-- Main Glassmorphic Help Card Container -->
+                <article class="about-card">
+                    <div class="about-card-header">
+                        <h3 class="about-title-text">Direct Channels</h3>
+                    </div>
+                    <p class="about-card-desc" style="margin-bottom: 1rem;">
+                        Select your preferred communications link below to initialize an instant, priority connection
+                        with our network administrators.
+                    </p>
+                </article>
+
+                <!-- Core Grid Segment: Touchpoints & Links -->
+                <div class="team-grid">
+
+                    <!-- Email Channel Card -->
+                    <div class="about-card" style="gap: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <i class="fa-solid fa-envelope" style="font-size: 1.8rem; color: #6366f1;"></i>
+                            <h3 class="about-title-text">Email Support</h3>
+                        </div>
+                        <p class="about-card-desc">For formal infrastructure requests, partnership pitches, or
+                            credential disputes.</p>
+                        <a href="mailto:support@joshipro.com" class="footer-btn"
+                            style="width: 100%; justify-content: center;">
+                            support@joshipro.com
+                        </a>
+                    </div>
+
+                    <!-- WhatsApp Messaging Card -->
+                    <div class="about-card" style="gap: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <i class="fa-brands fa-whatsapp" style="font-size: 2rem; color: #22c55e;"></i>
+                            <h3 class="about-title-text">WhatsApp Desk</h3>
+                        </div>
+                        <p class="about-card-desc">Instant real-time messaging chat for active application updates and
+                            rapid help desk tickets.</p>
+                        <!-- Replace text parameters with your phone digits following international layout format -->
+                        <a href="https://wa.me/1234567890" target="_blank" class="footer-btn"
+                            style="width: 100%; justify-content: center; background: rgba(34, 197, 94, 0.15); border-color: rgba(34, 197, 94, 0.3);">
+                            <i class="fa-brands fa-whatsapp"></i> Chat Now
+                        </a>
+                    </div>
+
+                    <!-- Voice Call Card -->
+                    <div class="about-card" style="gap: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <i class="fa-solid fa-phone" style="font-size: 1.6rem; color: #a855f7;"></i>
+                            <h3 class="about-title-text">Direct Line</h3>
+                        </div>
+                        <p class="about-card-desc">Available Monday through Friday for immediate corporate consultation
+                            routing loops.</p>
+                        <a href="tel:+1234567890" class="footer-btn" style="width: 100%; justify-content: center;">
+                            +1 (234) 567-890
+                        </a>
+                    </div>
+
+                    <!-- LinkedIn Network Card -->
+                    <div class="about-card" style="gap: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <i class="fa-brands fa-linkedin" style="font-size: 1.8rem; color: #0a66c2;"></i>
+                            <h3 class="about-title-text">LinkedIn Profile</h3>
+                        </div>
+                        <p class="about-card-desc">Connect with the official professional corporate network tier for
+                            institutional vacancy tracking.</p>
+                        <a href="https://linkedin.com/company/joshipro" target="_blank" class="footer-btn"
+                            style="width: 100%; justify-content: center; background: rgba(10, 102, 194, 0.15); border-color: rgba(10, 102, 194, 0.3);">
+                            <i class="fa-brands fa-linkedin-in"></i> Follow JOSHIPRO
+                        </a>
+                    </div>
+
+                </div>
+
+            </section>
+        </main>
+
+        <!-- --- Glassmorphic Dashboard Footer --- -->
+        <footer class="dashboard-footer">
+            <p class="footer-copyright">&copy; 2026 JOSHIPRO Cloud Network. All Rights Reserved.</p>
+        </footer>
+
+    </div>
+
+</body>
+
+</html>

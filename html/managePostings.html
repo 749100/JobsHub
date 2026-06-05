@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOSHIPRO - Manage Postings</title>
+    <!-- External Icon Styling Library -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
+    <!-- Shared independent layout stylesheets -->
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/postJobs.css">
+</head>
+
+<body>
+
+    <div class="background-decor animate-blob1"></div>
+    <div class="background-decor animate-blob2"></div>
+
+    <div class="dashboard-wrapper">
+
+        <!-- Top Navigation Bar Layout -->
+        <header class="navbar">
+            <div class="nav-left">
+                <button id="menuBtn" class="menu-btn">☰ Menu</button>
+                <div class="logo">JOSHI<span class="gradient-text">PRO</span></div>
+
+                <!-- Drawer Sidebar Component -->
+                <aside id="sidebar" class="sidebar">
+                    <div class="sidebar-brand">Dashboard</div>
+                    <nav class="sidebar-menu">
+                        <a href="dashboard.html">Home</a>
+                        <a href="findJobs.html">Find Jobs</a>
+                        <a href="postJobs.html">Post Jobs</a>
+                        <a href="applications.html">My Applications</a>
+                    </nav>
+                </aside>
+            </div>
+
+            <div class="nav-right">
+                <button class="profile-trigger" id="profileBtn" aria-label="Toggle profile menu">
+                    <div class="avatar" id="userAvatar">
+                        <img src="../assets/logo.png" alt="User Avatar" id="avatarImg">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                </button>
+                <ul class="dropdown-menu" id="dropdownMenu">
+                    <li><a href="profile.html"><i class="fa-regular fa-id-card"></i> Profile</a></li>
+                    <li><a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
+                    <li class="db-divider"></li>
+                    <li><button id="logoutBtn" class="logout-item"><i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            Log Out</button></li>
+                </ul>
+            </div>
+        </header>
+
+        <!-- Main Workspace Area -->
+        <main class="main-content">
+            <div class="admin-panel welcome-card">
+                <div class="form-header"
+                    style="margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+                    <h2>Manage Active Postings ⚙️</h2>
+                    <p>Review current vacancy metrics, monitor candidate channels, or remove postings from the live
+                        marketplace feed.</p>
+                </div>
+
+                <!-- Dynamic targeting workspace for streaming job cards via JS -->
+                <div id="manageJobsContainer" class="manage-jobs-list">
+                    <div class="loading-state" style="text-align: center; padding: 2rem; color: var(--text-muted);">
+                        <i class="fa-solid fa-spinner fa-spin"
+                            style="font-size: 1.5rem; color: #6366f1; margin-bottom: 0.5rem;"></i>
+                        <p>Syncing your posted corporate vacancy records from live database...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Separated Action Shortcuts -->
+            <div class="navigation-link-container">
+                <a href="postJobs.html" class="navigation-link"><i class="fa-solid fa-arrow-left"></i> Back to Post
+                    Form</a>
+                <a href="reviewApplicants.html" class="navigation-link"><i class="fa-solid fa-users"></i> Review
+                    Applicants</a>
+            </div>
+        </main>
+
+        <!-- Glassmorphic Dashboard Footer -->
+        <footer class="dashboard-footer">
+            <div class="footer-links">
+                <a href="helpdesk.html" class="footer-btn"><i class="fa-solid fa-headset"></i> Help Desk</a>
+                <a href="about.html" class="footer-btn"><i class="fa-solid fa-circle-info"></i> About Us</a>
+            </div>
+            <div class="footer-copyright">
+                &copy; 2026 JOSHIPRO. All rights reserved.
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Independent script architecture targeting this view exclusively -->
+    <script type="module" src="../js/managePostings.js"></script>
+    <script type="module" src="../js/dashboard.js"></script>
+</body>
+
+</html>

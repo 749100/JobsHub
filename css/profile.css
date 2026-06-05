@@ -1,0 +1,257 @@
+/* --- Core Global Theme Design Tokens --- */
+:root {
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --card-bg: rgba(30, 41, 59, 0.7);
+    --primary-grad: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    --glow-color: rgba(99, 102, 241, 0.25);
+}
+
+body {
+    background-color: #0f172a;
+    /* Deep elegant slate background */
+    color: var(--text-main);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    margin: 0;
+    padding: 2rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+/* --- Container Form Block Structure --- */
+.profile-container {
+    width: 100%;
+    max-width: 550px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 2.5rem;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.profile-header h2 {
+    font-size: 1.7rem;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 0.4rem;
+}
+
+.profile-header p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+    line-height: 1.4;
+}
+
+/* --- Interactive Circular Avatar Section --- */
+.avatar-upload-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+}
+
+.avatar-preview-box {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: rgba(15, 23, 42, 0.5);
+    border: 2px dashed #6366f1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: var(--text-muted);
+    overflow: hidden;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+}
+
+.avatar-preview-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#imageUpload {
+    display: none;
+    /* Hide default browser button */
+}
+
+.file-label {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.file-label:hover {
+    background: rgba(99, 102, 241, 0.15);
+    border-color: #6366f1;
+}
+
+.file-hint {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* --- Input Grid Mechanics --- */
+#profileForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid var(--border-color);
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    color: var(--text-main);
+    font-size: 0.95rem;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.2);
+}
+
+.form-group textarea {
+    resize: none;
+}
+
+/* --- Buttons --- */
+.submit-btn {
+    background: var(--primary-grad);
+    color: white;
+    border: none;
+    padding: 0.9rem;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px var(--glow-color);
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+.submit-btn:hover {
+    transform: translateY(-1px);
+    opacity: 0.95;
+}
+
+.status-msg {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.back-link {
+    display: block;
+    text-align: center;
+    margin-top: 1.5rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+
+.back-link:hover {
+    color: #6366f1;
+}
+/* =========================================================================
+   MOBILE RESPONSIVE GRID LAYOUT PATCH FOR JOSHIPRO
+   ========================================================================= */
+@media screen and (max-width: 768px) {
+
+    /* 1. Force the main layout page wrapper to fit the smartphone screen width */
+    .dashboard-wrapper,
+    .main-content {
+        width: 100% !important;
+        max-width: 100vw !important;
+        padding: 12px !important;
+        overflow-x: hidden !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 2. Transform the row-based job items into clean vertical stacks */
+    .manage-item {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 16px !important;
+        padding: 16px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 3. Re-align information sections to scale naturally without overflows */
+    .manage-info {
+        width: 100% !important;
+        text-align: left !important;
+    }
+
+    .manage-info h4 {
+        font-size: 1.15rem !important;
+        margin-bottom: 6px !important;
+        word-break: break-word !important;
+    }
+
+    .manage-info p {
+        font-size: 0.85rem !important;
+        line-height: 1.4 !important;
+        white-space: normal !important;
+        /* Forces clipped text like metadata to wrap below */
+    }
+
+    /* 4. Make action buttons expand to full horizontal width for easy thumb-tapping */
+    .manage-actions {
+        display: flex !important;
+        flex-direction: row !important;
+        /* Keeps them side-by-side but scales evenly */
+        gap: 10px !important;
+        width: 100% !important;
+    }
+
+    .manage-actions button,
+    .review-btn,
+    .delete-btn {
+        flex: 1 !important;
+        /* Forces buttons to share the row width 50/50 equally */
+        justify-content: center !important;
+        padding: 12px 8px !important;
+        font-size: 0.85rem !important;
+        white-space: nowrap !important;
+    }
+}

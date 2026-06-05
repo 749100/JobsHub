@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOSHIPRO - Login</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <div class="background-decor animate-blob1"></div>
+    <div class="background-decor animate-blob2"></div>
+
+    <div class="login-container">
+        <div class="brand">
+            <i class="fa-solid fa-cubes brand-icon"></i>
+            <h1>JOSHI<span class="gradient-text">PRO</span></h1>
+            <p class="subtitle">Elevate your workflow</p>
+        </div>
+
+        <form id="loginForm" novalidate>
+            <div class="input-group">
+                <i class="fa-solid fa-envelope input-icon"></i>
+                <input type="email" id="email" required placeholder=" ">
+                <label for="email">Email Address</label>
+                <span class="error-msg" id="emailError">Please enter a valid email</span>
+            </div>
+
+            <div class="input-group">
+                <i class="fa-solid fa-lock input-icon"></i>
+                <input type="password" id="password" required placeholder=" ">
+                <label for="password">Password</label>
+                <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
+                <span class="error-msg" id="passwordError">Password must be at least 6 characters</span>
+            </div>
+
+            <div class="actions">
+                <label class="remember-me">
+                    <input type="checkbox" id="remember">
+                    <span class="checkmark"></span>
+                    Remember me
+                </label>
+                <a href="#" class="forgot-pass">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                <span>Sign In</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </form>
+
+        <div class="divider"><span>or connect with</span></div>
+
+        <div class="social-login">
+            <button class="social-btn"><i class="fa-brands fa-google"></i></button>
+            <button class="social-btn"><i class="fa-brands fa-apple"></i></button>
+        </div>
+
+        <p class="footer-text">Don't have an account? <a href="register.html">Sign up</a></p>
+    </div>
+    <script  type="module" src="../js/login.js"></script>
+    <script type="module" src="../js/config.js"></script>
+</body>
+
+</html>

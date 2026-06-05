@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOSHIPRO - Create Account</title>
+    <!-- Sharing the exact same style.css file -->
+    <link rel="stylesheet" href="../css/style.css">
+   
+</head>
+
+<body>
+    <div class="background-decor animate-blob1"></div>
+    <div class="background-decor animate-blob2"></div>
+
+    <div class="login-container">
+        <div class="brand">
+            <i class="fa-solid fa-cubes brand-icon"></i>
+            <h1>JOSHI<span class="gradient-text">PRO</span></h1>
+            <p class="subtitle">Join us today</p>
+        </div>
+
+        <form id="registerForm" novalidate>
+            <div class="input-group">
+                <i class="fa-solid fa-user input-icon"></i>
+                <input type="text" id="fullname" required placeholder=" ">
+                <label for="fullname">Full Name</label>
+                <span class="error-msg" id="nameError">Please enter your full name</span>
+            </div>
+
+            <div class="input-group">
+                <i class="fa-solid fa-envelope input-icon"></i>
+                <input type="email" id="email" required placeholder=" ">
+                <label for="email">Email Address</label>
+                <span class="error-msg" id="emailError">Please enter a valid email</span>
+            </div>
+
+            <div class="input-group">
+                <i class="fa-solid fa-lock input-icon"></i>
+                <input type="password" id="password" required placeholder=" ">
+                <label for="password">Password</label>
+                <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
+                <span class="error-msg" id="passwordError">Must be at least 6 characters</span>
+            </div>
+
+            <div class="input-group">
+                <i class="fa-solid fa-lock-open input-icon"></i>
+                <input type="password" id="confirmPassword" required placeholder=" ">
+                <label for="confirmPassword">Confirm Password</label>
+                <i class="fa-solid fa-eye toggle-password" id="toggleConfirmPassword"></i>
+                <span class="error-msg" id="confirmPasswordError">Passwords do not match</span>
+            </div>
+
+            <div class="actions">
+                <label class="remember-me">
+                    <input type="checkbox" id="terms" required>
+                    <span class="checkmark"></span>
+                    I agree to the Terms
+                </label>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                <span>Create Account</span>
+                <i class="fa-solid fa-user-plus"></i>
+            </button>
+        </form>
+
+        <div class="divider"><span>or register with</span></div>
+
+        <div class="social-login">
+            <button class="social-btn"><i class="fa-brands fa-google"></i></button>
+            <button class="social-btn"><i class="fa-brands fa-apple"></i></button>
+        </div>
+
+        <p class="footer-text">Already have an account? <a href="login.html">Sign in</a></p>
+    </div>
+    <script  type="module" src="../js/register.js"></script>
+    <script type="module" src="../js/config.js"></script>
+</body>
+
+</html>

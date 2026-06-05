@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOSHIPRO - Manage Profile</title>
+    <!-- External Icon Styling Library -->
+    <link rel="stylesheet" href="https://jsdelivr.net">
+    <!-- Links to separate subfolder layout -->
+    <link rel="stylesheet" href="../css/profile.css">
+</head>
+
+<body>
+
+    <div class="profile-container">
+        <header class="profile-header">
+            <h2>Manage Your Profile 👤</h2>
+            <p>Update your personal information and upload an avatar picture for your dashboard view.</p>
+        </header>
+
+        <form id="profileForm">
+            <!-- Interactive Avatar Photo Uploader Circle Slot -->
+            <div class="avatar-upload-section">
+                <div class="avatar-preview-box" id="avatarPreview">
+                    <i class="fa-solid fa-user" id="defaultAvatarIcon"></i>
+                </div>
+                <label for="imageUpload" class="file-label">
+                    <i class="fa-solid fa-camera"></i> Upload New Photo
+                </label>
+                <input type="file" id="imageUpload" accept="image/*">
+                <p class="file-hint">Max file size: 500KB (JPG/PNG)</p>
+            </div>
+
+            <div class="form-group">
+                <label for="userName">Full Name</label>
+                <input type="text" id="userName" required placeholder="e.g. John Joshi">
+            </div>
+
+            <div class="form-group">
+                <label for="userBio">Professional Bio</label>
+                <textarea id="userBio" rows="4"
+                    placeholder="Tell potential clients about your skill sets and work experience..."></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn" id="saveProfileBtn">Save Profile Modifications</button>
+        </form>
+
+        <p id="statusMsg" class="status-msg"></p>
+
+        <!-- Quick navigation button pointing back to the main workspace view -->
+        <a href="dashboard.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Return to Dashboard</a>
+    </div>
+
+    <!-- Isolated Modular JavaScript Code Layer -->
+    <script type="module" src="../js/profile.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,447 @@
+/* ==========================================================================
+   JOSHIPRO - ABOUT US MODULE COMPONENT STYLESHEET (NO-JS EDITION)
+   ========================================================================== */
+
+/* --- Root Token Synchronization Ecosystem --- */
+:root {
+    --bg-dark: #0f172a;
+    --card-bg: rgba(30, 41, 59, 0.5);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --primary-grad: linear-gradient(135deg, #6366f1, #a855f7);
+    --glow-color: rgba(99, 102, 241, 0.35);
+    --error-color: #f43f5e;
+}
+
+/* --- Global Layout Reset Rules --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Master Layout Wrapper Configuration */
+.dashboard-wrapper {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Background Animated Blobs --- */
+.background-decor {
+    position: absolute;
+    width: 550px;
+    height: 550px;
+    border-radius: 50%;
+    filter: blur(100px);
+    z-index: 1;
+    opacity: 0.35;
+    pointer-events: none;
+}
+
+.animate-blob1 {
+    background: #6366f1;
+    top: -15%;
+    left: -10%;
+    animation: float 14s infinite alternate;
+}
+
+.animate-blob2 {
+    background: #a855f7;
+    bottom: -10%;
+    right: -10%;
+    animation: float 14s infinite alternate-reverse;
+}
+
+@keyframes float {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(60px, 40px) scale(1.15);
+    }
+}
+
+/* --- Hidden Checkbox Intercept Architecture --- */
+.state-resolver-check {
+    display: none !important;
+}
+
+/* --- Glassmorphic Navigation Header Elements --- */
+.navbar {
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2.5rem;
+    height: 75px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.logo {
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+
+.gradient-text {
+    background: var(--primary-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* --- Interactive CSS-Driven Menu Button Trigger --- */
+#menuBtn {
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.6rem 1.2rem;
+    background: rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+#menuBtn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: #6366f1;
+    box-shadow: 0 0 15px var(--glow-color);
+    transform: translateY(-1px);
+}
+
+/* --- Pure CSS Sidebar Toggle Control Engine --- */
+#sidebarToggle:checked~.sidebar {
+    left: 0 !important;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 280px;
+    height: 100vh;
+    background: #0f172a;
+    border-right: 1px solid var(--border-color);
+    box-shadow: 20px 0 40px rgba(0, 0, 0, 0.4);
+    transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 999;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.sidebar-brand {
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    background: var(--primary-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.sidebar-menu a {
+    display: block;
+    padding: 0.8rem 1.2rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+
+.sidebar-menu a:hover,
+.active-sidebar-link {
+    background: rgba(255, 255, 255, 0.04) !important;
+    color: var(--text-main) !important;
+    text-shadow: 0 0 8px var(--glow-color) !important;
+    padding-left: 1.6rem !important;
+}
+
+.active-sidebar-link {
+    border-left: 4px solid #6366f1 !important;
+}
+
+/* --- Pure CSS Profile Dropdown Toggle Control Engine --- */
+#dropdownToggle:checked~.dropdown-menu {
+    display: block !important;
+}
+
+.nav-right {
+    position: relative;
+}
+
+.profile-trigger {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: block;
+}
+
+.avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50% !important;
+    /* Perfect circle container override */
+    background: rgba(15, 23, 42, 0.6);
+    color: var(--text-muted);
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 1px solid var(--border-color);
+    overflow: hidden !important;
+    transition: all 0.3s;
+}
+
+.avatar img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 50% !important;
+    display: block !important;
+}
+
+.profile-trigger:hover .avatar {
+    border-color: #6366f1;
+    box-shadow: 0 0 15px var(--glow-color);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 80px;
+    right: 2.5rem;
+    background: #1e293b;
+    border: 1px solid var(--border-color);
+    min-width: 200px;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    list-style: none;
+    padding: 0.6rem 0;
+    margin: 0;
+    display: none;
+    z-index: 1000;
+}
+
+.dropdown-menu li a {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    width: 100%;
+    padding: 0.8rem 1.4rem;
+    box-sizing: border-box;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.dropdown-menu li a:hover {
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-main);
+}
+
+.dropdown-menu .db-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 0.6rem 0;
+}
+
+.dropdown-menu li a.logout-item {
+    color: var(--error-color);
+}
+
+.dropdown-menu li a.logout-item:hover {
+    background: rgba(244, 63, 94, 0.08);
+}
+
+/* --- Layout Grid Core Content Panels --- */
+.main-content {
+    padding: 4rem 2rem;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    flex: 1;
+}
+
+.feed-section {
+    width: 100%;
+}
+
+.feed-header {
+    margin-bottom: 2.5rem;
+}
+
+.feed-header h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+}
+
+.feed-subtitle {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+}
+
+/* --- Glassmorphic About Us Panels --- */
+.about-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 2.5rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.about-card:hover {
+    transform: translateY(-4px);
+    border-color: #6366f1;
+}
+
+.about-title-text {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: 0.3px;
+}
+
+.about-card-desc {
+    color: var(--text-muted);
+    line-height: 1.7;
+    font-size: 1rem;
+}
+
+/* Foundation Subgrid Design Layout rules */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+}
+
+/* --- Glassmorphic Compact Dashboard Footer --- */
+.dashboard-footer {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 2rem 1rem 2rem;
+    width: 100%;
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border-color);
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+}
+
+.footer-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.4rem;
+    background: rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.footer-btn:hover {
+    background: var(--primary-grad);
+    border-color: transparent;
+    box-shadow: 0 0 20px var(--glow-color);
+    transform: translateY(-2px);
+    color: #ffffff;
+}
+
+.footer-copyright {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    opacity: 0.7;
+}
+
+/* =========================================================================
+   MOBILE VIEWPORT ADAPTIVE PATTERNS
+   ========================================================================= */
+@media screen and (max-width: 768px) {
+
+    .dashboard-wrapper,
+    .main-content {
+        width: 100% !important;
+        max-width: 100vw !important;
+        padding: 16px !important;
+        overflow-x: hidden !important;
+    }
+
+    .navbar {
+        padding: 0 1rem !important;
+    }
+
+    .about-card {
+        padding: 1.75rem !important;
+    }
+
+    .dropdown-menu {
+        right: 1rem !important;
+        top: 75px !important;
+    }
+}
