@@ -1,12 +1,49 @@
-:root {
+/* =========================================================================
+   DEFAULT GLOBAL VARS / LIGHT THEME PREFERENCES
+   ========================================================================= */
+:root,
+body[data-theme="light"] {
     --bg-primary: #f8fafc;
     --card-bg: #ffffff;
     --text-main: #1e293b;
     --accent: #6366f1;
     --accent-hover: #4f46e5;
     --border: #e2e8f0;
+    --text-muted: #64748b;
+    --input-bg: #ffffff;
 }
 
+/* =========================================================================
+   DEEP CHARCOAL DARK THEME PREFERENCES
+   ========================================================================= */
+body[data-theme="dark"] {
+    --bg-primary: #0f172a;
+    --card-bg: #1e293b;
+    --text-main: #f1f5f9;
+    --accent: #818cf8;
+    --accent-hover: #6366f1;
+    --border: #334155;
+    --text-muted: #94a3b8;
+    --input-bg: #1e293b;
+}
+
+/* =========================================================================
+   MODERN CYBER NEON PREFERENCES
+   ========================================================================= */
+body[data-theme="neon"] {
+    --bg-primary: #050515;
+    --card-bg: #0b0c24;
+    --text-main: #00ffcc;
+    --accent: #ff007f;
+    --accent-hover: #e0006c;
+    --border: #1f2368;
+    --text-muted: #8b92ee;
+    --input-bg: #0b0c24;
+}
+
+/* =========================================================================
+   CORE INTERFACE STYLING (VARIABLE POWERED)
+   ========================================================================= */
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background-color: var(--bg-primary);
@@ -15,6 +52,8 @@ body {
     padding: 40px 20px;
     display: flex;
     justify-content: center;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    /* Smooth fade transitions */
 }
 
 .settings-container {
@@ -32,7 +71,7 @@ body {
 }
 
 .settings-header p {
-    color: #64748b;
+    color: var(--text-muted);
     margin: 0;
 }
 
@@ -43,6 +82,7 @@ body {
     padding: 24px;
     margin-bottom: 20px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .settings-card h3 {
@@ -68,9 +108,11 @@ select {
     padding: 10px;
     border-radius: 6px;
     border: 1px solid var(--border);
-    background: #fff;
+    background: var(--input-bg);
+    color: var(--text-main);
     font-size: 15px;
     outline: none;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 /* Toggle Switch Styling */
@@ -135,7 +177,7 @@ input:checked+.slider:before {
 .switch-label p {
     margin: 0;
     font-size: 13px;
-    color: #64748b;
+    color: var(--text-muted);
 }
 
 .save-btn {
@@ -166,7 +208,7 @@ input:checked+.slider:before {
     display: block;
     text-align: center;
     margin-top: 24px;
-    color: #64748b;
+    color: var(--text-muted);
     text-decoration: none;
     font-size: 14px;
 }
@@ -174,6 +216,7 @@ input:checked+.slider:before {
 .back-link:hover {
     color: var(--accent);
 }
+
 /* =========================================================================
    MOBILE RESPONSIVE GRID LAYOUT PATCH FOR JOSHIPRO
    ========================================================================= */
@@ -216,14 +259,12 @@ input:checked+.slider:before {
         font-size: 0.85rem !important;
         line-height: 1.4 !important;
         white-space: normal !important;
-        /* Forces clipped text like metadata to wrap below */
     }
 
     /* 4. Make action buttons expand to full horizontal width for easy thumb-tapping */
     .manage-actions {
         display: flex !important;
         flex-direction: row !important;
-        /* Keeps them side-by-side but scales evenly */
         gap: 10px !important;
         width: 100% !important;
     }
@@ -232,7 +273,6 @@ input:checked+.slider:before {
     .review-btn,
     .delete-btn {
         flex: 1 !important;
-        /* Forces buttons to share the row width 50/50 equally */
         justify-content: center !important;
         padding: 12px 8px !important;
         font-size: 0.85rem !important;

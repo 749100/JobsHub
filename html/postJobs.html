@@ -33,7 +33,11 @@
                         <a href="findJobs.html">Find Jobs</a>
                         <a href="postJobs.html"
                             style="background: rgba(255, 255, 255, 0.04); color: var(--text-main); text-shadow: 0 0 8px var(--glow-color); padding-left: 1.6rem;">Post
-                            Jobs</a>
+                            Jobs
+                        
+                        <a href="managePostings.html">Manage Postings</a>
+                        <a href="reviewApplicants.html">Review Applicants</a>
+                        </a>
                         <a href="applications.html">My Applications</a>
                     </nav>
                 </aside>
@@ -129,6 +133,18 @@
                 </form>
             </div>
 
+            <div class="admin-panel welcome-card" style="margin-top: 2rem;">
+                <div class="form-header"
+                    style="margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+                    <h2>Live Active Management Workspace ⚙️</h2>
+                    <p>Review job applicants and delete posts directly from the database.
+                    </p>
+                </div>
+                <div id="manageJobsContainer" class="manage-jobs-list">
+                    <!-- Data handles stream here dynamically via JS -->
+                </div>
+            </div>
+
             <!-- Beautifully Separated and Repaired Shortcut Navigation Links -->
             <div class="navigation-link-container">
                 <a href="managePostings.html" class="navigation-link"><i class="fa-solid fa-briefcase"></i> Manage
@@ -138,17 +154,7 @@
             </div>
 
             <!-- ADMINISTRATIVE MANAGEMENT PANEL -->
-            <div class="admin-panel welcome-card" style="margin-top: 2rem;">
-                <div class="form-header"
-                    style="margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
-                    <h2>Live Active Management Workspace ⚙️</h2>
-                    <p>Review current vacancy items, monitor applications, or delete posts directly from the database.
-                    </p>
-                </div>
-                <div id="manageJobsContainer" class="manage-jobs-list">
-                    <!-- Data handles stream here dynamically via JS -->
-                </div>
-            </div>
+            
 
         </main>
 

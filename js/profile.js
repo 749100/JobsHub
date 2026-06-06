@@ -22,6 +22,8 @@ const profileForm = document.getElementById("profileForm");
 const imageUpload = document.getElementById("imageUpload");
 const avatarPreview = document.getElementById("avatarPreview");
 const userNameInput = document.getElementById("userName"); 
+const userProfessionInput = document.getElementById("userProfession"); // ✅ Added selector
+const userPhoneInput = document.getElementById("userPhone");           // ✅ Added selector
 const userBioInput = document.getElementById("userBio");   
 const statusMsg = document.getElementById("statusMsg");
 
@@ -43,6 +45,8 @@ onAuthStateChanged(auth, async (user) => {
             if (userDocSnap.exists()) {
                 const data = userDocSnap.data();
                 if (userNameInput) userNameInput.value = data.name || "";
+                if (userProfessionInput) userProfessionInput.value = data.profession || ""; // ✅ Populate dynamic profession field
+                if (userPhoneInput) userPhoneInput.value = data.phone || data.phoneNumber || ""; // ✅ Populate dynamic phone field
                 if (userBioInput) userBioInput.value = data.bio || "";
                 
                 if (data.profileImage && avatarPreview) {
@@ -100,6 +104,8 @@ if (profileForm) {
 
         const updatedProfileData = {
           name: userNameInput ? userNameInput.value : "",
+          profession: userProfessionInput ? userProfessionInput.value.trim() : "", // ✅ Package field data safely
+          phone: userPhoneInput ? userPhoneInput.value.trim() : "",               // ✅ Package field data safely
           bio: userBioInput ? userBioInput.value : "",
           profileImage: base64ImageString, 
           updatedAt: new Date().toLocaleDateString()

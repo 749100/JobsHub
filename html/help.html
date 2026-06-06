@@ -5,13 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JOSHIPRO - Help Center Bot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/help.css">
 </head>
-<link rel="stylesheet" href="../css/help.css">
-<link rel="stylesheet" href="../css/dashboard.css">
 
 <body>
 
-    <!-- Main Navigation Header -->
     <header>
         <strong>JOSHIPRO</strong>
         <nav>
@@ -21,13 +20,12 @@
                 <a href="applications.html">My Applications</a> |
                 <a href="help.html"><strong>Help Desk</strong></a> |
                 <a href="about.html">About Us</a>
-        </nav>
+            </p>
         </nav>
     </header>
 
     <hr>
 
-    <!-- Main Content Arena -->
     <main>
         <section>
             <h1>Knowledge Support Terminal</h1>
@@ -35,8 +33,6 @@
                 system.</p>
 
             <hr>
-
-            <!-- Interactive Question & Answer Blocks -->
 
             <h3>Profiles & Accounts</h3>
 
@@ -102,7 +98,6 @@
 
         <hr>
 
-        <!-- Fallback Routing Element -->
         <section>
             <p>Query not resolved by the automated assistant?</p>
             <p><a href="contact.html">Open Human Support Ticket</a></p>
@@ -111,11 +106,36 @@
 
     <hr>
 
-    <!-- Footer Layer -->
     <footer>
         <p>&copy; 2026 JOSHIPRO Cloud Network. All Rights Reserved.</p>
     </footer>
 
+    <div class="chatbot-container">
+        <button id="chatbotToggle" class="chatbot-toggle-btn" aria-label="Open Chat">
+            <i class="fa-solid fa-comments"></i>
+        </button>
+
+        <div id="chatbotWindow" class="chatbot-window">
+            <div class="chatbot-header">
+                <div class="chatbot-title">
+                    <i class="fa-solid fa-robot"></i> JOSHI<span class="gradient-text">PRO</span> Bot
+                </div>
+                <button id="chatbotClose" class="chatbot-close-btn">&times;</button>
+            </div>
+            <div id="chatbotMessages" class="chatbot-messages">
+                <div class="chat-message bot">
+                    Hello! 👋 Welcome to the JOSHIPRO Knowledge Assistant. Ask me a question about your account,
+                    applications, or system layouts!
+                </div>
+            </div>
+            <div class="chatbot-input-area">
+                <input type="text" id="chatbotInput" placeholder="Ask a support question..." autocomplete="off">
+                <button id="chatbotSend" class="chatbot-send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/chatbot.js"></script>
 </body>
 
 </html>

@@ -1,11 +1,15 @@
+/* ==========================================================================
+   JOSHIPRO MASTER PRODUCTION STYLESHEET (OPTIMIZED & STREAMLINED)
+   ========================================================================== */
+
 :root {
     --bg-dark: #0f172a;
-    --card-bg: rgba(30, 41, 59, 0.5);
+    --card-bg: rgba(30, 41, 59, 0.45);
     --border-color: rgba(255, 255, 255, 0.08);
     --text-main: #f8fafc;
     --text-muted: #94a3b8;
     --primary-grad: linear-gradient(135deg, #6366f1, #a855f7);
-    --glow-color: rgba(99, 102, 241, 0.35);
+    --glow-color: rgba(99, 102, 241, 0.25);
     --error-color: #f43f5e;
 }
 
@@ -20,13 +24,11 @@ body {
     background-color: var(--bg-dark);
     color: var(--text-main);
     min-height: 100vh;
-    margin: 0;
-    padding: 0;
     overflow-x: hidden;
     position: relative;
 }
 
-/* Master Wrapper to keep UI elements above background blur effects */
+/* Master Core Container Stack */
 .dashboard-wrapper {
     position: relative;
     z-index: 10;
@@ -36,7 +38,7 @@ body {
     flex-direction: column;
 }
 
-/* --- Background Animated Blobs --- */
+/* --- Decorative Ambient Lighting Nodes --- */
 .background-decor {
     position: absolute;
     width: 550px;
@@ -44,7 +46,7 @@ body {
     border-radius: 50%;
     filter: blur(100px);
     z-index: 1;
-    opacity: 0.35;
+    opacity: 0.25;
     pointer-events: none;
 }
 
@@ -72,9 +74,9 @@ body {
     }
 }
 
-/* --- Glassmorphic Navigation Header --- */
+/* --- Top Fixed Header Interface Navigation --- */
 .navbar {
-    background: var(--card-bg);
+    background: rgba(15, 23, 42, 0.6);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border-color);
@@ -106,8 +108,8 @@ body {
     -webkit-text-fill-color: transparent;
 }
 
-/* --- Interactive Menu Button (#menuBtn) --- */
-#menuBtn {
+/* --- Menu Toggle Button Component --- */
+.menu-btn {
     font-size: 0.95rem;
     font-weight: 600;
     padding: 0.6rem 1.2rem;
@@ -126,30 +128,25 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-#menuBtn:hover {
+.menu-btn:hover {
     background: rgba(255, 255, 255, 0.08);
     border-color: #6366f1;
     box-shadow: 0 0 15px var(--glow-color);
     transform: translateY(-1px);
 }
 
-#menuBtn:active {
-    transform: translateY(0);
-}
-
-/* --- Glassmorphic Sidebar Component --- */
+/* --- Sliding Modular Sidebar Drawer Canvas --- */
 .sidebar {
     position: fixed;
     top: 0;
     left: -280px;
-    /* Hidden safely off-screen initially */
+    /* Securely hides panel out of screen boundaries */
     width: 280px;
     height: 100vh;
     background: #0f172a;
     border-right: 1px solid var(--border-color);
     box-shadow: 20px 0 40px rgba(0, 0, 0, 0.4);
     transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    /* Advanced timing for clean glide */
     z-index: 999;
     padding: 2rem 1.5rem;
     display: flex;
@@ -157,9 +154,9 @@ body {
     gap: 2rem;
 }
 
-/* Appended dynamically via dashboard.js when menuBtn is triggered */
 .sidebar.active {
     left: 0;
+    /* Smooth slide-out triggered by JavaScript class addition */
 }
 
 .sidebar-brand {
@@ -179,9 +176,10 @@ body {
     gap: 0.5rem;
 }
 
-/* Sidebar Routing Links */
 .sidebar-menu a {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
     padding: 0.8rem 1.2rem;
     color: var(--text-muted);
     text-decoration: none;
@@ -195,10 +193,9 @@ body {
     color: var(--text-main);
     text-shadow: 0 0 8px var(--glow-color);
     padding-left: 1.6rem;
-    /* Micro-slide transition on hover */
 }
 
-/* --- Profile Area & Dropdown --- */
+/* --- User Avatar Profile Node & Dropdown Utility Panel --- */
 .nav-right {
     position: relative;
 }
@@ -219,9 +216,21 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.1rem;
+    overflow: hidden;
     border: 1px solid var(--border-color);
-    transition: all 0.3s;
+    transition: all 0.3s ease;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* If avatar image breaks, fall back cleanly to icon state layout */
+.avatar img[src=""],
+.avatar img:not([src]) {
+    display: none;
 }
 
 .profile-trigger:hover .avatar {
@@ -229,7 +238,6 @@ body {
     box-shadow: 0 0 15px var(--glow-color);
 }
 
-/* Profile Dropdown Box styling */
 .dropdown-menu {
     position: absolute;
     top: 60px;
@@ -294,22 +302,22 @@ body {
     margin: 0.6rem 0;
 }
 
-/* Specific styling for the logout row */
 .dropdown-menu li button.logout-item {
     color: var(--error-color);
 }
 
 .dropdown-menu li button.logout-item:hover {
     background: rgba(244, 63, 94, 0.08);
-    color: var(--error-color);
 }
 
-/* --- Glassmorphic Welcome Content Card --- */
+/* --- Interactive Main Stage Center Contents --- */
 .main-content {
-    padding: 4rem 2rem;
+    padding: 3rem 2rem;
     max-width: 1200px;
     width: 100%;
     margin: 0 auto;
+    flex: 1;
+    /* Automatically forces footer down if center data is empty */
 }
 
 .welcome-card {
@@ -317,84 +325,147 @@ body {
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--border-color);
-    padding: 3rem;
+    padding: 2.5rem;
     border-radius: 24px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    margin-bottom: 2.5rem;
 }
 
 .welcome-card h1 {
-    font-size: 2.2rem;
-    margin-bottom: 0.75rem;
-    letter-spacing: 0.5px;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
 }
 
 .welcome-card p {
     color: var(--text-muted);
-    font-size: 1.05rem;
-}
-/* Layout wrapper configuration */
-.dashboard-wrapper {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    box-sizing: border-box;
+    font-size: 1rem;
 }
 
-/* Main content spacing adjustment */
-.main-content {
-    flex: 1;
-    /* Pushes footer downwards */
+/* --- Optimized Statistics Dashboard Grid Engine --- */
+.stats-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    width: 100%;
 }
-/* --- Glassmorphic Dashboard Footer (Compact Version) --- */
+
+.stat-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    background: rgba(30, 41, 59, 0.6);
+}
+
+.stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    font-size: 1.2rem;
+}
+
+/* Distinctive Colored Glowing Identification Handles */
+.neon-blue .stat-icon {
+    background: rgba(59, 130, 246, 0.12);
+    color: #3b82f6;
+}
+
+.neon-purple .stat-icon {
+    background: rgba(168, 85, 247, 0.12);
+    color: #a855f7;
+}
+
+.neon-orange .stat-icon {
+    background: rgba(245, 158, 11, 0.12);
+    color: #f59e0b;
+}
+
+.neon-green .stat-icon {
+    background: rgba(16, 185, 129, 0.12);
+    color: #10b981;
+}
+
+.neon-blue:hover {
+    border-color: rgba(59, 130, 246, 0.4);
+}
+
+.neon-purple:hover {
+    border-color: rgba(168, 85, 247, 0.4);
+}
+
+.neon-orange:hover {
+    border-color: rgba(245, 158, 11, 0.4);
+}
+
+.neon-green:hover {
+    border-color: rgba(16, 185, 129, 0.4);
+}
+
+.stat-card h2 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 0.15rem;
+}
+
+.stat-card p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* --- Fixed Glassmorphic Compact Footer Layout --- */
 .dashboard-footer {
-    margin-top: auto;
-    /* Forces everything down to the absolute bottom */
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.75rem;
-    /* Reduced space between the buttons and copyright text */
-    padding: 1.25rem 2rem 1rem 2rem;
-    /* Tighter padding around the edges */
+    gap: 1rem;
+    padding: 1.5rem;
     width: 100%;
-    background: var(--card-bg);
+    background: rgba(15, 23, 42, 0.5);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-top: 1px solid var(--border-color);
-    box-sizing: border-box;
 }
 
-/* Row container containing your two main buttons */
 .footer-links {
     display: flex;
     justify-content: center;
-    gap: 1rem;
-    /* Marginally tighter gap between buttons */
+    gap: 1.25rem;
 }
 
-/* Bottom Button Custom Styling */
 .footer-btn {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     padding: 0.6rem 1.4rem;
-    /* Slimmer vertical buttons */
     background: rgba(30, 41, 59, 0.6);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     color: var(--text-main);
     border: 1px solid var(--border-color);
-    border-radius: 10px;
+    border-radius: 12px;
     text-decoration: none;
-    font-size: 0.9rem;
-    /* Sized down slightly for a sleek look */
+    font-size: 0.85rem;
     font-weight: 600;
-    cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Hover State - Interactive theme matching */
 .footer-btn:hover {
     background: var(--primary-grad);
     border-color: transparent;
@@ -403,83 +474,121 @@ body {
     color: #ffffff;
 }
 
-.footer-btn:active {
-    transform: translateY(0);
-}
-
-.footer-btn i {
-    font-size: 0.95rem;
-}
-
-/* Clean, low-profile style rule for copyright text */
 .footer-copyright {
     color: var(--text-muted);
     font-size: 0.8rem;
     letter-spacing: 0.5px;
-    opacity: 0.7;
+    opacity: 0.65;
 }
+
 /* =========================================================================
-   MOBILE RESPONSIVE GRID LAYOUT PATCH FOR JOSHIPRO
+   ADVANCED MOBILE HARDWARE MEDIA TARGET QUEUES (PHONE ADAPTATION)
    ========================================================================= */
+@media screen and (max-width: 1024px) {
+    .stats-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media screen and (max-width: 768px) {
+    .navbar {
+        padding: 0 1.25rem;
+    }
 
-    /* 1. Force the main layout page wrapper to fit the smartphone screen width */
-    .dashboard-wrapper,
     .main-content {
-        width: 100% !important;
-        max-width: 100vw !important;
-        padding: 12px !important;
-        overflow-x: hidden !important;
-        box-sizing: border-box !important;
+        padding: 1.5rem 1rem;
+        width: 100%;
     }
 
-    /* 2. Transform the row-based job items into clean vertical stacks */
+    .welcome-card {
+        padding: 1.75rem;
+        border-radius: 20px;
+    }
+
+    .welcome-card h1 {
+        font-size: 1.6rem;
+    }
+
+   /* --- Statistics Dashboard Grid Styling --- */
+   .stats-cards {
+       display: grid;
+       grid-template-columns: repeat(4, 1fr);
+       gap: 1.5rem;
+       width: 100%;
+       margin-top: 2rem;
+   }
+
+   .stat-card {
+       background: var(--card-bg);
+       backdrop-filter: blur(12px);
+       -webkit-backdrop-filter: blur(12px);
+       border: 1px solid var(--border-color);
+       padding: 1.5rem;
+       border-radius: 20px;
+       display: flex;
+       flex-direction: column;
+       justify-content: center;
+       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+       transition: transform 0.3s ease, border-color 0.3s ease;
+   }
+
+   .stat-card:hover {
+       transform: translateY(-4px);
+       border-color: rgba(99, 102, 241, 0.4);
+   }
+
+   .stat-card h2 {
+       font-size: 2rem;
+       font-weight: 800;
+       color: var(--text-main);
+       margin-bottom: 0.25rem;
+   }
+
+   .stat-card p {
+       font-size: 0.85rem;
+       color: var(--text-muted);
+   }
+
+   @media screen and (max-width: 1024px) {
+       .stats-cards {
+           grid-template-columns: repeat(2, 1fr);
+       }
+   }
+
+   @media screen and (max-width: 600px) {
+       .stats-cards {
+           grid-template-columns: 1fr;
+       }
+   }
+
+    /* Clean management rows viewport patches formatting */
     .manage-item {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: stretch !important;
-        gap: 16px !important;
-        padding: 16px !important;
-        width: 100% !important;
-        box-sizing: border-box !important;
-    }
-
-    /* 3. Re-align information sections to scale naturally without overflows */
-    .manage-info {
-        width: 100% !important;
-        text-align: left !important;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+        padding: 1rem;
     }
 
     .manage-info h4 {
-        font-size: 1.15rem !important;
-        margin-bottom: 6px !important;
-        word-break: break-word !important;
+        word-break: break-word;
     }
 
     .manage-info p {
-        font-size: 0.85rem !important;
-        line-height: 1.4 !important;
-        white-space: normal !important;
-        /* Forces clipped text like metadata to wrap below */
+        white-space: normal;
+        font-size: 0.85rem;
     }
 
-    /* 4. Make action buttons expand to full horizontal width for easy thumb-tapping */
     .manage-actions {
-        display: flex !important;
-        flex-direction: row !important;
-        /* Keeps them side-by-side but scales evenly */
-        gap: 10px !important;
-        width: 100% !important;
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+        width: 100%;
     }
 
-    .manage-actions button,
-    .review-btn,
-    .delete-btn {
-        flex: 1 !important;
-        /* Forces buttons to share the row width 50/50 equally */
-        justify-content: center !important;
-        padding: 12px 8px !important;
-        font-size: 0.85rem !important;
-        white-space: nowrap !important;
+    .manage-actions button {
+        flex: 1;
+        justify-content: center;
+        padding: 0.75rem 0.5rem;
     }
 }
