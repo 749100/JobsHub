@@ -4,48 +4,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JOSHIPRO - Reset Credentials</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/reset.css">
+    <title>JOSHIPRO - Login</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
-
     <div class="background-decor animate-blob1"></div>
     <div class="background-decor animate-blob2"></div>
 
-    <div class="auth-container">
-        <div class="auth-card">
-            <div class="auth-header">
-                <div class="logo">JOSHI<span class="gradient-text">PRO</span></div>
-                <h2>Reset Password</h2>
-                <p>Enter your inbound email address to extract a secure recovery token link.</p>
-            </div>
-
-            <div id="alertBox" class="auth-alert hidden"></div>
-
-            <form id="resetForm" novalidate>
-                <div class="form-group">
-                    <label for="resetEmail">Registered Email</label>
-                    <div class="input-wrapper">
-                        <i class="fa-solid fa-envelope input-icon"></i>
-                        <input type="email" id="resetEmail" placeholder="name@example.com" required
-                            autocomplete="email">
-                    </div>
-                </div>
-
-                <button type="submit" id="resetSubmitBtn" class="auth-btn">
-                    <span>Send Reset Link</span>
-                </button>
-            </form>
-
-            <div class="auth-footer">
-                <p>Remembered your credentials? <a href="login.html" class="auth-link">Back to Login</a></p>
-            </div>
+    <div class="login-container">
+        <div class="brand">
+            <i class="fa-solid fa-cubes brand-icon"></i>
+            <h1>JOSHI<span class="gradient-text">PRO</span></h1>
+            <p class="subtitle">Elevate your workflow</p>
         </div>
-    </div>
 
-    <script type="module" src="../js/reset.js"></script>
+        <form id="loginForm" novalidate>
+            <div class="input-group">
+           
+                <i class="fa-solid fa-envelope input-icon"></i>
+                <input type="email" id="email" required placeholder=" ">
+                <label for="email">Email Address</label>
+                <span class="error-msg" id="emailError">Please enter a valid email</span>
+            </div>
+
+            <div class="input-group">
+                <i class="fa-solid fa-lock input-icon"></i>
+                <input type="" id="password" required placeholder=" ">
+                <label for="password">Password</label>
+                <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
+                <span class="error-msg" id="passwordError">Password must be at least 6 characters</span>
+            </div>
+
+            <div class="actions">
+                <label class="remember-me">
+                    <input type="checkbox" id="remember">
+                    <span class="checkmark"></span>
+                    Remember me
+                </label>
+                <a href="reset.html" class="forgot-pass">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                <span>Sign In</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </form>
+
+        <div class="divider"><span>or connect with</span></div>
+
+        <div class="social-login">
+            <button class="social-btn"><i class="fa-brands fa-google"></i></button>
+            <button class="social-btn"><i class="fa-brands fa-apple"></i></button>
+        </div>
+
+        <p class="footer-text">Don't have an account? <a href="register.html">Sign up</a></p>
+    </div>
+    <script  type="module" src="../js/login.js"></script>
+    <script type="module" src="../js/config.js"></script>
 </body>
 
 </html>
