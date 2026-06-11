@@ -74,10 +74,20 @@ if (myApplicationsContainer) {
             try {
                 const appRef = doc(db, "applications", applicationId);
                 
+                // Update status to Archive token flag
                 await updateDoc(appRef, { 
                     status: "ArchivedByApplicant",
                     withdrawnAt: serverTimestamp()
                  });
+
+                // Fluid application layout cleanup animation sequence
+                if (applicationCard) {
+                    applicationCard.style.transition = "all 0.3s ease";
+                    applicationCard.style.opacity = "0";
+                    applicationCard.style.transform = "scale(0.95)";
+                    setTimeout(() => applicationCard.remove(), 300);
+                }
+
                 alert(`Your application for "${jobTitle}" has been successfully withdrawn.`);
             } catch (error) {
                 console.error("Error withdrawing application:", error);
@@ -146,7 +156,13 @@ function syncCandidateApplications(currentUser) {
             return;
         }
 
-        const activeDocs = snapshot.docs.filter(doc => doc.data().status !== "ArchivedByApplicant");
+        // ✅ FIX 1: Explicitly drop entries that match "Withdrawn", "Revoked", or "ArchivedByApplicant" case-insensitively
+        const activeDocs = snapshot.docs.filter(doc => {
+            const rawStatus = (doc.data().status || "").trim().toLowerCase();
+            return rawStatus !== "archivedbyapplicant" && 
+                   rawStatus !== "withdrawn" && 
+                   rawStatus !== "revoked";
+        });
 
         if (activeDocs.length === 0) {
             myApplicationsContainer.innerHTML = `<p style="text-align:center; padding:2rem; color:var(--text-muted);">You haven't submitted any job applications yet.</p>`;
@@ -157,16 +173,20 @@ function syncCandidateApplications(currentUser) {
             const application = applicationDoc.data();
             const applicationId = applicationDoc.id;
             
-            let badgeClass = "status-pending";
-            if (application.status === "Granted") badgeClass = "status-granted";
-            if (application.status === "Revoked") badgeClass = "status-revoked";
+            // Standardize verification status comparison parameters
+            const normalizedStatus = (application.status || "Pending").trim().toLowerCase();
 
-            let statusIcon = "fa-spinner fa-spin";
-            if (application.status === "Granted") statusIcon = "fa-circle-check";
-            if (application.status === "Revoked") statusIcon = "fa-circle-xmark";
+            let badgeClass = "status-pending";
+            if (normalizedStatus === "granted") badgeClass = "status-granted";
+            if (normalizedStatus === "revoked") badgeClass = "status-revoked";
+
+            // ✅ FIX 2: Replaced the spinning loader fallback ("fa-spinner fa-spin") with a safe static clock icon
+            let statusIcon = "fa-clock"; 
+            if (normalizedStatus === "granted") statusIcon = "fa-circle-check";
+            if (normalizedStatus === "revoked") statusIcon = "fa-circle-xmark";
         
             let withdrawButtonMarkup = "";
-            if (application.status === "Pending" || application.status === "Granted") {
+            if (normalizedStatus === "pending" || normalizedStatus === "granted") {
                 withdrawButtonMarkup = `
                     <button class="action-withdraw-trigger" style="background: #ef4444; color: white; border: none; padding: 6px 14px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.85rem; transition: background 0.2s ease; display: inline-flex; align-items: center; gap: 6px;">
                         <i class="fa-solid fa-ban"></i> Withdraw
@@ -198,11 +218,34 @@ function syncCandidateApplications(currentUser) {
 }
 
 // Global Layout Navigation System Initialization Operations
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const menuBtn = document.getElementById("menuBtn");
     const sidebar = document.getElementById("sidebar");
     const dropdownMenu = document.getElementById("dropdownMenu");
     const logoutBtn = document.getElementById("logoutBtn");
+
+    // 🛡️ STEP 3 INTEGRATION: DYNAMIC ADMIN PORTAL INJECTOR LINK
+    try {
+        onAuthStateChanged(auth, async (user) => {
+            const placeholder = document.getElementById("adminLinkPlaceholder");
+            if (!user || !placeholder) return;
+
+            // Fetch the user's account data to check for admin privileges
+            const userDoc = await getDoc(doc(db, "users", user.uid));
+            if (userDoc.exists() && userDoc.data().isAdmin === true) {
+                const isAdminPage = window.location.pathname.includes("admin.html");
+                
+                // Inject the Admin Center link safely into your sidebar container
+                placeholder.innerHTML = `
+                    <a href="admin.html" class="${isAdminPage ? 'active-sidebar-link' : ''}" style="color: #a855f7; border-left: 3px solid #a855f7; background: rgba(168, 85, 247, 0.1); font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                        <i class="fa-solid fa-shield-halved"></i> Admin Center
+                    </a>
+                `;
+            }
+        });
+    } catch (injectorError) {
+        console.error("Admin link fallback initialization failed:", injectorError);
+    }
 
     if (menuBtn && sidebar) {
         menuBtn.onclick = (e) => {
@@ -224,7 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // ✅ FIXED: Binds the click event handler onto both ID selectors to guarantee interaction execution
+    // Binds the click event handler onto both ID selectors to guarantee interaction execution
     if (profileBtnEl) {
         profileBtnEl.onclick = toggleDropdown;
         profileBtnEl.style.cursor = "pointer";

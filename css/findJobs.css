@@ -1,56 +1,319 @@
-/* ==========================================================================
-   JOSHIPRO - FIND JOBS MODULE COMPONENT STYLESHEET
-   ========================================================================== */
+/* =========================================================================
+   1. CORE VALUES & BRAND PALETTE (UNIFIED FROM ALLJOBS)
+   ========================================================================= */
+:root {
+    --bg-dark: #0f172a;
+    --card-bg: rgba(30, 41, 59, 0.5);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --primary-grad: linear-gradient(135deg, #6366f1, #a855f7);
+    --glow-color: rgba(99, 102, 241, 0.15);
+}
 
-/* --- Core Page & Grid Layout Infrastructure --- */
-.feed-section {
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Background Animated Glassmorphic Blobs */
+.background-decor {
+    position: fixed;
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+    filter: blur(90px);
+    z-index: 1;
+    opacity: 0.25;
+    pointer-events: none;
+}
+
+.animate-blob1 {
+    background: #6366f1;
+    top: -10%;
+    left: -5%;
+}
+
+.animate-blob2 {
+    background: #a855f7;
+    bottom: -10%;
+    right: -5%;
+}
+
+/* =========================================================================
+   2. MAIN WRAPPERS & NAVBAR RE-STYLING TO MATCH HEADERS
+   ========================================================================= */
+.dashboard-wrapper {
+    position: relative;
+    z-index: 10;
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 1rem 0;
+    padding: 2rem 1.5rem;
 }
 
-.feed-header {
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
     margin-bottom: 2.5rem;
+    background: transparent;
 }
 
-.feed-header h2 {
-    font-size: 2.2rem;
-    font-weight: 800;
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.logo a {
+    text-decoration: none;
+    color: inherit;
+    font-size: 1.5rem;
+    font-weight: bold;
     letter-spacing: 0.5px;
-    margin-bottom: 0.5rem;
 }
 
-.feed-subtitle {
+.gradient-text {
+    background: var(--primary-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Custom Interactive Menu Toggler Button */
+.menu-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+}
+
+.menu-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* =========================================================================
+   3. SIDEBAR DRAWER AND PROFILE OPTIONS FLOATING POPUP MENU
+   ========================================================================= */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100vh;
+    background: #0f172a;
+    border-right: 1px solid var(--border-color);
+    padding: 2rem 1.5rem;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar.active {
+    transform: translateX(0) !important;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.sidebar-brand {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 2rem;
+    background: var(--primary-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.sidebar-menu a {
+    text-decoration: none;
     color: var(--text-muted);
-    font-size: 1.05rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.sidebar-menu a:hover,
+.sidebar-menu a.active-sidebar-link {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+}
+
+.sidebar-menu a.active-sidebar-link {
+    border-left: 3px solid #6366f1;
+}
+
+/* Profile Trigger Dropdowns */
+.nav-right {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.profile-trigger {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+    overflow: hidden;
+    background: rgba(15, 23, 42, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    transition: border-color 0.2s;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar i {
+    display: none;
+    /* Safely hides background profile icon unless fallback triggers */
+}
+
+.profile-trigger:hover .avatar {
+    border-color: #6366f1;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 50px;
+    background: #1e293b;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    min-width: 200px;
+    z-index: 200;
+    list-style: none;
+    padding: 0.5rem 0;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.dropdown-menu.active {
+    display: block !important;
+}
+
+.dropdown-menu li a,
+.dropdown-menu li .logout-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    background: transparent;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.dropdown-menu li a:hover,
+.dropdown-menu li .logout-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+}
+
+.db-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 0.5rem 0;
+}
+
+.logout-item {
+    color: #f43f5e !important;
+}
+
+/* =========================================================================
+   4. CONTENT LAYOUT, HEADERS, AND RESPONSIVE JOBS TILES GRID
+   ========================================================================= */
+.main-content {
+    width: 100%;
+}
+
+.welcome-card {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin-bottom: 2rem;
+}
+
+.welcome-card h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+.welcome-card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
 }
 
 .jobs-grid {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 1.5rem;
     width: 100%;
 }
 
-/* --- Glassmorphic Vacancy Listing Cards --- */
-.job-card {
-    background: var(--card-bg, rgba(30, 41, 59, 0.5));
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
-    border-radius: 24px;
-    padding: 2.5rem;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+/* Inherited Glassmorphic Job Card Blocks from allJobs UI */
+.job-listing-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+    justify-content: space-between;
+    gap: 1.25rem;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.job-card:hover {
-    transform: translateX(6px);
-    border-color: #6366f1;
+.job-listing-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(99, 102, 241, 0.3);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 }
 
 .job-card-header {
@@ -60,454 +323,277 @@
     gap: 1rem;
 }
 
-.job-title-text {
-    font-size: 1.35rem;
-    font-weight: 700;
-    color: var(--text-main);
-    letter-spacing: 0.3px;
-}
-
-.job-company-text {
-    font-weight: 500;
-    color: #6366f1; /* Synchronized brand colored accent text */
-    margin-top: 0.25rem;
-}
-
-/* --- Visual Metadata & Badge Attributes --- */
-.salary-tag {
-    background: rgba(99, 102, 241, 0.12);
-    color: #6366f1;
-    padding: 0.45rem 0.9rem;
-    border-radius: 10px;
-    font-size: 0.9rem;
+.job-title-block h4 {
+    font-size: 1.2rem;
     font-weight: 600;
-    border: 1px solid rgba(99, 102, 241, 0.25);
+    margin-bottom: 0.35rem;
+    color: #fff;
+}
+
+.company-tag {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.job-type-tag {
+    background: rgba(99, 102, 241, 0.15);
+    color: #818cf8;
+    padding: 0.25rem 0.65rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
     white-space: nowrap;
 }
 
-.job-card-desc {
-    color: var(--text-muted);
-    line-height: 1.6;
-    font-size: 0.95rem;
-    margin-bottom: 0.5rem;
+.job-snippet-description {
+    color: #cbd5e1;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .job-card-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--border-color);
-    gap: 1rem;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-.job-meta-tags {
+.salary-tag {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #22c55e;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.standard-apply-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
     display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+}
+
+.standard-apply-btn:hover {
+    background: #fff;
+    color: var(--bg-dark);
+    border-color: #fff;
+}
+
+/* Database Stream Fallback States */
+.loading-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 2rem !important;
+    color: var(--text-muted);
+}
+
+.loading-state i {
+    font-size: 2rem !important;
+    margin-bottom: 1rem !important;
+    color: #6366f1 !important;
+}
+
+/* =========================================================================
+   5. COMPACT SYSTEM FOOTER & MOBILE SCREEN RE-SIZING ADJUSTMENTS
+   ========================================================================= */
+.dashboard-footer {
+    margin-top: 5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     color: var(--text-muted);
     font-size: 0.85rem;
 }
 
-.job-meta-tags span {
+.footer-links {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    gap: 1.5rem;
 }
 
-.job-meta-tags span i {
-    color: #a855f7;
-    font-size: 0.95rem;
-}
-
-/* --- Interactive Action Submission Buttons --- */
-.apply-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    background: var(--primary-grad);
-    color: #ffffff;
-    border: none;
-    padding: 0.7rem 1.6rem;
-    font-size: 0.9rem;
-    font-weight: 600;
-    border-radius: 12px;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 15px var(--glow-color);
-}
-
-.apply-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 25px var(--glow-color);
-}
-
-.apply-btn:active {
-    transform: translateY(0);
-}
-
-/* --- Real-Time State Loading Components --- */
-.loading-state {
-    text-align: center;
-    padding: 4rem 2rem;
+.footer-links a {
+    text-decoration: none;
     color: var(--text-muted);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    width: 100%;
+    transition: color 0.2s;
 }
 
-.loading-state i {
-    font-size: 2.5rem;
-    color: #6366f1;
-    text-shadow: 0 0 15px var(--glow-color);
+.footer-links a:hover {
+    color: #fff;
 }
 
-.loading-text {
-    font-size: 1rem;
-    letter-spacing: 0.3px;
-}
-
-/* --- Global Custom Response Overlay Modals --- */
-.alert-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(15, 23, 42, 0.75);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-}
-
-.alert-box {
-    background: rgba(30, 41, 59, 0.95);
-    border: 1px solid var(--border-color);
-    border-radius: 24px;
-    max-width: 440px;
-    width: 90%;
-    text-align: center;
-    padding: 2.5rem;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 40px var(--glow-color);
-    animation: scaleInAlert 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
-.alert-box h2 {
-    color: var(--text-main);
-    font-size: 1.65rem;
-    font-weight: 700;
-    margin-bottom: 0.8rem;
-}
-
-.alert-error-title {
-    color: var(--error-color) !important;
-}
-
-.alert-box p {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin-bottom: 1.75rem;
-}
-
-.alert-btn {
-    width: 100%;
-    padding: 0.8rem;
-    background: var(--primary-grad);
-    color: #ffffff;
-    border: none;
-    font-size: 0.95rem;
-    font-weight: 600;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.alert-btn:hover {
-    box-shadow: 0 0 20px var(--glow-color);
-    opacity: 0.95;
-}
-
-@keyframes scaleInAlert {
-    from {
-        opacity: 0;
-        transform: scale(0.88) translateY(15px);
+@media (max-width: 768px) {
+    .jobs-grid {
+        grid-template-columns: 1fr;
     }
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
+
+    .navbar {
+        flex-direction: row;
+        align-items: center;
     }
 }
 
-/* ==========================================================================
-   NAVIGATION BAR & AVATAR FIXES (✅ COMPACT & SYNCED)
-   ========================================================================== */
-
-/* Fixed layout dimension clamp for profile avatar button container */
-.avatar {
-    width: 44px !important;
-    height: 44px !important;
-    border-radius: 50% !important; /* Replaced 20% box shape with standard circle */
-    background: rgba(15, 23, 42, 0.6);
-    color: var(--text-muted);
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    font-size: 1.1rem;
-    font-weight: 600;
-    border: 1px solid var(--border-color);
-    overflow: hidden !important; /* Prevents overflow from oversized fallback values */
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-/* Force inner graphic layer to sit inside avatar frame properties */
-.avatar img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    border-radius: 50% !important;
-    display: block !important;
-}
-
-/* Correct runtime display routing rule mapping for dropdown display trigger */
-.dropdown-menu.active {
-    display: block !important;
-    animation: fadeInDropdown 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
-}
-
-/* --- Responsive Adaptive Viewport Breakpoints --- */
-@media (max-width: 640px) {
-    .job-card {
-        padding: 1.75rem;
-    }
-
-    .job-card-header {
+@media (max-width: 480px) {
+    .navbar {
         flex-direction: column;
+        gap: 1rem;
         align-items: flex-start;
-        gap: 0.75rem;
     }
 
-    .job-card-footer {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 1.25rem;
-    }
-
-    .apply-btn {
+    .nav-right {
         width: 100%;
-        justify-content: center;
+        justify-content: flex-end;
+    }
+
+    .dashboard-footer {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
     }
 }
-
-/* ==========================================================================
-   REVIEW APPLICANTS DETAILED ACCORDION COMPONENTS
-   ========================================================================== */
-.candidate-row {
-    background: rgba(15, 23, 42, 0.4);
-    border: 1px solid var(--border-color);
-    padding: 1.25rem;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    transition: background 0.2s ease, border-color 0.2s ease;
-}
-
-.candidate-row:hover {
-    background: rgba(30, 41, 59, 0.4);
-    border-color: rgba(99, 102, 241, 0.3);
-}
-
-.accordion-trigger {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    width: 100%;
-    user-select: none;
-}
-
-.candidate-details-pane {
-    background: rgba(15, 23, 42, 0.6);
-    padding: 1.2rem;
-    border-radius: 10px;
-    border: 1px solid var(--border-color);
-    margin-top: 0.75rem;
-    font-size: 0.9rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-    animation: slideDownFade 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.candidate-details-pane p {
-    margin: 0;
-    color: var(--text-main);
-}
-
-.candidate-details-pane strong {
-    color: var(--text-muted);
-}
-
-.pitch-text-box {
-    margin-top: 0.5rem;
-    line-height: 1.5;
-    color: var(--text-main);
-    background: rgba(0, 0, 0, 0.2);
-    padding: 0.75rem;
-    border-radius: 8px;
-    border-left: 3px solid #6366f1;
-}
-
-.applicant-action-row {
-    display: flex;
-    gap: 0.5rem;
-    justify-content: flex-end;
-    margin-top: 0.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    padding-top: 0.75rem;
-}
-
-.status-inline-btn {
-    padding: 0.45rem 0.9rem;
-    border-radius: 8px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    cursor: pointer;
-    border: none;
-    transition: all 0.2s ease;
-}
-
-.status-inline-btn:hover {
-    transform: translateY(-1px);
-}
-
-.status-inline-btn:active {
-    transform: translateY(0);
-}
-
-@keyframes slideDownFade {
-    from {
-        opacity: 0;
-        transform: translateY(-8px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 /* =========================================================================
-   MOBILE RESPONSIVE GRID LAYOUT PATCH FOR JOSHIPRO
+   6. PHONE RESPONSIVENESS AND TOUCH PROFILE PATCH (768PX & BELOW)
    ========================================================================= */
 @media screen and (max-width: 768px) {
 
-    .dashboard-wrapper,
-    .main-content {
-        width: 100% !important;
-        max-width: 100vw !important;
-        padding: 12px !important;
-        overflow-x: hidden !important;
-        box-sizing: border-box !important;
+    /* Compress wrapper padding to maximize screen canvas area */
+    .dashboard-wrapper {
+        padding: 1rem 0.75rem;
     }
 
-    .manage-item {
-        display: flex !important;
+    /* Stack or scale the navigation layer neatly */
+    .navbar {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+    }
+
+    /* Prevent the brand title from crashing into menu toggles */
+    .logo a {
+        font-size: 1.25rem;
+    }
+
+    .menu-btn {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.8rem;
+    }
+
+    /* Dynamic Sidebar System: Keeps navigation off the view plane until tapped */
+    .sidebar {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 270px !important;
+        height: 100vh !important;
+        background-color: #0f172a !important;
+        /* Premium matching slate */
+        z-index: 999999 !important;
+        /* Keeps it layered firmly above everything else */
+        transform: translateX(-100%) !important;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+
+    .sidebar.active {
+        transform: translateX(0) !important;
+        box-shadow: 8px 0 32px rgba(0, 0, 0, 0.6) !important;
+    }
+
+    /* Fluid Header Headers Adjustments */
+    .welcome-card h2 {
+        font-size: 1.4rem;
+    }
+
+    .welcome-card p {
+        font-size: 0.85rem;
+        line-height: 1.4;
+    }
+
+    /* Force the cards to line up cleanly in a single viewport row */
+    .jobs-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem;
+    }
+
+    /* Job Cards Touch Design Optimization */
+    .job-listing-card {
+        padding: 1.15rem;
+        gap: 1rem;
+        border-radius: 12px;
+    }
+
+    .job-title-block h4 {
+        font-size: 1.1rem;
+        line-height: 1.3;
+    }
+
+    .company-tag {
+        font-size: 0.8rem;
+    }
+
+    .job-type-tag {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.5rem;
+    }
+
+    .job-snippet-description {
+        font-size: 0.85rem;
+        line-height: 1.4;
+        -webkit-line-clamp: 4;
+        /* Gives a tiny bit more text room on smaller screens */
+    }
+
+    /* Expand the footer application actions to act as large finger tap targets */
+    .job-card-footer {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 0.75rem;
+    }
+
+    .salary-tag {
+        font-size: 0.85rem;
+    }
+
+    .standard-apply-btn {
+        padding: 0.5rem 0.85rem;
+        font-size: 0.8rem;
+    }
+
+    /* Cleanup bottom info spacing systems */
+    .dashboard-footer {
+        margin-top: 3rem;
         flex-direction: column !important;
-        align-items: stretch !important;
-        gap: 16px !important;
-        padding: 16px !important;
-        width: 100% !important;
-        box-sizing: border-box !important;
+        gap: 1rem;
+        text-align: center;
     }
 
-    .manage-info {
-        width: 100% !important;
-        text-align: left !important;
-    }
-
-    .manage-info h4 {
-        font-size: 1.15rem !important;
-        margin-bottom: 6px !important;
-        word-break: break-word !important;
-    }
-
-    .manage-info p {
-        font-size: 0.85rem !important;
-        line-height: 1.4 !important;
-        white-space: normal !important;
-    }
-
-    .manage-actions {
-        display: flex !important;
-        flex-direction: row !important;
-        gap: 10px !important;
-        width: 100% !important;
-    }
-
-    .manage-actions button,
-    .review-btn,
-    .delete-btn {
-        flex: 1 !important;
-        justify-content: center !important;
-        padding: 12px 8px !important;
-        font-size: 0.85rem !important;
-        white-space: nowrap !important;
+    .footer-links {
+        justify-content: center;
+        gap: 1.25rem;
     }
 }
-  .stats-cards {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.5rem;
-      width: 100%;
-      margin-top: 2rem;
-  }
 
-  .stat-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--border-color);
-      padding: 1.5rem;
-      border-radius: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-      transition: transform 0.3s ease, border-color 0.3s ease;
-  }
-
-  .stat-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(99, 102, 241, 0.4);
-  }
-
-  .stat-card h2 {
-      font-size: 2rem;
-      font-weight: 800;
-      color: var(--text-main);
-      margin-bottom: 0.25rem;
-  }
-
-  .stat-card p {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-  }
-
-  @media screen and (max-width: 1024px) {
-      .stats-cards {
-          grid-template-columns: repeat(2, 1fr);
-      }
-  }
-
-  @media screen and (max-width: 600px) {
-      .stats-cards {
-          grid-template-columns: 1fr;
-      }
-  }
+/* Small adjustments for microscopic phone frames */
+@media screen and (max-width: 380px) {
+    .logo a {
+        display: none;
+        /* Safely hides the secondary logo to avoid clipping if space runs out */
+    }
+}

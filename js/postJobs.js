@@ -3,7 +3,8 @@
 // ==========================================
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { initializeFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+// Added doc, onSnapshot, and getDoc to support the user profile stream & admin link logic
+import { initializeFirestore, collection, addDoc, serverTimestamp, doc, onSnapshot, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCsWXLc_6ug45IGN4wL0-DoycYnxgx8dag",
@@ -29,12 +30,38 @@ const jobStatusMsg = document.getElementById("jobStatusMsg");
 let currentUserId = null;
 
 // ==========================================
-// 2. CHECK VALID AUTHENTICATION SESSION
+// 2. CHECK VALID AUTHENTICATION SESSION & PROFILE WATCH
 // ==========================================
 onAuthStateChanged(auth, (user) => {
     if (user) {
         currentUserId = user.uid;
         console.log("Job posting portal secured for recruiter ID:", currentUserId);
+
+        // Continuous real-time listener targeting your precise Firestore profile parameters
+        const userProfileRef = doc(db, "users", currentUserId);
+        onSnapshot(userProfileRef, (snapshot) => {
+            if (snapshot.exists()) {
+                const data = snapshot.data();
+
+                // 🛡️ INTEGRATED SECURITY ADMIN GATE CHECK
+                const placeholder = document.getElementById("adminLinkPlaceholder");
+                if (placeholder) {
+                    if (data && data.isAdmin === true) {
+                        const isAdminPage = window.location.pathname.includes("admin.html");
+                        placeholder.innerHTML = `
+                            <a href="admin.html" class="${isAdminPage ? 'active-sidebar-link' : ''}" style="color: #a855f7; border-left: 3px solid #a855f7; background: rgba(168, 85, 247, 0.1); font-weight: 700; display: flex; align-items: center; gap: 8px; padding: 10px 15px; text-decoration: none; border-radius: 0 6px 6px 0; margin: 4px 0;">
+                                <i class="fa-solid fa-shield-halved"></i> Admin Center
+                            </a>
+                        `;
+                    } else {
+                        placeholder.innerHTML = ""; // Clear link if user is not an admin
+                    }
+                }
+            }
+        }, (error) => {
+            console.error("Profile snapshot read failure inside job posting loop:", error);
+        });
+
     } else {
         console.warn("No active session found. Routing back to entry point...");
         window.location.href = "login.html";

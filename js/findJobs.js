@@ -29,6 +29,7 @@ const logoutBtn = document.getElementById('logoutBtn');
 const userAvatar = document.getElementById("userAvatar"); 
 
 let currentUserId = null;
+let unsubscribeJobsStream = null; 
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -56,6 +57,7 @@ onAuthStateChanged(auth, (user) => {
             }
         }
 
+        // Read the user documentation created during registration
         const userProfileRef = doc(db, "users", currentUserId);
         onSnapshot(userProfileRef, (snapshot) => {
             if (snapshot.exists()) {
@@ -63,6 +65,30 @@ onAuthStateChanged(auth, (user) => {
                 if (data && data.profileImage && userAvatar) {
                     userAvatar.innerHTML = `<img src="${data.profileImage}" alt="User Avatar" style="width:100%; height:100%; object-fit:cover; border-radius:50%; display:block;">`;
                 }
+
+                // 🛡️ INTEGRATED SECURITY ADMIN GATE CHECK
+                const placeholder = document.getElementById("adminLinkPlaceholder");
+                if (placeholder) {
+                    if (data && data.isAdmin === true) {
+                        const isAdminPage = window.location.pathname.includes("admin.html");
+                        placeholder.innerHTML = `
+                            <a href="admin.html" class="${isAdminPage ? 'active-sidebar-link' : ''}" style="color: #a855f7; border-left: 3px solid #a855f7; background: rgba(168, 85, 247, 0.1); font-weight: 700; display: flex; align-items: center; gap: 8px; padding: 10px 15px; text-decoration: none; border-radius: 0 6px 6px 0; margin: 4px 0;">
+                                <i class="fa-solid fa-shield-halved"></i> Admin Center
+                            </a>
+                        `;
+                    } else {
+                        placeholder.innerHTML = ""; // Clear link if user is not an admin
+                    }
+                }
+
+                // Grab the registration location
+                const registeredLocation = data?.location ? data.location.trim() : "";
+                
+                // Pass it to pull jobs matching only this location
+                setupDynamicJobsRegistry(registeredLocation);
+            } else {
+                // Fallback to show everything if profile document doesn't exist yet
+                setupDynamicJobsRegistry("");
             }
         });
 
@@ -111,22 +137,42 @@ if (logoutBtn) {
     });
 }
 
-// ==========================================
-// 6. REAL-TIME FIRESTORE JOBS REGISTRY STREAM
-// ==========================================
-if (jobsContainer) {
-  const jobsQuery = query(collection(db, "jobs"), orderBy("createdAt", "desc"));
+// =========================================================================
+// 6. REAL-TIME FIRESTORE JOBS REGISTRY STREAM (STRICT REGIONAL FILTER)
+// =========================================================================
+function setupDynamicJobsRegistry(userLocation) {
+  if (!jobsContainer) return;
 
-  onSnapshot(jobsQuery, (snapshot) => {
+  // Unsubscribe from any previous streams to save memory
+  if (unsubscribeJobsStream) unsubscribeJobsStream();
+
+  let jobsQuery;
+
+  // ✅ STRICT FILTER: Match job location with the registered user profile location field
+  if (userLocation) {
+      console.log(`Filtering jobs strictly by registration location: "${userLocation}"`);
+      jobsQuery = query(
+          collection(db, "jobs"),
+          where("location", "==", userLocation)
+      );
+  } else {
+      console.log("No registration location detected. Streaming all global jobs.");
+      jobsQuery = query(collection(db, "jobs"));
+  }
+
+  unsubscribeJobsStream = onSnapshot(jobsQuery, (snapshot) => {
       jobsContainer.innerHTML = ""; 
       
       if (snapshot.empty) {
-          jobsContainer.innerHTML = "<p class='loading-text' style='text-align:center; color:#94a3b8; width:100%; padding:2rem;'>No active vacancy postings found.</p>";
+          jobsContainer.innerHTML = `
+              <p class='loading-text' style='text-align:center; color:#94a3b8; width:100%; padding:2rem;'>
+                  No jobs currently posted in <b>${escapeHtml(userLocation || "your area")}</b>. Check back later!
+              </p>`;
           if (jobsCounter) jobsCounter.textContent = "0 Jobs Available";
           return;
       }
       
-      if (jobsCounter) jobsCounter.textContent = `${snapshot.size} Pipeline(s) Open`;
+      if (jobsCounter) jobsCounter.textContent = `${snapshot.size} Job(s) in ${userLocation}`;
       
       snapshot.forEach((doc) => {
           const job = doc.data() || {};
@@ -137,7 +183,7 @@ if (jobsContainer) {
                   <div class="job-card-header">
                       <div class="job-title-block">
                           <h4>${escapeHtml(job.title || 'Untitled Position')}</h4>
-                          <p class="company-tag">${escapeHtml(job.company || 'Confidential Recruiter')} • ${escapeHtml(job.location || 'Remote / Global')}</p>
+                          <p class="company-tag">${escapeHtml(job.company || 'Confidential Recruiter')} • ${escapeHtml(job.location || 'Remote')}</p>
                       </div>
                       <span class="job-type-tag">${escapeHtml(job.type || 'Full-Time')}</span>
                   </div>
@@ -156,10 +202,12 @@ if (jobsContainer) {
   }, (error) => {
       console.error("Firestore Streaming Read Error:", error);
   });
+}
 
-  // ==========================================
-  // SECURED 1-CLICK INTERACTIVE APPLY BUTTON HANDLER
-  // ==========================================
+// ==========================================
+// SECURED 1-CLICK INTERACTIVE APPLY BUTTON HANDLER
+// ==========================================
+if (jobsContainer) {
   jobsContainer.addEventListener("click", async (e) => {
       const targetBtn = e.target.closest(".standard-apply-btn");
       if (!targetBtn) return;

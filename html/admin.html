@@ -41,7 +41,6 @@
                 assets.</p>
         </section>
 
-        <!-- Live Telemetry Counts Panel -->
         <section class="metrics-grid">
             <div class="metric-card card-purple">
                 <div class="card-icon"><i class="fa-solid fa-users"></i></div>
@@ -66,30 +65,29 @@
             </div>
         </section>
 
-        <!-- Aligned User Registration Entry Point -->
         <section class="admin-form-section" style="margin-top: 32px;">
             <div class="form-container">
                 <div class="form-header">
-                    <h2><i class="fa-solid fa-user-plus" style="color: #a855f7;"></i> Direct System User Registration
+                    <h2><i class="fa-solid fa-user-plus" style="color: #a855f7;"></i> Direct Database User Injection
                     </h2>
-                    <p style="margin-bottom: 20px;">Provision an authentic production account straight into system nodes
-                        if primary authentication registration layers fail.</p>
+                    <p style="margin-bottom: 20px;">Force-provision a user profile document straight into Firestore if
+                        registration sub-layers fail.</p>
                 </div>
                 <form id="addUserForm" class="admin-inline-form">
                     <div class="form-group">
-                        <label for="newName">Full Name</label>
+                        <label>Full Name</label>
                         <input type="text" id="newName" placeholder="Enter full name" required>
                     </div>
                     <div class="form-group">
-                        <label for="newEmail">Email Address</label>
+                        <label>Email Address</label>
                         <input type="email" id="newEmail" placeholder="name@domain.com" required>
                     </div>
                     <div class="form-group">
-                        <label for="newPhone">Phone Number</label>
+                        <label>Phone Number</label>
                         <input type="tel" id="newPhone" placeholder="Enter phone number" required>
                     </div>
                     <div class="form-group">
-                        <label for="newLocation">Location Setting</label>
+                        <label>Location</label>
                         <select id="newLocation">
                             <option value="Bungoma">Bungoma</option>
                             <option value="Busia">Busia</option>
@@ -98,28 +96,25 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="newRole">Platform Role Assignment</label>
+                        <label>Account Role</label>
                         <select id="newRole">
                             <option value="Job Seeker">Job Seeker</option>
                             <option value="Employer">Employer</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="newPassword">Security Password</label>
+                        <label>Password</label>
                         <input type="password" id="newPassword" placeholder="Enter password" required>
                     </div>
                     <div class="form-group button-group">
-                        <button type="submit" class="btn-submit-inject"><i class="fa-solid fa-bolt"></i> Register
+                        <button type="submit" class="btn-submit-inject"><i class="fa-solid fa-bolt"></i> Inject
                             Account</button>
                     </div>
                 </form>
             </div>
         </section>
 
-        <!-- Moderation Registers Layout Area -->
         <section class="management-section">
-
-            <!-- 1. Users Stream Register -->
             <div class="table-container">
                 <div class="table-header">
                     <h2><i class="fa-solid fa-user-gear"></i> Account Moderation Registry</h2>
@@ -143,7 +138,6 @@
                 </div>
             </div>
 
-            <!-- 2. Application Live Interceptor Stream -->
             <div class="table-container">
                 <div class="table-header">
                     <h2><i class="fa-solid fa-folder-open"></i> Global Application Interceptor</h2>
@@ -167,7 +161,6 @@
                 </div>
             </div>
 
-            <!-- 3. Job Compliance Stream Hub -->
             <div class="table-container">
                 <div class="table-header">
                     <h2><i class="fa-solid fa-gavel"></i> Job Listing Compliance Hub</h2>
@@ -190,7 +183,6 @@
                     </table>
                 </div>
             </div>
-
         </section>
     </main>
 

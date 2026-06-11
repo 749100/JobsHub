@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOSHIPRO - All Job Postings</title>
+    <!-- Uses FontAwesome for wallet, location, and arrow icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/allJobs.css">
+</head>
+
+<body>
+    <!-- Background Animated Blobs to Match Brand Theme -->
+    <div class="background-decor animate-blob1"></div>
+    <div class="background-decor animate-blob2"></div>
+
+    <div class="dashboard-container">
+        <!-- Top Navigation Bar -->
+        <header class="main-header">
+            <div class="brand">
+                <i class="fa-solid fa-cubes brand-icon"></i>
+                <h1>JOSHI<span class="gradient-text">PRO</span></h1>
+            </div>
+            <div class="header-actions">
+                <span id="jobsCounter" class="counter-badge">Loading vacancies...</span>
+                <a href="findJobs.html" class="nav-back-btn">
+                    <i class="fa-solid fa-arrow-left"></i> My Jobs
+                </a>
+                <a href="dashboard.html" class="nav-back-btn">
+                    <i class="fa-solid fa-arrow-left"></i> Dashboard
+                </a>
+            </div>
+        </header>
+
+        <!-- Main Feed Sub-Layout -->
+        <main class="feed-layout">
+            <div class="feed-header">
+                <h2>Explore All Open Opportunities</h2>
+                <p>Viewing a complete, unfiltered stream of all active career pipelines across all western counties and
+                    regions.</p>
+            </div>
+
+            <!-- Dynamic Target Mount for JavaScript Job Cards -->
+            <div id="allJobsContainer" class="jobs-grid-wrapper">
+                <div class="loading-state">
+                    <i class="fa-solid fa-circle-notch fa-spin"></i>
+                    <p>Streaming jobs database from Firestore...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Script Entry Endpoints -->
+    <script type="module" src="../js/allJobs.js"></script>
+</body>
+
+</html>

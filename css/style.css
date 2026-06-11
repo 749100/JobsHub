@@ -64,7 +64,7 @@ body {
 }
 
 /* =========================================================================
-   3. ORIGINAL LOGIN FRAMEWORK MARKUP
+   3. ORIGINAL LOGIN & REGISTRATION FRAMEWORK MARKUP
    ========================================================================= */
 .background-decor {
     position: absolute;
@@ -154,9 +154,11 @@ body {
     top: 1rem;
     color: var(--text-muted);
     transition: color 0.3s;
+    z-index: 2;
 }
 
-.input-group input {
+.input-group input,
+.input-group select {
     width: 100%;
     padding: 1rem 1rem 1rem 2.75rem;
     background: rgba(15, 23, 42, 0.6);
@@ -168,6 +170,47 @@ body {
     transition: all 0.3s;
 }
 
+/* Specific select dropdown modifications */
+.input-group select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    padding-right: 2.75rem;
+    /* Space for custom caret arrow */
+}
+
+/* Custom Dropdown Chevron Positioner */
+.input-group:has(select)::after {
+    content: "\f107";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    right: 1.25rem;
+    top: 1rem;
+    color: var(--text-muted);
+    pointer-events: none;
+    transition: transform 0.3s, color 0.3s;
+    z-index: 2;
+}
+
+/* Rotate indicator icon when active */
+.input-group:has(select):focus-within::after {
+    transform: rotate(180deg);
+    color: #6366f1;
+}
+
+/* Style the native drop options menu list overlay */
+.input-group select option {
+    background: #1e293b;
+    color: var(--text-main);
+    padding: 0.75rem;
+}
+
+.input-group select option[disabled] {
+    color: var(--text-muted);
+}
+
 .input-group label {
     position: absolute;
     left: 2.75rem;
@@ -175,10 +218,14 @@ body {
     color: var(--text-muted);
     transition: all 0.3s;
     pointer-events: none;
+    z-index: 2;
 }
 
+/* Standard Input & Dropdown Select animation parameters */
 .input-group input:focus~label,
-.input-group input:not(:placeholder-shown)~label {
+.input-group input:not(:placeholder-shown)~label,
+.input-group select:focus~label,
+.input-group select:valid~label {
     top: -0.6rem;
     left: 1rem;
     font-size: 0.75rem;
@@ -186,14 +233,17 @@ body {
     padding: 0 0.4rem;
     border-radius: 4px;
     color: #a855f7;
+    z-index: 3;
 }
 
-.input-group input:focus {
+.input-group input:focus,
+.input-group select:focus {
     border-color: #6366f1;
     box-shadow: 0 0 12px var(--glow-color);
 }
 
-.input-group input:focus~.input-icon {
+.input-group input:focus~.input-icon,
+.input-group select:focus~.input-icon {
     color: #6366f1;
 }
 
@@ -203,6 +253,7 @@ body {
     top: 1rem;
     cursor: pointer;
     color: var(--text-muted);
+    z-index: 2;
 }
 
 .actions {
@@ -353,7 +404,8 @@ body {
     display: none;
 }
 
-.input-group.invalid input {
+.input-group.invalid input,
+.input-group.invalid select {
     border-color: var(--error-color);
 }
 

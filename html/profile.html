@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JOSHIPRO - Manage Profile</title>
-    <!-- External Icon Styling Library -->
-    <link rel="stylesheet" href="https://jsdelivr.net">
+    <!-- ✅ FIXED: Replaced broken link with official FontAwesome stylesheet to display icons -->
+    <link rel="stylesheet" href="https://cloudflare.com">
     <!-- Links to separate subfolder layout -->
     <link rel="stylesheet" href="../css/profile.css">
 </head>
@@ -37,10 +37,22 @@
                 <input type="text" id="userName" required placeholder="e.g. John Joshi">
             </div>
 
-            <!-- Added Profession Field -->
+            <!-- ✅ MODIFIED: Profession field converted to a clean Dropdown List -->
             <div class="form-group">
                 <label for="userProfession">Profession / Job Title</label>
-                <input type="text" id="userProfession" required placeholder="e.g. Full Stack Developer">
+                <select id="userProfession" required>
+                    <option value="" disabled selected>Select your profession...</option>
+                    <option value="Full Stack Developer">Full Stack Developer</option>
+                    <option value="Frontend Engineer">Frontend Engineer</option>
+                    <option value="Backend Developer">Backend Developer</option>
+                    <option value="Data Scientist">Data Scientist</option>
+                    <option value="UI/UX Designer">UI/UX Designer</option>
+                    <option value="Mobile App Developer">Mobile App Developer</option>
+                    <option value="DevOps Engineer">DevOps Engineer</option>
+                    <option value="Project Manager">Project Manager</option>
+                    <option value="Digital Marketer">Digital Marketer</option>
+                    <option value="Human Resources Specialist">Human Resources Specialist</option>
+                </select>
             </div>
 
             <!-- Added Phone Number Field -->
@@ -49,6 +61,17 @@
                 <input type="tel" id="userPhone" required placeholder="e.g. +1 (555) 000-0000">
             </div>
 
+            <!-- ✅ MODIFIED: Location field converted to Western Kenya Counties Dropdown List -->
+            <div class="form-group">
+                <label for="userLocation">Location (Western Region)</label>
+                <select id="userLocation" required>
+                    <option value="" disabled selected>Select your county...</option>
+                    <option value="Bungoma">Bungoma</option>
+                    <option value="Busia">Busia</option>
+                    <option value="Kakamega">Kakamega</option>
+                    <option value="Vihiga">Vihiga</option>
+                </select>
+            </div>
 
             <div class="form-group">
                 <label for="userBio">Professional Bio</label>

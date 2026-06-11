@@ -32,6 +32,8 @@
                         <a href="findJobs.html"><i class="fa-solid fa-magnifying-glass"></i> Find Jobs</a>
                         <a href="postJobs.html"><i class="fa-solid fa-pen-to-square"></i> Post Jobs</a>
                         <a href="applications.html"><i class="fa-solid fa-file-lines"></i> My Applications</a>
+
+                        <div id="adminLinkPlaceholder"></div>
                     </nav>
                 </aside>
             </div>
@@ -66,22 +68,31 @@
                 <div class="stat-card neon-blue">
                     <div class="stat-icon"><i class="fa-solid fa-briefcase"></i></div>
                     <div class="stat-info-wrapper">
-                        <h2 id="totalJobs">Syncing...</h2>
-                        <p>Total Jobs</p>
+                        <!-- 🛠️ FIXED ID: Set explicitly to jobsCounter to sync perfectly with your JS file -->
+                        <h2 id="jobsCounter">0</h2>
+                        <p><a href="allJobs.html">Total Jobs</a></p>
                     </div>
                 </div>
                 <div class="stat-card neon-purple">
                     <div class="stat-icon"><i class="fa-solid fa-paper-plane"></i></div>
                     <div class="stat-info-wrapper">
-                        <h2 id="activeApplications">Syncing...</h2>
-                        <p>Applications Sent</p>
+                        <h2 id="activeApplications">0</h2>
+                        <p><a href="applications.html">Applications Sent</a></p>
                     </div>
                 </div>
                 <div class="stat-card neon-orange">
                     <div class="stat-icon"><i class="fa-solid fa-hourglass-half"></i></div>
                     <div class="stat-info-wrapper">
-                        <h2 id="savedJobs">Syncing...</h2>
-                        <p>Pending Review</p>
+                        <h2 id="savedJobs">0</h2>
+                        <p><a href="applications.html">Pending Review</a></p>
+                    </div>
+                </div>
+                <div class="stat-card neon-purple">
+                    <div class="stat-icon"><i class="fa-solid fa-paper-plane"></i></div>
+                    <div class="stat-info-wrapper">
+                        <!-- 🛠️ FIXED ID: Standardized to avoid conflicting with activeApplications layout components -->
+                        <h2 id="myJobsCounter">0</h2>
+                        <p><a href="findJobs.html">My Jobs</a></p>
                     </div>
                 </div>
             </div>

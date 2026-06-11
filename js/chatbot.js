@@ -1,96 +1,138 @@
-// ==========================================
-// 🤖 JOSHIPRO LOCAL INTERACTIVE HELP DESK BOT ENGINE
-// ==========================================
-document.addEventListener("DOMContentLoaded", () => {
-    const chatbotToggle = document.getElementById("chatbotToggle");
-    const chatbotWindow = document.getElementById("chatbotWindow");
-    const chatbotClose = document.getElementById("chatbotClose");
-    const chatbotMessages = document.getElementById("chatbotMessages");
-    const chatbotInput = document.getElementById("chatbotInput");
-    const chatbotSend = document.getElementById("chatbotSend");
+/* ==========================================================================
+   JOSHIPRO CHATBOT MODULE LOGIC ENGINE - OFFICIAL GOOGLE SDK ROUTING
+   ========================================================================== */
+import { db } from "./config.js"; 
+import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-    // Toggle Chat visibility window flags
-    if (chatbotToggle && chatbotWindow) {
-        chatbotToggle.onclick = (e) => {
+// ✅ THE FIX: Import Google's official generative AI browser client distribution module
+import { GoogleGenAI } from "https://esm.run/@google/genai";
+
+// Your active developer platform tracking token
+const GEMINI_API_KEY = "AQ_YOUR_API_KEY_HERE"; 
+
+// ✅ INITIALIZE CORE CLIENT: This library wrapper correctly handles the AQ token encryption signature
+const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Structural Node Mappings targeting help.html definitions
+    const chatbotToggle = document.getElementById('chatbotToggle');
+    const chatbotWindow = document.getElementById('chatbotWindow');
+    const chatbotClose = document.getElementById('chatbotClose');
+    const chatbotForm = document.getElementById('chatbotForm');
+    const chatbotInput = document.getElementById('chatbotInput');
+    const chatbotMessages = document.getElementById('chatbotMessages');
+
+    // Context injector prompt keeping response parameters scoped
+    const systemPrompt = "You are the friendly, professional AI Assistant for JOSHIPRO, an advanced job portal platform in Kenya. Help users with resumes, applications, tracking jobs, and navigating the dashboard. Keep answers clear and under 3 sentences.";
+
+    // 1. Structural Panel Overlay Toggle Handling Engine
+    if (chatbotToggle) {
+        chatbotToggle.addEventListener('click', (e) => {
             e.stopPropagation();
-            chatbotWindow.classList.toggle("active");
-        };
+            chatbotWindow.classList.toggle('active');
+            if (chatbotWindow.classList.contains('active') && chatbotInput) {
+                chatbotInput.focus();
+            }
+        });
     }
 
-    // Dismiss active UI element via Header controls
-    if (chatbotClose && chatbotWindow) {
-        chatbotClose.onclick = (e) => {
+    if (chatbotClose) {
+        chatbotClose.addEventListener('click', (e) => {
             e.stopPropagation();
-            chatbotWindow.classList.remove("active");
-        };
+            chatbotWindow.classList.remove('active');
+        });
     }
 
-    // Isolate click actions executing inside the target panel bounds
     if (chatbotWindow) {
-        chatbotWindow.onclick = (e) => {
-            e.stopPropagation();
-        };
+        chatbotWindow.onclick = (e) => { e.stopPropagation(); };
     }
 
-    // Click outside to hide active window pane safely
     document.addEventListener("click", () => {
         if (chatbotWindow && chatbotWindow.classList.contains("active")) {
             chatbotWindow.classList.remove("active");
         }
     });
 
-    // Helper to generate text dialog cards
-    const appendChatMessage = (text, sender) => {
+    // Helper: Generate and append structural dynamic text elements
+    function createMessageBubble(text, senderType) {
         if (!chatbotMessages) return;
-        const msgDiv = document.createElement("div");
-        msgDiv.className = `chat-message ${sender}`;
-        msgDiv.textContent = text;
-        chatbotMessages.appendChild(msgDiv);
+        const bubble = document.createElement('div');
+        bubble.classList.add('chat-message', senderType);
+        
+        let formattedText = text
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\n/g, "<br>");
+
+        bubble.innerHTML = formattedText;
+        chatbotMessages.appendChild(bubble);
         chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-    };
+        return bubble;
+    }
 
-    // Form input submission parsing workflow logic
-    const processChatbotInput = () => {
-        if (!chatbotInput) return;
-        const queryText = chatbotInput.value.trim();
-        if (!queryText) return;
+    // Helper: Manage state indicator modules cleanly
+    function createTypingIndicator() {
+        if (!chatbotMessages) return;
+        const indicator = document.createElement('div');
+        indicator.classList.add('chat-message', 'bot');
+        indicator.id = 'chatbotTyping';
+        indicator.innerHTML = '<i>JOSHIPRO Bot is looking up ecosystem variables...</i>';
+        chatbotMessages.appendChild(indicator);
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    }
 
-        // Injects human bubble tracking element node layout
-        appendChatMessage(queryText, "user");
-        chatbotInput.value = "";
+    function removeTypingIndicator() {
+        const indicator = document.getElementById('chatbotTyping');
+        if (indicator) indicator.remove();
+    }
 
-        // Automated Local Keyword Mapping Response Sequence
-        setTimeout(() => {
-            const lowerQuery = queryText.toLowerCase();
-            let response = "I couldn't quite find an exact match for that. Try asking about 'password resets', 'missing tokens', 'withdrawing applications', or 'theme settings'!";
+    // 2. Transaction Stream Submission Management Loop
+    if (chatbotForm) {
+        chatbotForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const userPrompt = chatbotInput.value.trim();
+            if (!userPrompt) return;
 
-            if (lowerQuery.includes("hello") || lowerQuery.includes("hi") || lowerQuery.includes("hey")) {
-                response = "Hi there! 👋 Welcome to JOSHIPRO Help Support. Ask me any question related to our knowledge base system fields!";
-            } else if (lowerQuery.includes("password") || lowerQuery.includes("reset") || lowerQuery.includes("credential")) {
-                response = "Password controls are found on the main Login dashboard interface under 'Forgot Password'. A secure recovery link path will route instantly straight to your inbound email box.";
-            } else if (lowerQuery.includes("token") || lowerQuery.includes("verification") || lowerQuery.includes("code")) {
-                response = "Account security tokens drop instantly! If missing from your main view, double-check that your spam filters aren't capturing validation strings, or wait 180 seconds before retrying.";
-            } else if (lowerQuery.includes("apply") || lowerQuery.includes("status") || lowerQuery.includes("track")) {
-                response = "Successful 'Apply Now' submissions write data records live to the cloud backend layer. You can monitor progress lines anytime from your 'My Applications' hub page.";
-            } else if (lowerQuery.includes("withdraw") || lowerQuery.includes("cancel") || lowerQuery.includes("remove")) {
-                response = "To clear or cancel active job review listings, head to your 'My Applications' dashboard matrix and use the dedicated 'Withdraw' button actions.";
-            } else if (lowerQuery.includes("theme") || lowerQuery.includes("color") || lowerQuery.includes("light") || lowerQuery.includes("dark")) {
-                response = "The high-performance dark glassmorphic core theme is integrated directly into JOSHIPRO configuration styling scripts to save battery and protect vision. Light layouts are disabled by design.";
-            } else if (lowerQuery.includes("frozen") || lowerQuery.includes("freeze") || lowerQuery.includes("cache")) {
-                response = "If views freeze up or content fields misbehave, try dropping cached framework files with a hard refresh: Press Ctrl + F5 (or Cmd + Shift + R on Mac devices).";
-            } else if (lowerQuery.includes("human") || lowerQuery.includes("ticket") || lowerQuery.includes("contact")) {
-                response = "Still stuck? Click the 'Open Human Support Ticket' path link near the bottom footer elements to loop in a live member of our operations crew.";
+            createMessageBubble(userPrompt, 'user');
+            chatbotInput.value = '';
+            createTypingIndicator();
+
+            let aiResponseText = "";
+
+            // 3. SDK Generation Hook: Processing requests through native channels
+            try {
+                // This replaces the old raw fetch call completely to support your AQ token signature
+                const response = await ai.models.generateContent({
+                    model: 'gemini-1.5-flash',
+                    contents: `${systemPrompt}\n\nUser Question: ${userPrompt}`,
+                });
+
+                if (response && response.text) {
+                    aiResponseText = response.text;
+                } else {
+                    throw new Error("Empty or unexpected structural return matrix from SDK pipeline.");
+                }
+                
+            } catch (error) {
+                console.error("AI Communication Failure Context:", error);
+                aiResponseText = "I'm having trouble connecting to my system core right now. Please try your question again in a brief moment!";
+            } finally {
+                removeTypingIndicator();
+                createMessageBubble(aiResponseText, 'bot');
             }
 
-            appendChatMessage(response, "bot");
-        }, 450);
-    };
-
-    // Link triggers to interactive input actions
-    if (chatbotSend) chatbotSend.onclick = processChatbotInput;
-    if (chatbotInput) {
-        chatbotInput.onkeydown = (e) => {
-            if (e.key === "Enter") processChatbotInput();
-        };
+            // 4. Cloud Ledger Backup Sync
+            try {
+                await addDoc(collection(db, "support_tickets"), {
+                    query: userPrompt,
+                    reply: aiResponseText,
+                    timestamp: new Date(),
+                    origin: "help_center_bot"
+                });
+                console.log("Firestore backup logged successfully.");
+            } catch (dbError) {
+                console.error("Firestore tracking loop failed:", dbError);
+            }
+        });
     }
 });

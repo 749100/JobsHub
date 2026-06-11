@@ -63,16 +63,30 @@ function applyTextFallback(targetElement, email) {
 function startDashboardCounters(userId) {
     console.log("Dashboard metric streaming pipelines initialized for:", userId);
 
-    // 1. Live count total system jobs posted ecosystem-wide -> Targets id="totalJobs"
-    const totalJobsQuery = query(collection(db, "jobs"), where("status", "==", "Active"));
+    // 1. Live count total system jobs posted ecosystem-wide -> Targets id="jobsCounter"
+    const totalJobsQuery = query(collection(db, "jobs"));
     onSnapshot(totalJobsQuery, (snapshot) => {
-        const totalJobsCountElement = document.getElementById("totalJobs");
+        const totalJobsCountElement = document.getElementById("jobsCounter") || document.getElementById("totalJobs");
         if (totalJobsCountElement) {
+            console.log(`Ecosystem stream sync: Found ${snapshot.size} global platform jobs.`);
             totalJobsCountElement.textContent = snapshot.size;
         }
     }, (err) => console.error("Error updates counting total jobs:", err));
 
-    // 2. Live count candidate submission interactions -> Targets id="activeApplications" and id="savedJobs"
+    // 🛠️ 2. FIXED: Tracks and aggregates jobs posted exclusively by the current User ID session -> Targets id="myJobsCounter"
+    const myJobsQuery = query(collection(db, "jobs"), where("postedBy", "==", userId));
+    onSnapshot(myJobsQuery, (snapshot) => {
+        const myJobsCountElement = document.getElementById("myJobsCounter");
+        if (myJobsCountElement) {
+            console.log(`User specific stream sync: Found ${snapshot.size} jobs authored by user session.`);
+            myJobsCountElement.textContent = snapshot.size;
+        }
+    }, (err) => {
+        console.error("Error updates counting your posted jobs:", err);
+        // Quick tip: If you see an index build error here in the console, click the link Firebase provides to auto-generate it!
+    });
+
+    // 3. Live count candidate submission interactions -> Targets id="activeApplications" and id="savedJobs"
     const appsSentQuery = query(collection(db, "applications"), where("applicantId", "==", userId));
     onSnapshot(appsSentQuery, (snapshot) => {
         const activeApps = snapshot.docs.filter(doc => doc.data().status !== "ArchivedByApplicant");
@@ -83,7 +97,7 @@ function startDashboardCounters(userId) {
             appsSentElement.textContent = activeApps.length;
         }
 
-        // 3. Extract items matching Pending evaluation status -> Targets id="savedJobs"
+        // 4. Extract items matching Pending evaluation status -> Targets id="savedJobs"
         const pendingApps = activeApps.filter(doc => doc.data().status === "Pending" || !doc.data().status);
         const pendingReviewElement = document.getElementById("savedJobs");
         if (pendingReviewElement) {
@@ -135,6 +149,22 @@ onAuthStateChanged(auth, (user) => {
                 // Read global dynamic UI configurations if defined in profile scope
                 if (data && data.settings && data.settings.theme) {
                     document.body.setAttribute("data-theme", data.settings.theme);
+                }
+
+                // 🛡️ INTEGRATED SECURITY ADMIN GATE CHECK
+                // This utilizes the snapshot you already established to instantly reveal the purple gate key
+                const placeholder = document.getElementById("adminLinkPlaceholder");
+                if (placeholder) {
+                    if (data && data.isAdmin === true) {
+                        const isAdminPage = window.location.pathname.includes("admin.html");
+                        placeholder.innerHTML = `
+                            <a href="admin.html" class="${isAdminPage ? 'active-sidebar-link' : ''}" style="color: #a855f7; border-left: 3px solid #a855f7; background: rgba(168, 85, 247, 0.1); font-weight: 700; display: flex; align-items: center; gap: 8px; padding: 10px 15px; text-decoration: none; border-radius: 0 6px 6px 0; margin: 4px 0;">
+                                <i class="fa-solid fa-shield-halved"></i> Admin Center
+                            </a>
+                        `;
+                    } else {
+                        placeholder.innerHTML = ""; // Force clear context for standard audience nodes
+                    }
                 }
 
                 // If a distinct custom profile image path string is returned from your collections, override and show it

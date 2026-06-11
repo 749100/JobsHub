@@ -22,8 +22,9 @@ const profileForm = document.getElementById("profileForm");
 const imageUpload = document.getElementById("imageUpload");
 const avatarPreview = document.getElementById("avatarPreview");
 const userNameInput = document.getElementById("userName"); 
-const userProfessionInput = document.getElementById("userProfession"); // ✅ Added selector
-const userPhoneInput = document.getElementById("userPhone");           // ✅ Added selector
+const userProfessionInput = document.getElementById("userProfession"); // ✅ Maps cleanly to dropdown select node
+const userPhoneInput = document.getElementById("userPhone");           
+const userLocationInput = document.getElementById("userLocation");     // ✅ Maps cleanly to Western Kenya Counties dropdown node
 const userBioInput = document.getElementById("userBio");   
 const statusMsg = document.getElementById("statusMsg");
 
@@ -45,8 +46,9 @@ onAuthStateChanged(auth, async (user) => {
             if (userDocSnap.exists()) {
                 const data = userDocSnap.data();
                 if (userNameInput) userNameInput.value = data.name || "";
-                if (userProfessionInput) userProfessionInput.value = data.profession || ""; // ✅ Populate dynamic profession field
-                if (userPhoneInput) userPhoneInput.value = data.phone || data.phoneNumber || ""; // ✅ Populate dynamic phone field
+                if (userProfessionInput) userProfessionInput.value = data.profession || ""; // ✅ Automatically checks option elements inside profession select
+                if (userPhoneInput) userPhoneInput.value = data.phone || data.phoneNumber || ""; 
+                if (userLocationInput) userLocationInput.value = data.location || ""; // ✅ Automatically checks matching Western County option inside location select
                 if (userBioInput) userBioInput.value = data.bio || "";
                 
                 if (data.profileImage && avatarPreview) {
@@ -67,7 +69,7 @@ onAuthStateChanged(auth, async (user) => {
 // ==========================================
 if (imageUpload) {
     imageUpload.addEventListener("change", (e) => {
-        const file = e.target.files[0];
+        const file = e.target.files[0]; 
         if (!file) return;
 
         if (file.size > 500000) {
@@ -104,8 +106,9 @@ if (profileForm) {
 
         const updatedProfileData = {
           name: userNameInput ? userNameInput.value : "",
-          profession: userProfessionInput ? userProfessionInput.value.trim() : "", // ✅ Package field data safely
-          phone: userPhoneInput ? userPhoneInput.value.trim() : "",               // ✅ Package field data safely
+          profession: userProfessionInput ? userProfessionInput.value.trim() : "", // ✅ Captures standardized string values from dropdown
+          phone: userPhoneInput ? userPhoneInput.value.trim() : "",               
+          location: userLocationInput ? userLocationInput.value.trim() : "",       // ✅ Captures precise Western County selection for findJobs.js mapping
           bio: userBioInput ? userBioInput.value : "",
           profileImage: base64ImageString, 
           updatedAt: new Date().toLocaleDateString()

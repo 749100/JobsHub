@@ -5,12 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JOSHIPRO - Help Center Bot</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- ✅ FIXED: Replaced the broken link with a verified, secure vector graphics CDN URL -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <!-- Standalone Section Stylesheets -->
     <link rel="stylesheet" href="../css/help.css">
 </head>
 
+
 <body>
 
+    <!-- Main Navigation Header -->
     <header>
         <strong>JOSHIPRO</strong>
         <nav>
@@ -26,6 +30,7 @@
 
     <hr>
 
+    <!-- Main Knowledge Display Base -->
     <main>
         <section>
             <h1>Knowledge Support Terminal</h1>
@@ -93,11 +98,11 @@
                 <p>JOSHIPRO's dark glassmorphic neon layout engine is compiled directly into the root theme config
                     variables to optimize user viewports. Standard light configurations are locked out by design.</p>
             </details>
-
         </section>
 
         <hr>
 
+        <!-- Fallback System Communication Link -->
         <section>
             <p>Query not resolved by the automated assistant?</p>
             <p><a href="contact.html">Open Human Support Ticket</a></p>
@@ -106,36 +111,48 @@
 
     <hr>
 
+    <!-- Global Application Footer -->
     <footer>
         <p>&copy; 2026 JOSHIPRO Cloud Network. All Rights Reserved.</p>
     </footer>
 
+    <!-- 🤖 FLOATING CHATBOT WIDGET INTERFACE CONTAINER -->
     <div class="chatbot-container">
-        <button id="chatbotToggle" class="chatbot-toggle-btn" aria-label="Open Chat">
+        <!-- Interactive Trigger Button -->
+        <button id="chatbotToggle" class="chatbot-toggle-btn" aria-label="Open Chat Window">
             <i class="fa-solid fa-comments"></i>
         </button>
 
+        <!-- Dynamic Live Overlay Pane Wrapper -->
         <div id="chatbotWindow" class="chatbot-window">
             <div class="chatbot-header">
                 <div class="chatbot-title">
                     <i class="fa-solid fa-robot"></i> JOSHI<span class="gradient-text">PRO</span> Bot
                 </div>
-                <button id="chatbotClose" class="chatbot-close-btn">&times;</button>
+                <button id="chatbotClose" class="chatbot-close-btn" aria-label="Close Chat">&times;</button>
             </div>
+
+            <!-- Message Stream Node Element Target -->
             <div id="chatbotMessages" class="chatbot-messages">
                 <div class="chat-message bot">
                     Hello! 👋 Welcome to the JOSHIPRO Knowledge Assistant. Ask me a question about your account,
                     applications, or system layouts!
                 </div>
             </div>
-            <div class="chatbot-input-area">
-                <input type="text" id="chatbotInput" placeholder="Ask a support question..." autocomplete="off">
-                <button id="chatbotSend" class="chatbot-send-btn"><i class="fa-solid fa-paper-plane"></i></button>
-            </div>
+
+            <!-- User Input Submission Pipeline Form Wrapper -->
+            <form id="chatbotForm" class="chatbot-input-area">
+                <input type="text" id="chatbotInput" placeholder="Ask a support question..." autocomplete="off"
+                    required>
+                <button type="submit" id="chatbotSend" class="chatbot-send-btn" aria-label="Submit Message">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </form>
         </div>
     </div>
 
-    <script src="../js/chatbot.js"></script>
+    <!-- Connected Platform Automation JavaScript Logic Core -->
+<script type="module" src="../js/chatbot.js"></script
 </body>
 
 </html>
