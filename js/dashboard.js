@@ -1,9 +1,13 @@
-//  WITH THESE EXPLICIT PATHS:
+// =========================================================================
+// 🌐 DEPENDENCY MATRIX & MODULE IMPORT LOGISTICS
+// =========================================================================
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, query, where, onSnapshot, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-// 2. Define your configuration object literal
+// =========================================================================
+// 🔑 CONFIGURATION INTEGRATION MATRIX
+// =========================================================================
 const firebaseConfig = {
   apiKey: "AIzaSyCsWXLc_6ug45IGN4wL0-DoycYnxgx8dag",
   authDomain: "mabel-90f81.firebaseapp.com",
@@ -14,12 +18,14 @@ const firebaseConfig = {
   databaseURL: "https://mabel-90f81-default-rtdb.firebaseio.com" 
 };
 
-// 3. INITIALIZE APPS AND UTILITIES CLEANLY
+// Initialize Core Application Services
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-// Combined DOM element selections matching dashboard.html
+// =========================================================================
+// 🎯 DOM NODE REGISTRY MAPPING
+// =========================================================================
 const userInfo = document.getElementById('userInfo');
 const menuBtn = document.getElementById('menuBtn');
 const sidebar = document.getElementById('sidebar');
@@ -28,7 +34,9 @@ const dropdownMenu = document.getElementById('dropdownMenu');
 const logoutBtn = document.getElementById('logoutBtn');
 const userAvatar = document.getElementById("userAvatar"); 
 
-// Helper function to lock sizing attributes cleanly onto profile containers
+// =========================================================================
+// 🖼️ AVATAR INTERFACE UTILITIES & STYLING GUARDRAILS
+// =========================================================================
 function enforceAvatarStyling(targetElement) {
     if (!targetElement) return;
     targetElement.style.width = "40px";
@@ -39,12 +47,10 @@ function enforceAvatarStyling(targetElement) {
     targetElement.style.cursor = "pointer";
 }
 
-// Helper function to assemble image tags correctly
 function buildAvatarHtml(srcString) {
     return `<img src="${srcString}" alt="User Avatar" class="avatar-img-element" style="width:100%; height:100%; object-fit:cover; border-radius:50%; display:block;">`;
 }
 
-// Helper function to manage letter fallback profiles if images break
 function applyTextFallback(targetElement, email) {
     if (!targetElement || !email) return;
     targetElement.innerHTML = email.charAt(0).toUpperCase();
@@ -57,46 +63,75 @@ function applyTextFallback(targetElement, email) {
     targetElement.style.fontSize = '14px';
 }
 
-// ==========================================
-// 📊 REAL-TIME DASHBOARD STATS ENGINE
-// ==========================================
+// =========================================================================
+// 📊 REAL-TIME DASHBOARD TELEMETRY COUNTER ENGINE
+// =========================================================================
 function startDashboardCounters(userId) {
     console.log("Dashboard metric streaming pipelines initialized for:", userId);
 
     // 1. Live count total system jobs posted ecosystem-wide -> Targets id="jobsCounter"
     const totalJobsQuery = query(collection(db, "jobs"));
-    onSnapshot(totalJobsQuery, (snapshot) => {
+    
+    onSnapshot(totalJobsQuery, async (snapshot) => {
         const totalJobsCountElement = document.getElementById("jobsCounter") || document.getElementById("totalJobs");
         if (totalJobsCountElement) {
             console.log(`Ecosystem stream sync: Found ${snapshot.size} global platform jobs.`);
             totalJobsCountElement.textContent = snapshot.size;
         }
-    }, (err) => console.error("Error updates counting total jobs:", err));
 
-    // 2. Tracks and aggregates jobs posted exclusively by the current User ID session -> Targets id="myJobsCounter"
-    const myJobsQuery = query(collection(db, "jobs"), where("postedBy", "==", userId));
-    onSnapshot(myJobsQuery, (snapshot) => {
+        // 🎯 FIXED LOCATION FILTER ENGINE: Resolves 'My Jobs' rogue counter reporting
         const myJobsCountElement = document.getElementById("myJobsCounter");
         if (myJobsCountElement) {
-            console.log(`User specific stream sync: Found ${snapshot.size} jobs authored by user session.`);
-            myJobsCountElement.textContent = snapshot.size;
-        }
-    }, (err) => {
-        console.error("Error updates counting your posted jobs:", err);
-    });
+            try {
+                const userDocRef = doc(db, "users", userId);
+                const userDocSnap = await getDoc(userDocRef);
+                
+                let userLocation = "";
+                if (userDocSnap.exists()) {
+                    const userData = userDocSnap.data();
+                    userLocation = userData.location ? userData.location.trim().toLowerCase() : "";
+                }
 
-    // 3. Live count candidate submission interactions -> Targets id="activeApplications" and id="savedJobs"
+                // Guardrail Checklist: If no profile location is set, immediately clamp value to 0
+                if (!userLocation) {
+                    myJobsCountElement.textContent = "0";
+                    return;
+                }
+
+                // Evaluate records using native substring validation arrays
+                let matchingLocationCount = 0;
+                snapshot.forEach((jobDoc) => {
+                    const jobData = jobDoc.data();
+                    if (jobData.location) {
+                        const jobLoc = jobData.location.trim().toLowerCase();
+                        if (jobLoc.includes(userLocation) || userLocation.includes(jobLoc)) {
+                            matchingLocationCount++;
+                        }
+                    }
+                });
+
+                console.log(`Location match engine processed: Found ${matchingLocationCount} contextual matches.`);
+                myJobsCountElement.textContent = matchingLocationCount;
+
+            } catch (locErr) {
+                console.error("Failed executing location based calculations:", locErr);
+                myJobsCountElement.textContent = "0"; // Strict security error fallback state
+            }
+        }
+    }, (err) => console.error("Error updates counting total jobs:", err));
+
+    // 2. Live count candidate submission interactions -> Targets id="activeApplications"
     const appsSentQuery = query(collection(db, "applications"), where("applicantId", "==", userId));
     onSnapshot(appsSentQuery, (snapshot) => {
         const activeApps = snapshot.docs.filter(doc => doc.data().status !== "ArchivedByApplicant");
         
-        // Update Applications Sent Metric Display Box
+        // Update Applications Sent Metric Box
         const appsSentElement = document.getElementById("activeApplications");
         if (appsSentElement) {
             appsSentElement.textContent = activeApps.length;
         }
 
-        // 4. Extract items matching Pending evaluation status -> Targets id="savedJobs"
+        // 3. Extract items matching Pending evaluation status -> Targets id="savedJobs"
         const pendingApps = activeApps.filter(doc => doc.data().status === "Pending" || !doc.data().status);
         const pendingReviewElement = document.getElementById("savedJobs");
         if (pendingReviewElement) {
@@ -105,28 +140,24 @@ function startDashboardCounters(userId) {
     }, (err) => console.error("Error processing candidate tracking loops:", err));
 }
 
-// ==========================================
-// 4. Manage User Session Status & Live Profile Updates (Firebase Auth)
-// ==========================================
+// =========================================================================
+// 🔑 USER IDENTIFICATION & RUNTIME PROFILE SYNCHRONIZER
+// =========================================================================
 onAuthStateChanged(auth, (user) => {
     if (user) {
         const userId = user.uid;
         
-        // Display user email inside the main welcome card
         if (userInfo) userInfo.innerHTML = `Logged in securely as: <strong>${user.email}</strong>`;
         
-        // Enforce hard layout bounds on targets to isolate sizing distortion
         enforceAvatarStyling(userAvatar);
         enforceAvatarStyling(profileBtn);
 
-        // 1. Establish initial avatar fallback image settings
         const defaultImage = user.photoURL ? user.photoURL : "../assets/logo.png";
         const imageMarkup = buildAvatarHtml(defaultImage);
 
         if (userAvatar) userAvatar.innerHTML = imageMarkup;
         if (profileBtn) profileBtn.innerHTML = imageMarkup;
             
-        // Safe image monitoring loop across injected targets
         const triggerFallbackChecks = (element) => {
             if (!element) return;
             const imgElement = element.querySelector('.avatar-img-element');
@@ -138,21 +169,19 @@ onAuthStateChanged(auth, (user) => {
         triggerFallbackChecks(userAvatar);
         triggerFallbackChecks(profileBtn);
 
-        // 2. Continuous real-time listener targeting your precise Firestore profile parameters
+        // Real-Time Document Event Loop Listener
         const userProfileRef = doc(db, "users", userId);
-        
         onSnapshot(userProfileRef, (snapshot) => {
             const placeholder = document.getElementById("adminLinkPlaceholder");
             
             if (snapshot.exists()) {
                 const data = snapshot.data();
                 
-                // Read global dynamic UI configurations if defined in profile scope
                 if (data && data.settings && data.settings.theme) {
                     document.body.setAttribute("data-theme", data.settings.theme);
                 }
 
-                // 🛡️ INTEGRATED SECURITY ADMIN GATE CHECK
+                // 🛡️ SECURITY ADMINISTRATION GATE VERIFICATION
                 if (placeholder) {
                     if (data && data.isAdmin === true) {
                         const isAdminPage = window.location.pathname.includes("admin.html");
@@ -166,7 +195,7 @@ onAuthStateChanged(auth, (user) => {
                     }
                 }
 
-                // If a distinct custom profile image path string is returned from your collections, override and show it
+                // Custom User Uploaded Avatar Override Process
                 if (data && data.profileImage) {
                     const dynamicMarkup = buildAvatarHtml(data.profileImage);
                     if (userAvatar) {
@@ -179,27 +208,25 @@ onAuthStateChanged(auth, (user) => {
                     }
                 }
             } else {
-                // Clear the admin element if a document doesn't exist for the user yet
                 if (placeholder) placeholder.innerHTML = "";
-                console.log("Profile document does not exist yet. Running default layout values.");
+                console.log("Profile document does not exist yet. Running baseline defaults.");
             }
         }, (error) => {
             console.error("Live profile snapshot sync failed:", error);
         });
 
-        // 🛠️ MOVED OUTSIDE: This now executes automatically right when the user authenticates, 
-        // meaning brand-new accounts will log in and see dashboard metrics immediately!
+        // Initialize Data Counter Handlers Immediately Following Auth Complete
         startDashboardCounters(userId);
 
     } else {
-        // Secure Route: Force unauthenticated visitors back to the login screen
+        // Unauthenticated User Ejection Strategy
         window.location.href = 'login.html'; 
     }
 });
 
-// ==========================================
-// 5. Left Side Menu Button (Sidebar Toggle)
-// ==========================================
+// =========================================================================
+// 🚀 INTERACTION LOGIC & UI SIDE-BAR CONTROLLERS
+// =========================================================================
 if (menuBtn) {
     menuBtn.addEventListener('click', (e) => {
         e.stopPropagation(); 
@@ -208,32 +235,21 @@ if (menuBtn) {
     });
 }
 
-// Shared execution block routing target actions to handle layout triggers correctly
 const handleDropdownToggle = (e) => {
     e.stopPropagation(); 
     if (dropdownMenu) dropdownMenu.classList.toggle('active');
     if (sidebar) sidebar.classList.remove('active'); 
 };
 
-// ==========================================
-// 6. Right Side Profile Button (Avatar Dropdown Toggle)
-// ==========================================
-if (profileBtn) {
-    profileBtn.addEventListener('click', handleDropdownToggle);
-}
-if (userAvatar) {
-    userAvatar.addEventListener('click', handleDropdownToggle);
-}
+if (profileBtn) profileBtn.addEventListener('click', handleDropdownToggle);
+if (userAvatar) userAvatar.addEventListener('click', handleDropdownToggle);
 
-// ==========================================
-// 7. Click Outside to Close Active Menus
-// ==========================================
+// Click Outside Logic Canvas Dismissals
 document.addEventListener('click', (e) => {
     if (sidebar && sidebar.classList.contains('active') && !sidebar.contains(e.target) && e.target !== menuBtn) {
         sidebar.classList.remove('active');
     }
     
-    // Check elements so dropdown menu collapses safely when clicking content canvas fields
     const isProfileClick = profileBtn && profileBtn.contains(e.target);
     const isAvatarClick = userAvatar && userAvatar.contains(e.target);
     const isMenuClick = dropdownMenu && dropdownMenu.contains(e.target);
@@ -243,9 +259,9 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// ==========================================
-// 8. Handle Application Log Out
-// ==========================================
+// =========================================================================
+// 🔒 SECURE SHUTDOWN LIFECYCLE CONTROLLER
+// =========================================================================
 if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
         signOut(auth)
