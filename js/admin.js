@@ -1,7 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-// 🛠️ Direct Account Provisioning operations
-import { initializeFirestore, collection, onSnapshot, query, where, doc, getDoc, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, signOut, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { initializeFirestore, collection, onSnapshot, doc, getDoc, deleteDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCsWXLc_6ug45IGN4wL0-DoycYnxgx8dag",
@@ -16,6 +15,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = initializeFirestore(app, { experimentalAutoDetectLongPolling: true }); 
 const auth = getAuth(app); 
+
+// 🧠 MULTI-SESSION ISOLATION ENGINE: Creates an independent pipeline to register accounts 
+// without auto-logging you out of your Master Control profile session.
+const secondaryApp = initializeApp(firebaseConfig, "SecondaryAuthEcosystem");
+const secondaryAuth = getAuth(secondaryApp);
 
 const menuBtn = document.getElementById('menuBtn');
 const sidebar = document.getElementById('sidebar');
@@ -46,12 +50,11 @@ onAuthStateChanged(auth, async (user) => {
         const userData = userDocSnap.data();
         console.log("Payload data verified successfully from root collection:", userData);
 
-        // Strict verification: ensures the field is present, active, and explicitly a Boolean true value
         if (userData && userData.isAdmin === true) {
             console.log("🛡️ Access Verified: Master Command capabilities enabled.");
             renderAdminSidebarLink();
             startGlobalSystemPipelines();
-            setupFormInterceptors(); // ⚡ Initialize form handling after authorization verification pass
+            setupFormInterceptors(); 
         } else {
             console.error("🛑 Access Blocked: Account permissions unauthorized.");
             const detectedValue = userData ? userData.isAdmin : 'undefined';
@@ -108,7 +111,8 @@ function startGlobalSystemPipelines() {
             const row = `
                 <tr>
                     <td>
-                        <div class="primary-table-text">${escapeHtml(uData.email || 'Hidden Contact')}</div>
+                        <div class="primary-table-text">${escapeHtml(uData.fullName || 'Anonymous User')}</div>
+                        <div style="font-size:0.8rem; color:var(--text-muted);">${escapeHtml(uData.email || 'Hidden Contact')}</div>
                         <div class="secondary-table-id">${uId}</div>
                     </td>
                     <td><span class="role-badge">${escapeHtml(uData.role || 'Job Seeker')}</span></td>
@@ -203,7 +207,7 @@ function startGlobalSystemPipelines() {
 }
 
 // =========================================================================
-// 🛠️ REPAIRED & AUTO-MAPPED FORM INTERCEPTOR PROTOCOL
+// 🛠️ ISOLATED DIRECT LIVE SIGN-IN USER PROVISIONING INTERCEPTOR
 // =========================================================================
 function setupFormInterceptors() {
     const addUserForm = document.getElementById("addUserForm");
@@ -214,69 +218,61 @@ function setupFormInterceptors() {
 
     addUserForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-        console.log("⚡ Injection hook triggered. Processing user registration variables...");
+        console.log("⚡ Secure Isolated Account Provisioning sequence initialization triggered...");
 
-        // Safeguarded fallbacks to support structural iterations across your HTML forms
-        const nameField = document.getElementById("newUid") || document.getElementById("newName"); 
-        const emailField = document.getElementById("newEmail");
-        const phoneField = document.getElementById("newPhone");
-        const mixedSelectorField = document.getElementById("newRole") || document.getElementById("newLocation"); 
-        const passwordField = document.getElementById("newPassword");
+        // Direct DOM value capturing mapping your custom registration layout
+        const nameVal = document.getElementById("newName").value.trim();
+        const emailVal = document.getElementById("newEmail").value.trim();
+        const phoneVal = document.getElementById("newPhone").value.trim();
+        const locationVal = document.getElementById("newLocation").value;
+        const passwordVal = document.getElementById("newPassword").value;
+        const confirmPasswordVal = document.getElementById("confirmPassword").value;
 
-        if (!nameField || !emailField) {
-            alert("Application Crash Prevented:\nCritical form fields missing from the active view document.");
+        // Validation gate checking
+        if (passwordVal !== confirmPasswordVal) {
+            alert("❌ Entry Rejection: Passwords do not match!");
             return;
         }
 
-        const fullNameVal = nameField.value.trim();
-        const emailVal = emailField.value.trim();
-        const phoneVal = phoneField ? phoneField.value.trim() : "";
-        const passwordVal = passwordField ? passwordField.value : "";
-        
-        let locationVal = "Not Specified";
-        let determinedRole = "Job Seeker";
-
-        if (mixedSelectorField) {
-            const selectedOption = mixedSelectorField.options[mixedSelectorField.selectedIndex];
-            
-            // Text is what the admin physically sees on screen ('Bungoma', 'Busia', etc.)
-            locationVal = selectedOption.text; 
-            
-            // Value is the internal structural property mapping ('Job Seeker', 'Employer', 'Admin')
-            if (selectedOption.value === "Admin") {
-                determinedRole = "Admin";
-            } else if (selectedOption.value === "Employer") {
-                determinedRole = "Employer";
-            } else if (selectedOption.value === "Job Seeker") {
-                determinedRole = "Job Seeker";
-            }
+        if (passwordVal.length < 6) {
+            alert("❌ Entry Rejection: Passwords must be at least 6 characters long.");
+            return;
         }
 
-        // Generates clean platform tracing keys
-        const generatedUserUid = "INJECT_" + Date.now();
-
         try {
-            console.log(`Writing registration profile node directly to Firebase path: users/${generatedUserUid}`);
+            console.log("Provisioning authentication parameters via independent secondary ecosystem routing...");
             
-            await setDoc(doc(db, "users", generatedUserUid), {
-                uid: generatedUserUid,
-                fullName: fullNameVal,
+            // Step 1: Force authenticatable login credentials inside Firebase Authentication Engine
+            const userCredential = await createUserWithEmailAndPassword(secondaryAuth, emailVal, passwordVal);
+            const dynamicUid = userCredential.user.uid;
+            
+            console.log(`Auth node registration verified. Generated System ID Reference Key: ${dynamicUid}`);
+
+            // Step 2: Push database metadata configurations to user collection using the exact generated UID
+            await setDoc(doc(db, "users", dynamicUid), {
+                uid: dynamicUid,
+                fullName: nameVal,
                 email: emailVal,
                 phone: phoneVal,
-                location: locationVal,
-                role: determinedRole,
-                passwordValue: passwordVal,
-                isAdmin: determinedRole === "Admin", 
-                createdAt: new Date().toISOString(),
+                location: locationVal || "Not Specified",
+                role: "Job Seeker", // Standardizing created accounts without role field clutter
+                isAdmin: false, 
+                createdAt: serverTimestamp(),
                 accountStatus: "active",
                 profileCompleted: true
             });
 
-            alert(`✅ Account Injected Successfully!\n\nUser Profile document forced into database tracking node registry with tracking UID:\n${generatedUserUid}`);
+            console.log("Firestore profile synchronized successfully under tracking UID.");
+
+            // Step 3: Evict user session cache token from secondary scope immediately
+            await secondaryAuth.signOut();
+
+            alert(`🎉 Success!\n\nAccount for "${nameVal}" has been registered successfully. They can now immediately log into the platform with their email.`);
             addUserForm.reset();
+
         } catch (err) {
-            console.error("❌ Firestore Engine Injection Rejection Sequence:", err);
-            alert(`Database Schema Rejection Error:\n${err.message}`);
+            console.error("❌ Isolated Account Creation Pipeline failure sequence triggered:", err);
+            alert(`Profile Allocation Fault:\n${err.message}`);
         }
     });
 }

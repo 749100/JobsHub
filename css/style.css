@@ -1,6 +1,7 @@
 /* =========================================================================
-   1. CORE VALUES & GLOBAL VARIABLES
+   🔒 JOSHIPRO SYSTEM ARCHITECTURE - CORE AUTHENTICATION VISUAL CORE
    ========================================================================= */
+
 :root {
     --bg-dark: #0f172a;
     --card-bg: rgba(30, 41, 59, 0.7);
@@ -16,7 +17,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Plus Jakarta Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
@@ -28,44 +29,13 @@ body {
     align-items: center;
     overflow-x: hidden;
     position: relative;
+    padding: 24px;
 }
 
 /* =========================================================================
-   2. RECRUITER SIDEBAR DOCK SYSTEM (DESKTOP INTERFACE RULES)
+   ✨ CHROMATIC ANIMATED BACKGROUND SYSTEMS
    ========================================================================= */
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 260px;
-    height: 100vh;
-    background: #111827;
-    border-right: 1px solid var(--border-color);
-    padding: 2rem 1.5rem;
-    z-index: 100;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
 
-/* Dynamic dropdown menu rules */
-.dropdown-menu {
-    display: none;
-    position: absolute;
-    right: 0;
-    top: 60px;
-    background: #1e293b;
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    min-width: 200px;
-    z-index: 200;
-}
-
-.dropdown-menu.show {
-    display: block !important;
-}
-
-/* =========================================================================
-   3. ORIGINAL LOGIN & REGISTRATION FRAMEWORK MARKUP
-   ========================================================================= */
 .background-decor {
     position: absolute;
     width: 400px;
@@ -73,7 +43,8 @@ body {
     border-radius: 50%;
     filter: blur(80px);
     z-index: 1;
-    opacity: 0.4;
+    opacity: 0.3;
+    pointer-events: none;
 }
 
 .animate-blob1 {
@@ -100,6 +71,315 @@ body {
     }
 }
 
+/* =========================================================================
+   🎛️ SYSTEM WRAPPERS & GLASSMORPHISM LAYOUT PANELS
+   ========================================================================= */
+
+.auth-container-wrapper {
+    width: 100%;
+    max-width: 550px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.admin-form-section .form-container {
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border-color);
+    padding: 2.5rem;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+}
+
+/* =========================================================================
+   📝 CORE BRANDING & TYPOGRAPHY NODES
+   ========================================================================= */
+
+.auth-brand-header {
+    text-align: center;
+}
+
+.auth-brand-header .logo-wrapper {
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.5rem;
+    color: var(--text-main);
+}
+
+.auth-brand-header .logo-wrapper i {
+    color: #a855f7;
+    margin-right: 0.35rem;
+    filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.4));
+}
+
+.auth-brand-header .logo-wrapper span,
+.gradient-text {
+    background: var(--primary-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.auth-brand-header p,
+.form-header p {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+.form-header {
+    margin-bottom: 2rem;
+}
+
+.form-header h2 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* =========================================================================
+   📥 COMPREHENSIVE INPUT GRID CONFIGURATIONS
+   ========================================================================= */
+
+.form-group {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--text-main);
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 12px var(--glow-color);
+    background: rgba(15, 23, 42, 0.8);
+}
+
+.form-split-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+/* =========================================================================
+   🎚️ SELECT DROPDOWN OVERLAY REFINEMENTS
+   ========================================================================= */
+
+.form-group select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    padding-right: 2.75rem;
+}
+
+.form-group:has(select)::after {
+    content: "\f107";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    right: 1.25rem;
+    bottom: 1.1rem;
+    color: var(--text-muted);
+    pointer-events: none;
+    transition: transform 0.3s, color 0.3s;
+}
+
+.form-group:has(select):focus-within::after {
+    transform: rotate(180deg);
+    color: #6366f1;
+}
+
+.form-group select option {
+    background: #1e293b;
+    color: var(--text-main);
+}
+
+/* =========================================================================
+   👁️ SECURITY INTERFACES & PASSWORDS CONTROLS
+   ========================================================================= */
+
+.password-field-container {
+    position: relative;
+    width: 100%;
+}
+
+.password-field-container input {
+    padding-right: 3rem;
+}
+
+.toggle-visibility-trigger {
+    position: absolute;
+    right: 1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: color 0.2s;
+    z-index: 5;
+    padding: 4px;
+}
+
+.toggle-visibility-trigger:hover {
+    color: var(--text-main);
+}
+
+/* =========================================================================
+   ⚖️ LEGAL COMPLIANCE & BUTTON SELECTION LOOPS
+   ========================================================================= */
+
+.compliance-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    user-select: none;
+}
+
+.compliance-row input[type="checkbox"] {
+    margin-top: 0.2rem;
+    accent-color: #a855f7;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.compliance-row a {
+    color: #6366f1;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.compliance-row a:hover {
+    text-decoration: underline;
+}
+
+/* =========================================================================
+   🚀 DEPLOYMENT EXECUTIVE TRANSACTION BUTTON
+   ========================================================================= */
+
+.btn-submit-inject {
+    width: 100%;
+    padding: 1rem;
+    background: var(--primary-grad);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 0.2s, box-shadow 0.3s;
+}
+
+.btn-submit-inject:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px var(--glow-color);
+}
+
+.btn-submit-inject:active {
+    transform: translateY(0);
+}
+
+.btn-submit-inject:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* =========================================================================
+   🔗 LOWER SUBSYSTEM ROUTING SEGMENTS
+   ========================================================================= */
+
+.auth-routing-footer {
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.auth-routing-footer a {
+    color: #a855f7;
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 4px;
+}
+
+.auth-routing-footer a:hover {
+    text-decoration: underline;
+    color: #6366f1;
+}
+
+/* =========================================================================
+   🛑 SYSTEM ERROR STRUCTURAL MATRIX HANDLERS
+   ========================================================================= */
+
+.form-group.invalid input,
+.form-group.invalid select {
+    border-color: var(--error-color);
+    box-shadow: 0 0 8px rgba(244, 63, 94, 0.2);
+    background: rgba(244, 63, 94, 0.03);
+}
+
+.form-group.invalid label {
+    color: var(--error-color);
+}
+
+/* =========================================================================
+   📱 HIGH-PERFORMANCE SMARTPHONE RESPONSIVE BREAKPOINT
+   ========================================================================= */
+
+@media screen and (max-width: 768px) {
+    body {
+        padding: 16px;
+    }
+
+    .form-split-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .admin-form-section .form-container {
+        padding: 1.75rem;
+    }
+}
+
 .login-container {
     background: var(--card-bg);
     backdrop-filter: blur(16px);
@@ -107,210 +387,175 @@ body {
     border: 1px solid var(--border-color);
     padding: 2.5rem;
     border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
     width: 100%;
-    max-width: 420px;
+    max-width: 500px;
     z-index: 10;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    display: flex;
+    /* 🛠️ Added to control container alignment layout */
+    flex-direction: column;
+    /* 🛠️ Ensures items flow top-to-bottom sequentially */
 }
 
-.brand {
+/* 🎯 Explicitly forces centering alignment across the brand block wrapper */
+.login-container .brand,
+.auth-brand-header {
     text-align: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     margin-bottom: 2rem;
 }
 
-.brand-icon {
-    font-size: 2.5rem;
-    background: var(--primary-grad);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 0.5rem;
+/* Ensure branding text alignment reads uniformly centered */
+.auth-brand-header .logo-wrapper,
+.login-container .brand h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    text-align: center;
+    width: 100%;
 }
 
-.brand h1 {
-    font-size: 2rem;
-    letter-spacing: 1px;
-}
-
-.gradient-text {
-    background: var(--primary-grad);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.subtitle {
-    color: var(--text-muted);
-    font-size: 0.875rem;
-    margin-top: 0.25rem;
-}
-
+/* Map input group positioning layers */
 .input-group {
     position: relative;
     margin-bottom: 1.5rem;
-}
-
-.input-icon {
-    position: absolute;
-    left: 1rem;
-    top: 1rem;
-    color: var(--text-muted);
-    transition: color 0.3s;
-    z-index: 2;
-}
-
-.input-group input,
-.input-group select {
     width: 100%;
-    padding: 1rem 1rem 1rem 2.75rem;
+}
+
+/* Align old input tags into your new modern dashboard aesthetics */
+.input-group input {
+    width: 100%;
+    padding: 1rem 1.25rem 1rem 3rem !important;
+    /* Make room for the prefix icon */
     background: rgba(15, 23, 42, 0.6);
     border: 1px solid var(--border-color);
     border-radius: 12px;
     color: var(--text-main);
-    font-size: 1rem;
+    font-size: 0.95rem;
     outline: none;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
 }
 
-/* Specific select dropdown modifications */
-.input-group select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    cursor: pointer;
-    padding-right: 2.75rem;
-    /* Space for custom caret arrow */
-}
-
-/* Custom Dropdown Chevron Positioner */
-.input-group:has(select)::after {
-    content: "\f107";
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-    position: absolute;
-    right: 1.25rem;
-    top: 1rem;
-    color: var(--text-muted);
-    pointer-events: none;
-    transition: transform 0.3s, color 0.3s;
-    z-index: 2;
-}
-
-/* Rotate indicator icon when active */
-.input-group:has(select):focus-within::after {
-    transform: rotate(180deg);
-    color: #6366f1;
-}
-
-/* Style the native drop options menu list overlay */
-.input-group select option {
-    background: #1e293b;
-    color: var(--text-main);
-    padding: 0.75rem;
-}
-
-.input-group select option[disabled] {
-    color: var(--text-muted);
-}
-
-.input-group label {
-    position: absolute;
-    left: 2.75rem;
-    top: 1rem;
-    color: var(--text-muted);
-    transition: all 0.3s;
-    pointer-events: none;
-    z-index: 2;
-}
-
-/* Standard Input & Dropdown Select animation parameters */
-.input-group input:focus~label,
-.input-group input:not(:placeholder-shown)~label,
-.input-group select:focus~label,
-.input-group select:valid~label {
-    top: -0.6rem;
-    left: 1rem;
-    font-size: 0.75rem;
-    background: #1e293b;
-    padding: 0 0.4rem;
-    border-radius: 4px;
-    color: #a855f7;
-    z-index: 3;
-}
-
-.input-group input:focus,
-.input-group select:focus {
+.input-group input:focus {
     border-color: #6366f1;
     box-shadow: 0 0 12px var(--glow-color);
+    background: rgba(15, 23, 42, 0.8);
 }
 
-.input-group input:focus~.input-icon,
-.input-group select:focus~.input-icon {
+/* Input Icon positioning adjustments */
+.input-group .input-icon {
+    position: absolute;
+    left: 1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    transition: color 0.3s;
+    z-index: 5;
+}
+
+.input-group input:focus~.input-icon {
     color: #6366f1;
 }
 
-.toggle-password {
+/* Clean up Floating Label transforms */
+.input-group label {
     position: absolute;
-    right: 1rem;
-    top: 1rem;
+    left: 3rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+/* Float labels smoothly above inputs on focus or if text exists */
+.input-group input:focus~label,
+.input-group input:not(:placeholder-shown)~label {
+    top: -6px;
+    left: 0.75rem;
+    font-size: 0.75rem;
+    padding: 0 6px;
+    background: #1e293b;
+    color: #6366f1;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+/* Align eye toggle visibility triggers to the password field */
+.input-group .toggle-password {
+    position: absolute;
+    right: 1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
     cursor: pointer;
     color: var(--text-muted);
-    z-index: 2;
+    transition: color 0.2s;
+    z-index: 5;
+    padding: 4px;
 }
+
+.input-group .toggle-password:hover {
+    color: var(--text-main);
+}
+
+/* Error message typography alignment definitions */
+.error-msg {
+    color: var(--error-color);
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-top: 4px;
+    display: none;
+    /* Controlled via JS input metrics */
+}
+
+.input-group.invalid input {
+    border-color: var(--error-color);
+}
+
+/* =========================================================================
+   🔗 ACTIONS, REMEMBER SELECTION, AND SOCIAL PLATFORM GRID
+   ========================================================================= */
 
 .actions {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.85rem;
     margin-bottom: 1.5rem;
+    font-size: 0.875rem;
 }
 
 .remember-me {
     display: flex;
     align-items: center;
-    cursor: pointer;
+    gap: 0.5rem;
     color: var(--text-muted);
+    cursor: pointer;
+    user-select: none;
 }
 
 .remember-me input {
-    display: none;
-}
-
-.checkmark {
+    accent-color: #a855f7;
     width: 16px;
     height: 16px;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    margin-right: 8px;
-    display: inline-block;
-    position: relative;
-    background: rgba(15, 23, 42, 0.6);
-}
-
-.remember-me input:checked~.checkmark {
-    background: var(--primary-grad);
-    border-color: transparent;
-}
-
-.remember-me input:checked~.checkmark::after {
-    content: "✓";
-    position: absolute;
-    color: white;
-    font-size: 10px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
 
 .forgot-pass {
     color: #6366f1;
     text-decoration: none;
-    transition: opacity 0.3s;
+    font-weight: 500;
 }
 
 .forgot-pass:hover {
     text-decoration: underline;
 }
 
+/* Match the Login submission buttons to the system register button */
 .submit-btn {
     width: 100%;
     padding: 1rem;
@@ -333,10 +578,7 @@ body {
     box-shadow: 0 8px 20px var(--glow-color);
 }
 
-.submit-btn:active {
-    transform: translateY(0);
-}
-
+/* Connect divider elements */
 .divider {
     text-align: center;
     margin: 1.5rem 0;
@@ -355,34 +597,38 @@ body {
 }
 
 .divider span {
-    background: #1e293b;
-    padding: 0 1rem;
+    background: #161f32;
+    padding: 0 10px;
     color: var(--text-muted);
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     position: relative;
     z-index: 2;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
+/* Connect alternative sign-in vectors */
 .social-login {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 1rem;
     margin-bottom: 1.5rem;
 }
 
 .social-btn {
-    flex: 1;
-    padding: 0.75rem;
-    background: rgba(15, 23, 42, 0.6);
+    background: rgba(15, 23, 42, 0.4);
     border: 1px solid var(--border-color);
+    padding: 0.75rem;
     border-radius: 12px;
     color: var(--text-main);
-    font-size: 1.2rem;
     cursor: pointer;
-    transition: background 0.3s;
+    font-size: 1.25rem;
+    transition: all 0.2s ease;
 }
 
 .social-btn:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(30, 41, 59, 0.8);
+    border-color: #6366f1;
 }
 
 .footer-text {
@@ -397,113 +643,12 @@ body {
     font-weight: 600;
 }
 
-.error-msg {
-    color: var(--error-color);
-    font-size: 0.75rem;
-    margin-top: 0.25rem;
-    display: none;
+.footer-text a:hover {
+    text-decoration: underline;
 }
 
-.input-group.invalid input,
-.input-group.invalid select {
-    border-color: var(--error-color);
-}
-
-.input-group.invalid .error-msg {
-    display: block;
-}
-
-/* =========================================================================
-   4. COMPREHENSIVE SMARTPHONE RESPONSIVE BREAKPOINT PATCH (768PX & BELOW)
-   ========================================================================= */
-@media screen and (max-width: 768px) {
-
-    /* A. FORCE INTERACTIVE SIDEBAR OUT OF INTERFACE BOUNDS ON MOBILE START */
-    .sidebar {
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 270px !important;
-        height: 100vh !important;
-        background-color: #0f172a !important;
-        /* Matches --bg-dark layer palette */
-        z-index: 999999 !important;
-        /* Layer directly over data elements */
-        display: block !important;
-        visibility: visible !important;
-
-        /* Slide hidden completely off the screen workspace left */
-        transform: translateX(-100%) !important;
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    }
-
-    /* B. INTERACTIVE RESPONSE: Bring drawer into clear focus view */
-    .sidebar.active {
-        transform: translateX(0) !important;
-        box-shadow: 8px 0 32px rgba(0, 0, 0, 0.5) !important;
-    }
-
-    /* C. MOBILE CORECONTAINER RESIZING STRATEGY */
-    .dashboard-wrapper,
-    .main-content {
-        width: 100% !important;
-        max-width: 100vw !important;
-        padding: 16px 12px !important;
-        overflow-x: hidden !important;
-        box-sizing: border-box !important;
-    }
-
-    /* D. JOB POSTING CONTROL ITEM CONTAINER BLOCKS */
-    .manage-item {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: stretch !important;
-        gap: 16px !important;
-        padding: 16px !important;
-        width: 100% !important;
-        background: rgba(30, 41, 59, 0.4) !important;
-        border-radius: 16px !important;
-        border: 1px solid var(--border-color) !important;
-        box-sizing: border-box !important;
-        margin-bottom: 12px !important;
-    }
-
-    .manage-info {
-        width: 100% !important;
-        text-align: left !important;
-    }
-
-    .manage-info h4 {
-        font-size: 1.15rem !important;
-        margin-bottom: 6px !important;
-        word-break: break-word !important;
-    }
-
-    .manage-info p {
-        font-size: 0.85rem !important;
-        line-height: 1.4 !important;
-        white-space: normal !important;
-        /* Wrapped long metadata strings */
-    }
-
-    /* E. SYMMETRIC TAP ACTION INTERACTION BUTTON LAYOUTS */
-    .manage-actions {
-        display: flex !important;
-        flex-direction: row !important;
-        gap: 10px !important;
-        width: 100% !important;
-    }
-
-    .manage-actions button,
-    .review-btn,
-    .delete-btn {
-        flex: 1 !important;
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        padding: 12px 8px !important;
-        font-size: 0.85rem !important;
-        white-space: nowrap !important;
-        border-radius: 8px !important;
+@media screen and (max-width: 480px) {
+    .login-container {
+        padding: 1.75rem;
     }
 }

@@ -4,11 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JOSHIPRO - Post a Job</title>
-    <!-- External Icon Styling Library -->
-    <link rel="stylesheet" href="https://jsdelivr.net">
-    <!-- Links outward to your independent CSS folder layout sheets -->
+    <title>JOBSHUB — Post a Job</title>
+    <link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/postJobs.css">
 </head>
 
@@ -19,13 +18,11 @@
 
     <div class="dashboard-wrapper">
 
-        <!-- Top Navigation Bar Layout -->
         <header class="navbar">
             <div class="nav-left">
                 <button id="menuBtn" class="menu-btn">☰ Menu</button>
-                <div class="logo"><a href="dashboard.html">JOSHI<span class="gradient-text">PRO</span></a></div>
+                <div class="logo"><a href="dashboard.html">JOBS<span class="gradient-text">HUB</span></a></div>
 
-                <!-- Drawer Sidebar Component -->
                 <aside id="sidebar" class="sidebar">
                     <div class="sidebar-brand">Dashboard</div>
                     <nav class="sidebar-menu">
@@ -33,11 +30,9 @@
                         <a href="findJobs.html">Find Jobs</a>
                         <a href="postJobs.html"
                             style="background: rgba(255, 255, 255, 0.04); color: var(--text-main); text-shadow: 0 0 8px var(--glow-color); padding-left: 1.6rem;">Post
-                            Jobs
-                        
+                            Jobs</a>
                         <a href="managePostings.html">Manage Postings</a>
                         <a href="reviewApplicants.html">Review Applicants</a>
-                        </a>
                         <a href="applications.html">My Applications</a>
 
                         <div id="adminLinkPlaceholder"></div>
@@ -63,11 +58,10 @@
             </div>
         </header>
 
-        <!-- Main Marketplace Submission Content Form Area -->
         <main class="main-content">
             <div class="form-container welcome-card">
                 <div class="form-header">
-                    <h2>Post a New Job Opening 💼</h2>
+                    <h2>Post a New Job 💼</h2>
                     <p>Fill out the details below to publish your vacancy live onto the platform marketplace.</p>
                 </div>
 
@@ -77,11 +71,11 @@
                         <input type="text" id="jobTitle" required placeholder="e.g. Frontend Web Developer">
                     </div>
 
-                    <div class="form-row-layout">
+                    <div class="form-split-row">
                         <div class="form-group">
                             <label for="jobCategory">Job Category</label>
                             <select id="jobCategory" required>
-                                <option value="" disabled selected>Select category</option>
+                                <option value="" disabled selected hidden>Select category</option>
                                 <option value="Electronics">Electronics</option>
                                 <option value="Construction">Construction</option>
                                 <option value="Catering">Catering</option>
@@ -97,7 +91,7 @@
                         <div class="form-group">
                             <label for="jobType">Job Type</label>
                             <select id="jobType" required>
-                                <option value="" disabled selected>Select job type</option>
+                                <option value="" disabled selected hidden>Select job type</option>
                                 <option value="Full-Time">Full-Time</option>
                                 <option value="Part-Time">Part-Time</option>
                                 <option value="Contract">Contract</option>
@@ -112,15 +106,34 @@
                         <input type="text" id="companyName" required placeholder="e.g. JoshiPro Tech">
                     </div>
 
-                    <div class="form-row-layout">
+                    <div class="form-split-row">
                         <div class="form-group">
-                            <label for="location">Location</label>
-                            <input type="text" id="location" required placeholder="e.g. Nairobi, Kenya or Remote">
+                            <label for="locationCounty">Target Deployment County</label>
+                            <select id="locationCounty" required>
+                                <option value="" disabled selected hidden>Select county...</option>
+                                <option value="Bungoma">Bungoma</option>
+                                <option value="Busia">Busia</option>
+                                <option value="Kakamega">Kakamega</option>
+                                <option value="Vihiga">Vihiga</option>
+                                <option value="Mombasa">Mombasa</option>
+                                <option value="Nairobi">Nairobi</option>
+                                <option value="Kwale">Kwale</option>
+                                <option value="Kilifi">Kilifi</option>
+                                <option value="Tana River">Tana River</option>
+                                <option value="Lamu">Lamu</option>
+                                <option value="Taita Taveta">Taita Taveta</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="salary">Salary Range</label>
-                            <input type="text" id="salary" required placeholder="e.g. KSh 50,000 - 70,000 / month">
+                            <label for="locationDetails">Specific Area</label>
+                            <input type="text" id="locationDetails" required
+                                placeholder="e.g. Westlands, Upper Hill, or Remote">
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="salary">Salary</label>
+                        <input type="text" id="salary" required placeholder="e.g. KSh70,000 / month">
                     </div>
 
                     <div class="form-group">
@@ -129,51 +142,34 @@
                             placeholder="Describe responsibilities, stack requirements, and application instructions..."></textarea>
                     </div>
 
-                    <button type="submit" class="submit-btn" id="submitBtn">
-                        Publish Job Listing <i class="fa-solid fa-paper-plane" style="margin-left: 0.4rem;"></i>
+                    <button type="submit" class="btn-submit-inject" id="submitBtn">
+                        Post Job <i class="fa-solid fa-paper-plane" style="margin-left: 0.4rem;"></i>
                     </button>
                 </form>
             </div>
 
-            <div class="admin-panel welcome-card" style="margin-top: 2rem;">
-                <div class="form-header"
-                    style="margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
-                    <h2>Live Active Management Workspace ⚙️</h2>
-                    <p>Review job applicants and delete posts directly from the database.
-                    </p>
-                </div>
-                <div id="manageJobsContainer" class="manage-jobs-list">
-                    <!-- Data handles stream here dynamically via JS -->
-                </div>
-            </div>
-
-            <!-- Beautifully Separated and Repaired Shortcut Navigation Links -->
-            <div class="navigation-link-container">
-                <a href="managePostings.html" class="navigation-link"><i class="fa-solid fa-briefcase"></i> Manage
-                    Postings</a>
-                <a href="reviewApplicants.html" class="navigation-link"><i class="fa-solid fa-users"></i> Review
+            <div class="navigation-link-container" style="margin-top: 24px; display: flex; gap: 16px;">
+                <a href="managePostings.html" class="navigation-link"
+                    style="color: var(--text-muted); text-decoration: none;"><i class="fa-solid fa-briefcase"></i>
+                    Manage Postings</a>
+                <a href="reviewApplicants.html" class="navigation-link"
+                    style="color: var(--text-muted); text-decoration: none;"><i class="fa-solid fa-users"></i> Review
                     Applicants</a>
             </div>
-
-            <!-- ADMINISTRATIVE MANAGEMENT PANEL -->
-            
-
         </main>
 
-        <!-- Glassmorphic Dashboard Compact Footer -->
         <footer class="dashboard-footer">
             <div class="footer-links">
-                <a href="helpdesk.html" class="footer-btn"><i class="fa-solid fa-headset"></i> Help Desk</a>
+                <a href="help.html" class="footer-btn"><i class="fa-solid fa-headset"></i> Help Desk</a>
                 <a href="about.html" class="footer-btn"><i class="fa-solid fa-circle-info"></i> About Us</a>
             </div>
             <div class="footer-copyright">
-                &copy; 2026 JOSHIPRO. All rights reserved.
+                &copy; 2026 JOBSHUB. All rights reserved.
             </div>
         </footer>
 
     </div>
 
-    <!-- Isolated Modular Programming Code Layers -->
     <script type="module" src="../js/postJobs.js"></script>
     <script type="module" src="../js/dashboard.js"></script>
 </body>

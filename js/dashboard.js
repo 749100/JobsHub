@@ -73,7 +73,7 @@ function startDashboardCounters(userId) {
         }
     }, (err) => console.error("Error updates counting total jobs:", err));
 
-    // 🛠️ 2. FIXED: Tracks and aggregates jobs posted exclusively by the current User ID session -> Targets id="myJobsCounter"
+    // 2. Tracks and aggregates jobs posted exclusively by the current User ID session -> Targets id="myJobsCounter"
     const myJobsQuery = query(collection(db, "jobs"), where("postedBy", "==", userId));
     onSnapshot(myJobsQuery, (snapshot) => {
         const myJobsCountElement = document.getElementById("myJobsCounter");
@@ -83,7 +83,6 @@ function startDashboardCounters(userId) {
         }
     }, (err) => {
         console.error("Error updates counting your posted jobs:", err);
-        // Quick tip: If you see an index build error here in the console, click the link Firebase provides to auto-generate it!
     });
 
     // 3. Live count candidate submission interactions -> Targets id="activeApplications" and id="savedJobs"
@@ -143,6 +142,8 @@ onAuthStateChanged(auth, (user) => {
         const userProfileRef = doc(db, "users", userId);
         
         onSnapshot(userProfileRef, (snapshot) => {
+            const placeholder = document.getElementById("adminLinkPlaceholder");
+            
             if (snapshot.exists()) {
                 const data = snapshot.data();
                 
@@ -152,8 +153,6 @@ onAuthStateChanged(auth, (user) => {
                 }
 
                 // 🛡️ INTEGRATED SECURITY ADMIN GATE CHECK
-                // This utilizes the snapshot you already established to instantly reveal the purple gate key
-                const placeholder = document.getElementById("adminLinkPlaceholder");
                 if (placeholder) {
                     if (data && data.isAdmin === true) {
                         const isAdminPage = window.location.pathname.includes("admin.html");
@@ -163,7 +162,7 @@ onAuthStateChanged(auth, (user) => {
                             </a>
                         `;
                     } else {
-                        placeholder.innerHTML = ""; // Force clear context for standard audience nodes
+                        placeholder.innerHTML = ""; 
                     }
                 }
 
@@ -179,12 +178,17 @@ onAuthStateChanged(auth, (user) => {
                         triggerFallbackChecks(profileBtn);
                     }
                 }
+            } else {
+                // Clear the admin element if a document doesn't exist for the user yet
+                if (placeholder) placeholder.innerHTML = "";
+                console.log("Profile document does not exist yet. Running default layout values.");
             }
         }, (error) => {
             console.error("Live profile snapshot sync failed:", error);
         });
 
-        // Start dynamic metrics counters engine calculations using your exact HTML target structure
+        // 🛠️ MOVED OUTSIDE: This now executes automatically right when the user authenticates, 
+        // meaning brand-new accounts will log in and see dashboard metrics immediately!
         startDashboardCounters(userId);
 
     } else {

@@ -279,3 +279,33 @@ input:checked+.slider:before {
         white-space: nowrap !important;
     }
 }
+/* =========================================================================
+   🖼️ AVATAR AND PROFILE IMAGE MAPPING DYNAMICS
+   ========================================================================= */
+
+/* Use this layout style block if you build a preview module in settings.html */
+.profile-avatar-preview {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 3px solid #a855f7;
+    box-shadow: 0 0 15px var(--glow-color);
+    margin: 0 auto 1.5rem auto;
+    overflow: hidden;
+    background: rgba(15, 23, 42, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Force image tags inside wrappers to scale proportionally without squeezing */
+.profile-avatar-preview img,
+#userAvatar img,
+.avatarImg {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    /* 🎯 THIS IS THE FIX: Clips edges cleanly instead of compressing */
+    border-radius: 50%;
+    display: block;
+}

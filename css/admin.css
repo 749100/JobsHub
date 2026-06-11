@@ -27,6 +27,7 @@ body {
     color: var(--text-main);
     min-height: 100vh;
     overflow-x: hidden;
+    width: 100%;
 }
 
 /* =========================================================================
@@ -167,6 +168,7 @@ body {
 .admin-canvas {
     margin-left: 260px;
     padding: 110px 40px 40px 40px;
+    width: auto;
 }
 
 .welcome-banner h1 {
@@ -280,26 +282,6 @@ body {
 
 .card-pink:hover {
     border-color: rgba(236, 72, 153, 0.4);
-}
-
-/* =========================================================================
-   📱 RESPONSIVE BREAKPOINT CONTROLS
-   ========================================================================= */
-@media (max-width: 992px) {
-    .admin-sidebar {
-        transform: translateX(-100%);
-        /* Hides sidebar natively on tablets */
-    }
-
-    .admin-sidebar.active {
-        transform: translateX(0);
-        /* Reveal when toggled */
-    }
-
-    .admin-canvas {
-        margin-left: 0;
-        padding: 100px 20px 20px 20px;
-    }
 }
 
 /* =========================================================================
@@ -470,6 +452,7 @@ tr:last-child td {
     font-size: 0.9rem;
     outline: none;
     transition: border-color 0.2s;
+    width: 100%;
 }
 
 .form-group input:focus,
@@ -495,7 +478,6 @@ tr:last-child td {
     transform: translateY(-1px);
 }
 
-/* Optimization components inside live database loops */
 .primary-table-text {
     font-weight: 600;
     color: var(--text-main);
@@ -532,4 +514,137 @@ tr:last-child td {
     background: rgba(234, 179, 8, 0.15);
     color: #facc15;
     border: 1px solid rgba(234, 179, 8, 0.25);
+}
+
+/* =========================================================================
+   📱 MASTER UNIFIED MOBILE RESPONSIVE ENGINE (FIXES SYSTEM BREAKOUTS)
+   ========================================================================= */
+
+/* Tablet & Intermediate Small Screen Breakpoint */
+@media screen and (max-width: 1024px) {
+    .admin-sidebar {
+        transform: translateX(-100%);
+    }
+
+    .admin-sidebar.active {
+        transform: translateX(0);
+    }
+
+    .admin-canvas {
+        margin-left: 0 !important;
+        padding: 95px 20px 30px 20px !important;
+    }
+
+    .metrics-grid {
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)) !important;
+        gap: 16px;
+    }
+
+    .admin-layout-wrapper,
+    #adminDashboard {
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        gap: 16px;
+    }
+}
+
+/* Smartphone Strict Structural Constraints */
+@media screen and (max-width: 600px) {
+
+    /* Header optimization to prevent badge overlapping titles */
+    .admin-header {
+        padding: 0 12px !important;
+    }
+
+    .admin-logo {
+        font-size: 1.1rem !important;
+    }
+
+    .security-badge {
+        font-size: 0.75rem !important;
+        padding: 4px 8px !important;
+    }
+
+    /* Core Canvas Adjustments */
+    .admin-canvas {
+        padding: 90px 12px 20px 12px !important;
+    }
+
+    /* Typography fixes to stop edge pushes */
+    .welcome-banner h1 {
+        font-size: 1.5rem !important;
+        line-height: 1.2;
+    }
+
+    .welcome-banner p {
+        font-size: 0.9rem !important;
+        margin-bottom: 20px;
+    }
+
+    /* Stacking Metric Metrics into single visual cards */
+    .metrics-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+
+    .metric-card {
+        padding: 16px !important;
+        gap: 14px !important;
+    }
+
+    .metric-value {
+        font-size: 1.6rem !important;
+    }
+
+    /* Inline Form Stack Conversion Engine */
+    .admin-inline-form {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 12px !important;
+        margin-top: 16px;
+    }
+
+    .form-group {
+        width: 100% !important;
+        min-width: 100% !important;
+    }
+
+    .form-container {
+        padding: 16px !important;
+    }
+
+    .btn-submit-inject {
+        width: 100% !important;
+        display: flex;
+        justify-content: center;
+        padding: 12px !important;
+    }
+
+    /* Horizontal Axis Shielding for Data Logs */
+    .table-container {
+        max-width: 100% !important;
+    }
+
+    .responsive-table-wrapper {
+        width: 100% !important;
+        overflow-x: auto !important;
+        display: block !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+        min-width: 650px;
+        /* Forces full size map inside scroll wrapper layout */
+    }
+
+    th,
+    td {
+        padding: 12px 14px !important;
+        font-size: 0.82rem !important;
+    }
+
+    .table-header {
+        padding: 14px 16px !important;
+    }
 }

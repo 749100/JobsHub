@@ -4,197 +4,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JOSHIPRO — Master Command Center</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    <title>JOSHIPRO — Create Account Node</title>
+    <!-- Core Engine Typography & Icons Matched to Admin Command Console -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/admin.css">
+    <!-- Standalone Externalized Component Styles -->
+    <link rel="stylesheet" href="../css/style.css">  
 </head>
 
 <body>
 
-    <header class="admin-header">
-        <div class="header-left">
-            <button id="menuBtn" class="sidebar-toggle-btn"><i class="fa-solid fa-bars"></i></button>
-            <div class="admin-logo"><i class="fa-solid fa-shield-halved"></i> JOSHIPRO <span>HQ</span></div>
-        </div>
-        <div class="header-right">
-            <div class="security-badge"><i class="fa-solid fa-user-shield"></i> Master Control Root</div>
-        </div>
-    </header>
-
-    <aside id="sidebar" class="admin-sidebar">
-        <nav class="sidebar-menu">
-            <a href="dashboard.html"><i class="fa-solid fa-house"></i> Return to Dashboard</a>
-            <a href="findJobs.html"><i class="fa-solid fa-briefcase"></i> View Jobs</a>
-            <a href="applications.html"><i class="fa-solid fa-file-invoice"></i> View Applications</a>
-            <div class="sidebar-divider"></div>
-            <div id="adminLinkPlaceholder"></div>
-            <button id="logoutBtn" class="sidebar-logout-btn"><i class="fa-solid fa-power-off"></i> System Exit</button>
-        </nav>
-    </aside>
-
-    <main class="admin-canvas">
-        <section class="welcome-banner">
-            <h1>Ecosystem Command Console</h1>
-            <p>Authorized personnel node override. Moderate registration parameters, remove listings, and audit system
-                assets.</p>
-        </section>
-
-        <!-- Live Telemetry Counts Panel -->
-        <section class="metrics-grid">
-            <div class="metric-card card-purple">
-                <div class="card-icon"><i class="fa-solid fa-users"></i></div>
-                <div class="card-info">
-                    <h3>Registered Accounts</h3>
-                    <div class="metric-value" id="adminUsersTotal">...</div>
-                </div>
+    <div class="auth-container-wrapper">
+        <!-- Structural Corporate Branding Display -->
+        <header class="auth-brand-header">
+            <div class="logo-wrapper">
+                <i class="fa-solid fa-shield-halved"></i> JOBS<span>HUB</span>
             </div>
-            <div class="metric-card card-indigo">
-                <div class="card-icon"><i class="fa-solid fa-briefcase"></i></div>
-                <div class="card-info">
-                    <h3>Active System Jobs</h3>
-                    <div class="metric-value" id="adminJobsTotal">...</div>
-                </div>
-            </div>
-            <div class="metric-card card-pink">
-                <div class="card-icon"><i class="fa-solid fa-paper-plane"></i></div>
-                <div class="card-info">
-                    <h3>Total Applications</h3>
-                    <div class="metric-value" id="adminAppsTotal">...</div>
-                </div>
-            </div>
-        </section>
+            <p>Access Portal Override — Provision an Authorized Client Platform Node</p>
+        </header>
 
-        <!-- Aligned User Registration Entry Point -->
-        <section class="admin-form-section" style="margin-top: 32px;">
+        <!-- Form Module Section Using Admin Console Structural Layout Classes -->
+        <section class="admin-form-section">
             <div class="form-container">
                 <div class="form-header">
                     <h2><i class="fa-solid fa-user-plus" style="color: #a855f7;"></i> Direct System User Registration
                     </h2>
-                    <p style="margin-bottom: 20px;">Provision an authentic production account straight into system nodes
-                        if primary authentication registration layers fail.</p>
+                    <p>Initialize production baseline attributes straight into ecosystem tables to build active tracking
+                        portfolios.</p>
                 </div>
-                <form id="addUserForm" class="admin-inline-form">
+
+                <form id="registerForm" novalidate>
+                    <!-- Identity Text Form Module Component Block -->
                     <div class="form-group">
-                        <label for="newName">Full Name</label>
-                        <input type="text" id="newName" placeholder="Enter full name" required>
+                        <label for="fullname">Full Name</label>
+                        <input type="text" id="fullname" placeholder="Enter full name" autocomplete="name" required>
                     </div>
+
+                    <!-- Communication Network Delivery Module Component Block -->
                     <div class="form-group">
-                        <label for="newEmail">Email Address</label>
-                        <input type="email" id="newEmail" placeholder="name@domain.com" required>
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" placeholder="name@domain.com" autocomplete="email" required>
                     </div>
+
+                    <!-- Multi-column Stack Component Framework for Mobile Forms -->
+                    <div class="form-split-row">
+                        <!-- Contact Link Module Component Block -->
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" placeholder="Enter phone number" autocomplete="tel" required>
+                        </div>
+
+                        <!-- Regional Segment Module Component Block -->
+                        <div class="form-group">
+                            <label for="location">Location Context</label>
+                            <select id="location" required>
+                                <option value="" disabled selected hidden>Select deployment county...</option>
+                                <option value="Bungoma">Bungoma</option>
+                                <option value="Busia">Busia</option>
+                                <option value="Kakamega">Kakamega</option>
+                                <option value="Vihiga">Vihiga</option>
+                                <option value="Mombasa">Mombasa</option>
+                                <option value="Nairobi">Nairobi</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Dual Password Validation Entry Group Block -->
                     <div class="form-group">
-                        <label for="newPhone">Phone Number</label>
-                        <input type="tel" id="newPhone" placeholder="Enter phone number" required>
+                        <label for="password">Security Password Matrix</label>
+                        <div class="password-field-container">
+                            <input type="password" id="password" placeholder="Initialize profile token"
+                                autocomplete="new-password" required>
+                            <i class="fa-solid fa-eye toggle-visibility-trigger" id="togglePassword"></i>
+                        </div>
                     </div>
+
                     <div class="form-group">
-                        <label for="newLocation">Location Setting</label>
-                        <select id="newLocation">
-                            <option value="Bungoma">Bungoma</option>
-                            <option value="Busia">Busia</option>
-                            <option value="Kakamega">Kakamega</option>
-                            <option value="Vihiga">Vihiga</option>
-                        </select>
+                        <label for="confirmPassword">Confirm Password Profile Key</label>
+                        <div class="password-field-container">
+                            <input type="password" id="confirmPassword" placeholder="Re-enter profile token"
+                                autocomplete="new-password" required>
+                            <i class="fa-solid fa-eye toggle-visibility-trigger" id="toggleConfirmPassword"></i>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="newRole">Platform Role Assignment</label>
-                        <select id="newRole">
-                            <option value="Job Seeker">Job Seeker</option>
-                            <option value="Employer">Employer</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="newPassword">Security Password</label>
-                        <input type="password" id="newPassword" placeholder="Enter password" required>
-                    </div>
-                    <div class="form-group button-group">
-                        <button type="submit" class="btn-submit-inject"><i class="fa-solid fa-bolt"></i> Register
-                            Account</button>
+
+                    <!-- Legal Terms Compliance Integration Selection Link -->
+                    <label class="compliance-row" for="terms">
+                        <input type="checkbox" id="terms" required>
+                        <span>I confirm deployment attributes are accurate and consent to initialize authentication data
+                            parameters in compliance with the <a href="#">JOSHIPRO Node Security Guidelines</a>.</span>
+                    </label>
+
+                    <!-- Submission Integration Trigger Execution Injection Controller -->
+                    <div class="form-group button-group" style="margin-bottom: 0;">
+                        <button type="submit" class="btn-submit-inject">
+                            <i class="fa-solid fa-bolt"></i> Register Platform Account
+                        </button>
                     </div>
                 </form>
             </div>
         </section>
 
-        <!-- Moderation Registers Layout Area -->
-        <section class="management-section">
+        <!-- Redirection Navigation Row Component Area -->
+        <footer class="auth-routing-footer">
+            Already possess an activated platform credential? <a href="login.html">Sign In Here</a>
+        </footer>
+    </div>
 
-            <!-- 1. Users Stream Register -->
-            <div class="table-container">
-                <div class="table-header">
-                    <h2><i class="fa-solid fa-user-gear"></i> Account Moderation Registry</h2>
-                </div>
-                <div class="responsive-table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Account ID / Contact</th>
-                                <th>Account Role</th>
-                                <th>Location Context</th>
-                                <th style="text-align: right;">System Adjustments</th>
-                            </tr>
-                        </thead>
-                        <tbody id="usersTableBody">
-                            <tr>
-                                <td colspan="4" class="table-loading">Streaming account nodes...</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- 2. Application Live Interceptor Stream -->
-            <div class="table-container">
-                <div class="table-header">
-                    <h2><i class="fa-solid fa-folder-open"></i> Global Application Interceptor</h2>
-                </div>
-                <div class="responsive-table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Applicant Context</th>
-                                <th>Target Position / ID</th>
-                                <th>Submission Flag</th>
-                                <th style="text-align: right;">Operational Safety</th>
-                            </tr>
-                        </thead>
-                        <tbody id="appsTableBody">
-                            <tr>
-                                <td colspan="4" class="table-loading">Streaming platform transmissions...</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- 3. Job Compliance Stream Hub -->
-            <div class="table-container">
-                <div class="table-header">
-                    <h2><i class="fa-solid fa-gavel"></i> Job Listing Compliance Hub</h2>
-                </div>
-                <div class="responsive-table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Position / Company</th>
-                                <th>Location Flag</th>
-                                <th>Ecosystem Posting ID</th>
-                                <th style="text-align: right;">Compliance Execution</th>
-                            </tr>
-                        </thead>
-                        <tbody id="jobsTableBody">
-                            <tr>
-                                <td colspan="4" class="table-loading">Streaming operational jobs...</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-        </section>
-    </main>
-
-    <script type="module" src="../js/admin.js"></script>
+    <!-- Core App Logic Controller Interfacing Module -->
+    <script type="module" src="../js/register.js"></script>
 </body>
 
 </html>

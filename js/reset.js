@@ -23,11 +23,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const resetSubmitBtn = document.getElementById("resetSubmitBtn");
     const alertBox = document.getElementById("alertBox");
 
-    // Helper utility to safely manage validation alert block styles
+    // 🛠️ FIXED: Rewritten helper utility to cleanly sync with your glassmorphism styles
     const renderAlertMessage = (messageText, alertType) => {
         if (!alertBox) return;
         alertBox.textContent = messageText;
-        alertBox.className = `auth-alert ${alertType}`; // layout configurations: 'success' or 'error'
+        alertBox.style.display = "block"; // Explicitly unhide element container
+        
+        if (alertType === "success") {
+            // Transform color layouts to reflect successful transitions safely
+            alertBox.style.background = "rgba(34, 197, 94, 0.1)";
+            alertBox.style.borderColor = "rgba(34, 197, 94, 0.3)";
+            alertBox.style.color = "#22c55e";
+        } else {
+            // Restore default stylesheet error metrics
+            alertBox.style.background = "rgba(244, 63, 94, 0.1)";
+            alertBox.style.borderColor = "rgba(244, 63, 94, 0.2)";
+            alertBox.style.color = "var(--error-color)";
+        }
     };
 
     if (resetForm) {
@@ -35,6 +47,9 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
 
             const emailValue = resetEmailInput.value.trim();
+
+            // Hide previous alerts when attempting a new transmission
+            if (alertBox) alertBox.style.display = "none";
 
             // Simple Client-Side Input Empty Sanity Check Step
             if (!emailValue) {
@@ -45,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Update button layout state to indicate active communication loops
             if (resetSubmitBtn) {
                 resetSubmitBtn.disabled = true;
-                resetSubmitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending Link...';
+                resetSubmitBtn.innerHTML = '<span>Sending Link...</span> <i class="fa-solid fa-spinner fa-spin"></i>';
             }
 
             try {
@@ -80,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Standard structural rollback: Restore submit interaction state values cleanly
                 if (resetSubmitBtn) {
                     resetSubmitBtn.disabled = false;
-                    resetSubmitBtn.innerHTML = '<span>Send Reset Link</span>';
+                    resetSubmitBtn.innerHTML = '<span>Send Reset Link</span> <i class="fa-solid fa-paper-plane" style="font-size: 0.85rem;"></i>';
                 }
             }
         });

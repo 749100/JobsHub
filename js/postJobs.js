@@ -3,8 +3,7 @@
 // ==========================================
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-// Added doc, onSnapshot, and getDoc to support the user profile stream & admin link logic
-import { initializeFirestore, collection, addDoc, serverTimestamp, doc, onSnapshot, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { initializeFirestore, collection, addDoc, serverTimestamp, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCsWXLc_6ug45IGN4wL0-DoycYnxgx8dag",
@@ -85,39 +84,53 @@ if (activeForm) {
         }
 
         try {
-            // 1. Capture the form elements cleanly
-            const titleInput = activeForm.querySelector('[id*="title" i], [name*="title" i]');
-            const companyInput = activeForm.querySelector('[id*="company" i], [name*="company" i]');
-            const locationInput = activeForm.querySelector('[id*="location" i], [name*="location" i]');
-            const descInput = activeForm.querySelector('[id*="description" i], [name*="description" i], textarea');
+            // 1. Capture core text inputs and description fields
+            const titleInput = document.getElementById("jobTitle");
+            const companyInput = document.getElementById("companyName");
+            const categorySelect = document.getElementById("jobCategory");
+            const typeSelect = document.getElementById("jobType");
+            const salaryInput = document.getElementById("salary");
+            const descInput = document.getElementById("jobDesc");
 
-            // 2. Safely extract trimmed text values
+            // 🛠️ MULTI-INPUT LOCATION INJECTION LAYER
+            const countySelect = document.getElementById("locationCounty");
+            const detailsInput = document.getElementById("locationDetails");
+
+            // 2. Safely extract values and run trim evaluations
             const titleVal = titleInput ? titleInput.value.trim() : "";
             const companyVal = companyInput ? companyInput.value.trim() : "";
-            const locationVal = locationInput ? locationInput.value.trim() : "";
-            const descVal = descInput ? descInput.value.trim() : "";
+            const categoryVal = categorySelect ? categorySelect.value : "";
+            const typeVal = typeSelect ? typeSelect.value : "Full-Time";
+            const salaryVal = salaryInput ? salaryInput.value.trim() : "Competitive";
+            const descVal = descInput ? descInput.value.trim() : "No description provided.";
 
-            console.log("Extracted Payload Data:", { titleVal, companyVal, locationVal, descVal });
+            const countyVal = countySelect ? countySelect.value : "";
+            const detailsVal = detailsInput ? detailsInput.value.trim() : "";
 
-            // 3. Ensure validation matches the trimmed values
-            if (!titleVal || !companyVal) {
-                alert("Please fill out at least the Job Title and Company name fields.");
+            // 3. Structural Validation Checks
+            if (!titleVal || !companyVal || !countyVal || !detailsVal) {
+                alert("Please make sure all mandatory operational attributes—including County Node assignment and specific area data maps—are filled.");
                 return;
             }
 
-            // Build out the structured parameters object
+            // 🔗 Combine separate location nodes into a unified data payload item string
+            const standardLocationPayload = `${countyVal} (${detailsVal})`;
+            console.log("Assembled Ecosystem Location Mapping:", standardLocationPayload);
+
+            // Build out the structured database parameters object
             const jobData = {
                 title: titleVal,
                 company: companyVal,
-                location: locationVal || "Remote",
-                description: descVal || "No description provided.",
-                salary: "Competitive", 
-                type: "Full-Time",     
+                category: categoryVal,
+                type: typeVal,
+                location: standardLocationPayload, 
+                salary: salaryVal,
+                description: descVal,
                 postedBy: currentUserId,
                 createdAt: serverTimestamp() 
             };
 
-            console.log("Attempting to write document directly to Firestore...");
+            console.log("Attempting to write document directly to Firestore 'jobs' collection...", jobData);
             await addDoc(collection(db, "jobs"), jobData);
             console.log("Firestore write succeeded!");
 
@@ -128,13 +141,13 @@ if (activeForm) {
                 jobStatusMsg.textContent = "🎉 Job listing posted successfully!";
                 setTimeout(() => { jobStatusMsg.textContent = ""; }, 5000);
             } else {
-                alert("🎉 Job listing posted successfully!");
+                alert("🎉 Job listing posted successfully onto the platform marketplace!");
             }
 
             activeForm.reset(); 
 
         } catch (error) {
-            console.error("Critical Firestore write failure:", error);
+            console.error("Critical Firestore write failure trapped during network dispatch:", error);
             alert(`Failed to submit job listing: ${error.message}`);
         }
     });
@@ -152,5 +165,5 @@ function escapeHtml(str) {
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
-        .replace(/'/g, "'");
+        .replace(/'/g, "&#039;");
 }

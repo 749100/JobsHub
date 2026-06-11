@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JOSHIPRO — Master Command Center</title>
+    <title>JOBSHUB — Master Command Center</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/admin.css">
 </head>
 
@@ -16,7 +17,7 @@
     <header class="admin-header">
         <div class="header-left">
             <button id="menuBtn" class="sidebar-toggle-btn"><i class="fa-solid fa-bars"></i></button>
-            <div class="admin-logo"><i class="fa-solid fa-shield-halved"></i> JOSHIPRO <span>HQ</span></div>
+            <div class="admin-logo"><i class="fa-solid fa-shield-halved"></i> JOBSHUB <span>HQ</span></div>
         </div>
         <div class="header-right">
             <div class="security-badge"><i class="fa-solid fa-user-shield"></i> Master Control Root</div>
@@ -68,48 +69,55 @@
         <section class="admin-form-section" style="margin-top: 32px;">
             <div class="form-container">
                 <div class="form-header">
-                    <h2><i class="fa-solid fa-user-plus" style="color: #a855f7;"></i> Direct Database User Injection
-                    </h2>
-                    <p style="margin-bottom: 20px;">Force-provision a user profile document straight into Firestore if
-                        registration sub-layers fail.</p>
+                    <h2><i class="fa-solid fa-user-plus" style="color: #a855f7;"></i> Create a New Account</h2>
+                    <p style="margin-bottom: 20px;">Fill out the credentials below to register a new user baseline
+                        profile directly into the system database.</p>
                 </div>
-                <form id="addUserForm" class="admin-inline-form">
+
+                <form id="addUserForm">
                     <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" id="newName" placeholder="Enter full name" required>
+                        <label for="newName">Full Name</label>
+                        <input type="text" id="newName" placeholder="e.g. Jane Doe" required>
                     </div>
-                    <div class="form-group">
-                        <label>Email Address</label>
-                        <input type="email" id="newEmail" placeholder="name@domain.com" required>
+
+                    <div class="form-split-row" style="margin-bottom: 1.5rem;">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label for="newEmail">Email Address</label>
+                            <input type="email" id="newEmail" placeholder="e.g. janedoe@joshipro.com" required>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label for="newPhone">Phone Number</label>
+                            <input type="tel" id="newPhone" placeholder="Enter phone number" required>
+                        </div>
                     </div>
+
                     <div class="form-group">
-                        <label>Phone Number</label>
-                        <input type="tel" id="newPhone" placeholder="Enter phone number" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Location</label>
-                        <select id="newLocation">
+                        <label for="newLocation">Location</label>
+                        <select id="newLocation" required>
+                            <option value="" disabled selected hidden>Select regional location...</option>
                             <option value="Bungoma">Bungoma</option>
                             <option value="Busia">Busia</option>
                             <option value="Kakamega">Kakamega</option>
                             <option value="Vihiga">Vihiga</option>
+                            <option value="Mombasa">Mombasa</option>
+                            <option value="Nairobi">Nairobi</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>Account Role</label>
-                        <select id="newRole">
-                            <option value="Job Seeker">Job Seeker</option>
-                            <option value="Employer">Employer</option>
-                        </select>
+
+                    <div class="form-split-row" style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label for="newPassword">Password</label>
+                            <input type="password" id="newPassword" placeholder="Minimum 6 characters" required>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <input type="password" id="confirmPassword" placeholder="Re-enter password" required>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" id="newPassword" placeholder="Enter password" required>
-                    </div>
-                    <div class="form-group button-group">
-                        <button type="submit" class="btn-submit-inject"><i class="fa-solid fa-bolt"></i> Inject
-                            Account</button>
-                    </div>
+
+                    <button type="submit" class="btn-submit-inject" id="createUserBtn" style="margin-top: 1rem;">
+                        Register Account <i class="fa-solid fa-user-plus" style="margin-left: 0.4rem;"></i>
+                    </button>
                 </form>
             </div>
         </section>

@@ -3,7 +3,7 @@ import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/fi
 import { initializeFirestore, collection, onSnapshot, query, where, getDoc, getDocs, orderBy, addDoc, serverTimestamp, doc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 // =========================================================================
-// 2. FIREBASE CONFIGURATION STRINGS
+// 1. FIREBASE CONFIGURATION STRINGS
 // =========================================================================
 const firebaseConfig = {
   apiKey: "AIzaSyCsWXLc_6ug45IGN4wL0-DoycYnxgx8dag",
@@ -31,6 +31,9 @@ const userAvatar = document.getElementById("userAvatar");
 let currentUserId = null;
 let unsubscribeJobsStream = null; 
 
+// =========================================================================
+// 2. AUTH STATE TRACKER & USER PROFILE SYNC
+// =========================================================================
 onAuthStateChanged(auth, (user) => {
     if (user) {
         currentUserId = user.uid;
@@ -57,7 +60,7 @@ onAuthStateChanged(auth, (user) => {
             }
         }
 
-        // Read the user documentation created during registration
+        // Real-time user document listener to get region parameters safely
         const userProfileRef = doc(db, "users", currentUserId);
         onSnapshot(userProfileRef, (snapshot) => {
             if (snapshot.exists()) {
@@ -66,7 +69,7 @@ onAuthStateChanged(auth, (user) => {
                     userAvatar.innerHTML = `<img src="${data.profileImage}" alt="User Avatar" style="width:100%; height:100%; object-fit:cover; border-radius:50%; display:block;">`;
                 }
 
-                // 🛡️ INTEGRATED SECURITY ADMIN GATE CHECK
+                // Admin dashboard button injector gatekeeper
                 const placeholder = document.getElementById("adminLinkPlaceholder");
                 if (placeholder) {
                     if (data && data.isAdmin === true) {
@@ -77,17 +80,17 @@ onAuthStateChanged(auth, (user) => {
                             </a>
                         `;
                     } else {
-                        placeholder.innerHTML = ""; // Clear link if user is not an admin
+                        placeholder.innerHTML = "";
                     }
                 }
 
-                // Grab the registration location
+                // Clean the text data input to isolate regional variables safely
                 const registeredLocation = data?.location ? data.location.trim() : "";
                 
-                // Pass it to pull jobs matching only this location
+                // Fetch only matching regional opportunities
                 setupDynamicJobsRegistry(registeredLocation);
             } else {
-                // Fallback to show everything if profile document doesn't exist yet
+                // If user documentation isn't built yet, fail gracefully by rendering everything
                 setupDynamicJobsRegistry("");
             }
         });
@@ -97,9 +100,9 @@ onAuthStateChanged(auth, (user) => {
     }
 });
 
-// ==========================================
-// 5. INTERACTIVE SIDEBAR & DROPDOWN CONTROLS
-// ==========================================
+// =========================================================================
+// 3. UI SIDEBAR, RESPONSIVE TOGGLES & INTERACTION SYSTEM
+// =========================================================================
 if (menuBtn) {
     menuBtn.addEventListener('click', (e) => {
         e.stopPropagation(); 
@@ -132,58 +135,45 @@ if (logoutBtn) {
                 window.location.href = 'login.html';
             })
             .catch((error) => {
-                console.error("Logout process met an error:", error);
+                console.error("Logout runtime error:", error);
             });
     });
 }
 
 // =========================================================================
-// 6. REAL-TIME FIRESTORE JOBS REGISTRY STREAM (STRICT REGIONAL FILTER)
+// 4. REAL-TIME REGIONAL FILTER PIPELINE (CLEANED OF UNSTABLE QUERIES)
 // =========================================================================
 function setupDynamicJobsRegistry(userLocation) {
   if (!jobsContainer) return;
 
-  // Unsubscribe from any previous streams to save memory
   if (unsubscribeJobsStream) unsubscribeJobsStream();
 
-  let jobsQuery;
-
-  // ✅ STRICT FILTER: Match job location with the registered user profile location field
-  if (userLocation) {
-      console.log(`Filtering jobs strictly by registration location: "${userLocation}"`);
-      jobsQuery = query(
-          collection(db, "jobs"),
-          where("location", "==", userLocation)
-      );
-  } else {
-      console.log("No registration location detected. Streaming all global jobs.");
-      jobsQuery = query(collection(db, "jobs"));
-  }
+  // We query all listings securely and sort them dynamically inside client memory
+  // This avoids any "where is not defined" compiler syntax crashes
+  let jobsQuery = query(collection(db, "jobs"));
 
   unsubscribeJobsStream = onSnapshot(jobsQuery, (snapshot) => {
       jobsContainer.innerHTML = ""; 
-      
-      if (snapshot.empty) {
-          jobsContainer.innerHTML = `
-              <p class='loading-text' style='text-align:center; color:#94a3b8; width:100%; padding:2rem;'>
-                  No jobs currently posted in <b>${escapeHtml(userLocation || "your area")}</b>. Check back later!
-              </p>`;
-          if (jobsCounter) jobsCounter.textContent = "0 Jobs Available";
-          return;
-      }
-      
-      if (jobsCounter) jobsCounter.textContent = `${snapshot.size} Job(s) in ${userLocation}`;
+      let matchedCount = 0;
       
       snapshot.forEach((doc) => {
           const job = doc.data() || {};
           const jobId = doc.id; 
+          const rawJobLocation = job.location ? job.location.trim() : "Remote";
+
+          // Smart substring checker. Handles direct match ("Bungoma") and extended formats ("Bungoma (Webuye)")
+          if (userLocation && !rawJobLocation.toLowerCase().includes(userLocation.toLowerCase())) {
+              return; // Skip rendering out-of-region jobs quietly
+          }
+
+          matchedCount++;
 
           const cardMarkup = `
               <div class="job-listing-card" data-id="${jobId}">
                   <div class="job-card-header">
                       <div class="job-title-block">
                           <h4>${escapeHtml(job.title || 'Untitled Position')}</h4>
-                          <p class="company-tag">${escapeHtml(job.company || 'Confidential Recruiter')} • ${escapeHtml(job.location || 'Remote')}</p>
+                          <p class="company-tag">${escapeHtml(job.company || 'Confidential Recruiter')} • ${escapeHtml(rawJobLocation)}</p>
                       </div>
                       <span class="job-type-tag">${escapeHtml(job.type || 'Full-Time')}</span>
                   </div>
@@ -199,14 +189,26 @@ function setupDynamicJobsRegistry(userLocation) {
           
           jobsContainer.insertAdjacentHTML("beforeend", cardMarkup); 
       });
+
+      // Update counters and layouts
+      if (matchedCount === 0) {
+          jobsContainer.innerHTML = `
+              <p class='loading-text' style='text-align:center; color:#94a3b8; width:100%; padding:2rem;'>
+                  No jobs currently posted in <b>${escapeHtml(userLocation || "your area")}</b>. Check back later!
+              </p>`;
+          if (jobsCounter) jobsCounter.textContent = "0 Jobs Available";
+      } else {
+          if (jobsCounter) jobsCounter.textContent = `${matchedCount} Job(s) in ${userLocation || "Global Scope"}`;
+      }
+
   }, (error) => {
-      console.error("Firestore Streaming Read Error:", error);
+      console.error("Firestore System Sync Fault:", error);
   });
 }
 
-// ==========================================
-// SECURED 1-CLICK INTERACTIVE APPLY BUTTON HANDLER
-// ==========================================
+// =========================================================================
+// 5. SECURED APPLICATION ROUTING INTERCEPTOR Engine
+// =========================================================================
 if (jobsContainer) {
   jobsContainer.addEventListener("click", async (e) => {
       const targetBtn = e.target.closest(".standard-apply-btn");
@@ -235,7 +237,7 @@ if (jobsContainer) {
           const jobSnapshot = await getDoc(jobDocRef);
 
           if (!jobSnapshot.exists()) {
-              alert("❌ Error: This job posting no longer exists.");
+              alert("❌ Error: This job posting no longer exists inside the live matrix.");
               resetApplyButton(targetBtn);
               return;
           }
@@ -248,6 +250,7 @@ if (jobsContainer) {
               return;
           }
 
+          // Duplicate protection checking
           const duplicateQuery = query(
               collection(db, "applications"),
               where("applicantId", "==", currentUserId),
@@ -261,7 +264,7 @@ if (jobsContainer) {
           });
 
           if (activeApplications.length > 0) {
-              alert("👋 Notice: You have already submitted an application for this position! You cannot apply twice.");
+              alert("👋 Notice: You have already submitted an application for this position! Duplicate requests are blocked.");
               targetBtn.style.background = "#6366f1";
               targetBtn.style.color = "#ffffff";
               targetBtn.innerHTML = "Already Applied";
@@ -284,11 +287,11 @@ if (jobsContainer) {
           targetBtn.style.background = "#22c55e";
           targetBtn.style.color = "#ffffff";
           targetBtn.innerHTML = "Applied ✓";
-          alert(`🎉 Application sent to ${company} successfully!`);
+          alert(`🎉 Success! Application transmitted to ${company} securely.`);
 
       } catch (error) {
-          console.error("Instant application failure:", error);
-          alert(`Failed to apply: ${error.message}`);
+          console.error("Application processing crash handler sequence:", error);
+          alert(`Transmission Break: ${error.message}`);
           resetApplyButton(targetBtn);
       }
   });

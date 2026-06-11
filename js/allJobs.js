@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { initializeFirestore, collection, onSnapshot, query, getDoc, getDocs, orderBy, addDoc, serverTimestamp, doc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+// 🛠️ FIXED: Added 'where' to the direct destructuring import statement list below
+import { initializeFirestore, collection, onSnapshot, query, where, getDoc, getDocs, orderBy, addDoc, serverTimestamp, doc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 // =========================================================================
 // FIREBASE LIVE CONNECTION STRINGS
@@ -54,12 +55,10 @@ function streamUnfilteredJobsRegistry() {
                   <i class="fa-solid fa-folder-open" style="color: #475569;"></i>
                   <p>There are no open job vacancies listed anywhere on JOSHIPRO yet.</p>
               </div>`;
-          // 🛠️ FIXED: Outputs a raw "0" so your styled dashboard card loads correctly
           if (jobsCounter) jobsCounter.textContent = "0";
           return;
       }
       
-      // 🛠️ FIXED: Removed long text strings. Injects the raw quantity number directly into your UI card element
       if (jobsCounter) jobsCounter.textContent = snapshot.size;
       
       snapshot.forEach((doc) => {
@@ -156,6 +155,7 @@ if (allJobsContainer) {
           if (activeApplications.length > 0) {
               alert("👋 Entry Locked: You already have a dynamic applicant token filed for this vacancy pipeline.");
               targetBtn.innerHTML = "Already Applied";
+              targetBtn.disabled = true;
               return;
           }
 

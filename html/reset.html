@@ -5,10 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JOSHIPRO - Reset Credentials</title>
-    <!-- FontAwesome Vector Icons Link Hooks -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Using your shared authorization stylesheet -->
-    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
@@ -16,39 +14,48 @@
     <div class="background-decor animate-blob1"></div>
     <div class="background-decor animate-blob2"></div>
 
-    <div class="auth-container">
-        <div class="auth-card">
-            <div class="auth-header">
-                <div class="logo">JOSHI<span class="gradient-text">PRO</span></div>
-                <h2>Reset Password</h2>
-                <p>Enter your inbound email address to extract a secure recovery token link.</p>
+    <div class="login-container">
+
+        <div class="auth-brand-header">
+            <div class="logo-wrapper">
+                <i class="fa-solid fa-cubes"></i>JOBS<span>HUB</span>
+            </div>
+            <p>Account Recovery Subsystem</p>
+        </div>
+
+        <div class="form-header" style="text-align: center; margin-top: 1rem;">
+            <h2 style="justify-content: center; font-size: 1.25rem;">
+                <i class="fa-solid fa-key" style="color: #a855f7;"></i> Reset Password
+            </h2>
+            <p style="margin-top: 0.25rem;">Enter your inbound email address to extract a secure recovery token link.
+            </p>
+        </div>
+
+        <div id="alertBox" class="error-msg"
+            style="text-align: center; margin: 1rem 0; font-weight: 600; padding: 10px; border-radius: 8px; background: rgba(244, 63, 94, 0.1); border: 1px solid rgba(244, 63, 94, 0.2);">
+        </div>
+
+        <form id="resetForm" novalidate>
+            <div class="input-group">
+                <i class="fa-solid fa-envelope input-icon"></i>
+                <input type="email" id="resetEmail" required placeholder=" " autocomplete="email">
+                <label for="resetEmail">Email Address</label>
+                <span class="error-msg" id="emailError">Please enter a valid account email</span>
             </div>
 
-            <!-- Dynamic Interactive Status Alert Banners -->
-            <div id="alertBox" class="auth-alert hidden"></div>
+            <button type="submit" id="resetSubmitBtn" class="submit-btn" style="margin-top: 1.5rem;">
+                <span>Send Reset Link</span>
+                <i class="fa-solid fa-paper-plane" style="font-size: 0.85rem;"></i>
+            </button>
+        </form>
 
-            <form id="resetForm" novalidate>
-                <div class="form-group">
-                    <label for="resetEmail">Registered Email</label>
-                    <div class="input-wrapper">
-                        <i class="fa-solid fa-envelope input-icon"></i>
-                        <input type="email" id="resetEmail" placeholder="name@example.com" required
-                            autocomplete="email">
-                    </div>
-                </div>
+        <div class="divider"><span>or</span></div>
 
-                <button type="submit" id="resetSubmitBtn" class="auth-btn">
-                    <span>Send Reset Link</span>
-                </button>
-            </form>
-
-            <div class="auth-footer">
-                <p>Remembered your credentials? <a href="login.html" class="auth-link">Back to Login</a></p>
-            </div>
+        <div class="footer-text">
+            <p>Remembered your credentials? <a href="login.html">Back to Login</a></p>
         </div>
     </div>
 
-    <!-- Firebase / Password Reset Workflow Lifecycle Management Script Context Link -->
     <script type="module" src="../js/reset.js"></script>
 </body>
 
