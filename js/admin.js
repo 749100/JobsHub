@@ -16,8 +16,6 @@ const app = initializeApp(firebaseConfig);
 const db = initializeFirestore(app, { experimentalAutoDetectLongPolling: true }); 
 const auth = getAuth(app); 
 
-// 🧠 MULTI-SESSION ISOLATION ENGINE: Creates an independent pipeline to register accounts 
-// without auto-logging you out of your Master Control profile session.
 const secondaryApp = initializeApp(firebaseConfig, "SecondaryAuthEcosystem");
 const secondaryAuth = getAuth(secondaryApp);
 
@@ -25,9 +23,6 @@ const menuBtn = document.getElementById('menuBtn');
 const sidebar = document.getElementById('sidebar');
 const logoutBtn = document.getElementById('logoutBtn');
 
-// =========================================================================
-// 🛡️ DIAGNOSTIC SECURITY GATEKEEPER MONITOR
-// =========================================================================
 onAuthStateChanged(auth, async (user) => {
     if (!user) {
         console.warn("🔐 No active session found. Routing back to entry point...");

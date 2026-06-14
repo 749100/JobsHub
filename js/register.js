@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         createdAt: new Date()
                     });
 
-                    alert('🎉 Registration successful for JOSHIPRO!');
+                    alert('🎉 Registration successful for JOBSHUB!');
                     window.location.href = 'login.html'; 
                     
                 } catch (error) {

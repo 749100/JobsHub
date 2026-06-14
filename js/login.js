@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 // Request sign-in token from Firebase
                 await signInWithEmailAndPassword(auth, email, password);
-                alert('Welcome back to JOSHIPRO!');
+                alert('Welcome back to JOBSHUB!');
                 window.location.href = 'dashboard.html'; // Redirect to your application dashboard
                 
             } catch (error) {
