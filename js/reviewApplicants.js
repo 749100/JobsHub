@@ -1,6 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-// ✅ FIXED: Added getDoc to imports to read candidate profiles directly
 import { getFirestore, collection, onSnapshot, query, where, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -47,27 +46,29 @@ function syncActiveApplicants() {
             return;
         }
 
-        // STEP 2: Stream applications, but completely ignore them if they don't belong to the user's jobs
-        onSnapshot(collection(db, "applications"), async (snapshot) => {
+        // 🎯 FIXED: Query specifically for applications matching the user's Job IDs.
+        // This satisfies the secure Firestore Rules because you are only requesting records you own.
+        // (Note: Firestore 'in' queries accept arrays with up to 30 items)
+        const targetedAppsQuery = query(
+            collection(db, "applications"), 
+            where("jobId", "in", myJobIds)
+        );
+
+        onSnapshot(targetedAppsQuery, async (snapshot) => {
             applicantsContainer.innerHTML = "";
             let visibleCount = 0;
 
-            // Using for...of loop to handle asynchronous profile fetching sequentially
+            // Loop through authorized application matches securely
             for (const applicationDoc of snapshot.docs) {
                 const application = applicationDoc.data();
                 const applicationId = applicationDoc.id;
 
-                // 🔒 BLANK PRIVACY PROTECTION GATE: If this application belongs to someone else's job, completely ignore it
-                if (!myJobIds.includes(application.jobId)) {
-                    continue; 
-                }
-
-                // ✅ UPDATED: Added "ArchivedByApplicant" so withdrawn jobs disappear instantly from here
+                // Dismiss items hidden by applicant actions or previous review sweeps
                 if (application.status === "Revoked" || application.status === "Withdrawn" || application.status === "ArchivedByApplicant") {
                     continue;
                 }
 
-                // 🔍 LIVE LOOKUP: Get live profile data straight from the candidate's profile document
+                // 🔍 LIVE LOOKUP: Gather details directly from the candidate profile sheet
                 let liveName = "Anonymous Applicant";
                 let liveProfession = "Not Specified";
                 let livePhone = "Not Provided";
@@ -89,7 +90,6 @@ function syncActiveApplicants() {
                 let badgeClass = "status-pending";
                 if (application.status === "Granted") badgeClass = "status-granted";
 
-                // ✅ UPDATED DESIGN: Displays only Job Title, Name, Profession, Phone, and Email
                 const cardMarkup = `
                     <div class="candidate-card" data-id="${applicationId}" data-job-id="${application.jobId}" style="margin-bottom: 1rem; padding: 16px; display: flex; justify-content: space-between; align-items: center;">
                         <div class="candidate-meta">
@@ -119,7 +119,11 @@ function syncActiveApplicants() {
             if (visibleCount === 0) {
                 applicantsContainer.innerHTML = `<p style="text-align:center; padding:2rem; color:var(--text-muted);">No active candidate profiles to review.</p>`;
             }
+        }, (error) => {
+            console.error("Applications sub-stream listen aborted:", error);
         });
+    }, (error) => {
+        console.error("Master job tracking stream closed abruptly:", error);
     });
 }
 
@@ -130,7 +134,6 @@ if (applicantsContainer) {
 
         const applicationId = targetRow.getAttribute("data-id");
         
-        // Target specifically the name node inside the new profile layout block
         const candidateNameElement = targetRow.querySelector(".profile-details-block span");
         const candidateName = candidateNameElement ? candidateNameElement.textContent.replace("Name: ", "") : "this applicant";
 

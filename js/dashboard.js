@@ -266,7 +266,7 @@ if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
         signOut(auth)
             .then(() => {
-                alert("Logged out successfully from JOSHIPRO!");
+                alert("Logged out successfully from JOBSHUB!");
                 window.location.href = 'login.html';
             })
             .catch((error) => {
